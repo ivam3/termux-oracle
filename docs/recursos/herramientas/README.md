@@ -17,6 +17,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [androidsdk-cli](./androidsdk-cli.md)
 * [antigravity-cli](./antigravity-cli.md)
 * [apache2](./apache2.md)
+* [apt](./apt.md)
 * [apksigner](./apksigner.md)
 * [apktool](./apktool.md)
 * [appshark](./appshark.md)
@@ -149,6 +150,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [ngrok](./ngrok.md)
 * [nikto](./nikto.md)
 * [nmap](./nmap.md)
+* [npm](./npm.md)
 
 ### O
 

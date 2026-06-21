@@ -19,7 +19,7 @@ Descubre los pilares fundamentales, historia, normas y la misión detrás de nue
 Guías de configuración avanzada, gestión de paquetes y entorno Linux en Android.
 * [Guía de Instalación](./docs/termux/instalacion.md)
 * [Configuración Inicial](./docs/termux/configuracion.md)
-* [Gestión de Paquetes (`pkg` vs `apt`)](./docs/termux/paquetes.md)
+* [Gestión de Paquetes (`pkg` vs `apt`) y wrappers `apt`/`npm`/`pnpm`](./docs/termux/paquetes.md)
 * [🛠️ Wrapper 'fixer' y Automatización](./docs/termux/fixer.md)
 * [🖥️ Interfaz Gráfica con Termux-X11](./docs/termux/termux-x11.md)
 * [Acceso al Almacenamiento](./docs/termux/almacenamiento.md)
@@ -73,6 +73,7 @@ Diccionario de conceptos técnicos y colecciones de herramientas útiles.
 Esta documentación ha sido optimizada semánticamente. Puedes hacerle preguntas complejas al asistente en el boton [DevinAI](https://deepwiki.com/ivam3/termux-oracle) del [bot de Telegram](https://t.me/ivam3_bot), tales como:
 * *"¿Cómo soluciono el error CANNOT LINK EXECUTABLE en Termux?"*
 * *"¿Cuál es la diferencia entre pkg y apt en i-HakLab?"*
+* *"¿Cómo funcionan los wrappers apt, npm y pnpm de i-HakLab?"*
 * *"¿Qué ruta de aprendizaje debo seguir si ya conozco los comandos básicos de Linux?"*
 
 ---
