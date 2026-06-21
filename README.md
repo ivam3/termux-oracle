@@ -1,10 +1,10 @@
 # i-HakLab Knowledge Base 🚀
-
 ¡Bienvenido al centro de documentación técnica oficial de **i-HakLab** e **Ivam3bycinderella**! Esta base de conocimientos está diseñada y estructurada específicamente para servir como el núcleo de información técnica sobre Termux, Linux en Android, Automatización, Desarrollo y Seguridad Informática, sirviendo de soporte directo a la comunidad [Ivam3byCinderella](https://ivam3.github.io) a través de asistentes de Inteligencia Artificial (como DevinAI de [DeepWiki](https://deepwiki.com/)).
 
 ---
 
 ## 🗺️ Portal de Navegación
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ivam3/termux-oracle)
 
 ### 👥 [1. Comunidad](./docs/comunidad/faq-comunidad.md)
 Descubre los pilares fundamentales, historia, normas y la misión detrás de nuestro movimiento técnico.
