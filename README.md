@@ -1,6 +1,6 @@
 # i-HakLab Knowledge Base 🚀
 
-¡Bienvenido al centro de documentación técnica oficial de **i-HakLab** e **Ivam3bycinderella**! Esta base de conocimientos está diseñada y estructurada específicamente para servir como el núcleo de información técnica sobre Termux, Linux, Android, Automatización y Seguridad Informática, sirviendo de soporte directo a la comunidad a través de asistentes de Inteligencia Artificial (como DevinAI y DeepWiki).
+¡Bienvenido al centro de documentación técnica oficial de **i-HakLab** e **Ivam3bycinderella**! Esta base de conocimientos está diseñada y estructurada específicamente para servir como el núcleo de información técnica sobre Termux, Linux en Android, Automatización, Desarrollo y Seguridad Informática, sirviendo de soporte directo a la comunidad [Ivam3byCinderella](https://ivam3.github.io) a través de asistentes de Inteligencia Artificial (como DevinAI de [DeepWiki](https://deepwiki.com/)).
 
 ---
 
@@ -70,7 +70,7 @@ Diccionario de conceptos técnicos y colecciones de herramientas útiles.
 
 ## 💡 ¿Cómo interactuar con DevinAI en esta Wiki?
 
-Esta documentación ha sido optimizada semánticamente. Puedes hacerle preguntas complejas al asistente en el bot de Telegram, tales como:
+Esta documentación ha sido optimizada semánticamente. Puedes hacerle preguntas complejas al asistente en el boton [DevinAI](https://deepwiki.com/ivam3/termux-oracle) del [bot de Telegram](https://t.me/ivam3_bot), tales como:
 * *"¿Cómo soluciono el error CANNOT LINK EXECUTABLE en Termux?"*
 * *"¿Cuál es la diferencia entre pkg y apt en i-HakLab?"*
 * *"¿Qué ruta de aprendizaje debo seguir si ya conozco los comandos básicos de Linux?"*
