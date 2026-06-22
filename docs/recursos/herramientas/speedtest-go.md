@@ -69,3 +69,9 @@ Upload: 23.45 Mbit/s
 
 ---
 *Nota: Esta es una herramienta de diagnóstico de red. Es útil y segura de usar en cualquier entorno.*
+
+## Alternativa: speedtest-cli (Python)
+
+Existe también `speedtest-cli`, una implementación en Python que ofrece la misma funcionalidad básica. En i-HakLab, el wrapper `apt` redirige la instalación de `speedtest-cli` a `pip` automáticamente, siendo una alternativa ligera que no requiere binarios Go.
+
+Ambas herramientas son funcionalmente equivalentes. La elección depende de si prefieres un binario único (`speedtest-go`) o una dependencia de Python (`speedtest-cli`). Consulta `speedtest-cli.md` para más detalles.

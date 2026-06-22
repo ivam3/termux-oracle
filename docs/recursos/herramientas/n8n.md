@@ -81,3 +81,15 @@ Una vez que n8n está en ejecución y has accedido a su interfaz web (normalment
 -   **Código Abierto vs. Cloud:** La versión autoalojada ofrece total control y privacidad de datos, ideal para empresas que manejan información sensible. n8n Cloud proporciona una solución gestionada sin preocupaciones de infraestructura.
 -   **Flexibilidad "Low-Code":** La capacidad de añadir nodos "Function" con JavaScript hace que n8n sea extremadamente flexible para casos de uso complejos que requieren lógica personalizada.
 -   **Comunidad y Recursos:** n8n cuenta con una comunidad activa y una excelente documentación, lo que facilita el aprendizaje y la resolución de problemas.
+
+## Instalación mediante los wrappers de i-HakLab
+
+Los wrappers `apt`, `npm` y `pnpm` de i-HakLab automatizan pasos adicionales al instalar n8n, preparando el entorno de Termux para su correcto funcionamiento:
+
+1.  Instala dependencias del sistema: `nodejs-lts`, `libsqlite`, `sqlite`.
+2.  Instala herramientas globales auxiliares: `pm2`, `gyp`, `node-gyp`.
+3.  Crea los directorios de configuración `~/.n8n` y `~/.gyp`.
+4.  Genera `~/.gyp/include.gypi` con una configuración compatible con Android/Termux.
+5.  Ejecuta la configuración posterior mediante `pkg2conf`.
+
+Esto asegura que n8n tenga todas las dependencias de compilación y ejecución necesarias en Termux. Consulta `npm.md` o `pnpm.md` para más detalles sobre el comportamiento de los wrappers.

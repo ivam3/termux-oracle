@@ -60,6 +60,7 @@ Aprovecha al máximo el potencial de tu terminal mediante el uso de scripts y AP
 ### 📖 [7. Glosario & Recursos](./docs/glosario/conceptos.md)
 Diccionario de conceptos técnicos y colecciones de herramientas útiles.
 * [Manual de Uso de i-HakLab y Arsenal de Herramientas](./docs/recursos/herramientas-ihaklab.md)
+  * Incluye referencia de wrappers `apt`/`npm`/`pnpm`, `pkg2conf`, credenciales por defecto y automatizaciones de `4share` y `servers4test`.
 * [Ecosistema de Herramientas de i-HakLab](./docs/recursos/herramientas.md)
 * [Manuales Detallados del Arsenal (Más de 180 herramientas)](./docs/recursos/herramientas/README.md)
 * [Conceptos Clave del Entorno](./docs/glosario/conceptos.md)
@@ -74,6 +75,7 @@ Esta documentación ha sido optimizada semánticamente. Puedes hacerle preguntas
 * *"¿Cómo soluciono el error CANNOT LINK EXECUTABLE en Termux?"*
 * *"¿Cuál es la diferencia entre pkg y apt en i-HakLab?"*
 * *"¿Cómo funcionan los wrappers apt, npm y pnpm de i-HakLab?"*
+* *"¿Cuál es la contraseña por defecto de i-HakLab y cómo funcionan 4share y servers4test?"*
 * *"¿Qué ruta de aprendizaje debo seguir si ya conozco los comandos básicos de Linux?"*
 
 ---
