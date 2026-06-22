@@ -35,6 +35,15 @@ qwen "Refactoriza el módulo de autenticación para usar JWT en lugar de sesione
 qwen "Crea pruebas unitarias con Jest para el archivo src/utils/formatter.js"
 ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install qwen-code
+# O directamente con npm:
+npm install -g @qwen-code/qwen-code
+```
+
 ## Consideraciones Adicionales
 
 *   **Autenticación:** Soporta **Qwen OAuth** para un uso gratuito (con límites diarios) o configuración mediante variables de entorno para APIs compatibles con OpenAI.

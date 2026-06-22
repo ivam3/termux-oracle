@@ -51,6 +51,15 @@ Descripción:
 ...
 ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install twifo-cli
+# O directamente con npm:
+npm install -g twifo-cli
+```
+
 ## Consideraciones Adicionales
 
 *   **Dependencia de la Plataforma:** Esta herramienta depende de la estructura de Twitter/X. Si la plataforma cambia la forma en que se accede a los datos públicos, la herramienta puede dejar de funcionar hasta que sea actualizada.

@@ -71,6 +71,15 @@ La verdadera potencia de Shodan reside en sus filtros. Los filtros se usan con e
     shodan search os:"Windows XP"
     ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install shodan
+# O directamente con pip:
+python3 -m pip install shodan
+```
+
 ## Consideraciones Adicionales
 
 *   **API Key:** El acceso a Shodan (especialmente a través de la CLI y para búsquedas avanzadas) está limitado por tu clave de API. Las cuentas gratuitas tienen limitaciones significativas en el número de resultados y filtros que puedes usar.

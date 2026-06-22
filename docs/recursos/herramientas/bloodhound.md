@@ -52,6 +52,15 @@ Un análisis con BloodHound podría revelar una ruta como esta:
 
 **Conclusión:** Un atacante que comprometa la cuenta de `Bob` puede usar esa posición para tomar el control de `Alice`, y a través de ella, comprometer todo el dominio. Esta es una ruta de ataque que sería muy difícil de ver sin una herramienta como BloodHound.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install bloodhound
+# O directamente con pip:
+python3 -m pip install bloodhound
+```
+
 ## Consideraciones Adicionales
 
 *   **BloodHound Community vs. Enterprise:** Existe una versión gratuita y de código abierto (Community Edition), que es la utilizada por la mayoría de los pentesters. También hay una versión comercial (Enterprise) con características adicionales para la monitorización continua y la remediación, enfocada en los equipos de defensa.

@@ -49,6 +49,15 @@ wfuzz -c -w /usr/share/seclists/Discovery/Web-Content/common.txt --hc 404 http:/
 ```
 *   `--hc 404`: Oculta (`hide`) las respuestas con código (`code`) 404.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install wfuzz
+# O directamente con pip:
+python3 -m pip install wfuzz
+```
+
 ## Consideraciones Adicionales
 
 *   **Flexibilidad Extrema:** La capacidad de poner `FUZZ` en cualquier lugar de una petición (incluso en múltiples lugares con `FUZZ1`, `FUZZ2`, etc.) hace que Wfuzz sea mucho más flexible que otras herramientas como `dirb` o `gobuster`.

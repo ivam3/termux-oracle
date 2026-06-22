@@ -56,6 +56,15 @@ eval "$xXyYzZ"
 ```
 Ambos scripts producirían exactamente la misma salida en la terminal, pero el segundo es mucho más difícil de entender a simple vista.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install bash-obfuscate
+# O directamente con npm:
+npm install -g bash-obfuscate
+```
+
 ## Consideraciones Adicionales
 
 *   **No es cifrado:** La ofuscación no es lo mismo que el cifrado. El código no está protegido por una clave secreta. Con suficiente esfuerzo, un script ofuscado **siempre puede ser desofuscado**.

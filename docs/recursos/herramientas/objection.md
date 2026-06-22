@@ -22,6 +22,13 @@ Objection es una herramienta indispensable en el arsenal de cualquier profesiona
 
 Objection se ejecuta desde la línea de comandos y se conecta a una aplicación móvil que está siendo instrumentada por Frida.
 
+### Instalación mediante i-HakLab
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install objection
+```
+
 ### 1. Instalación de Prerrequisitos
 
 1.  **Instalar Python 3 y `pip`:** Asegúrate de tener Python 3 y su gestor de paquetes `pip` instalados en tu sistema.

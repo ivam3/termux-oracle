@@ -61,6 +61,15 @@ Puedes buscar varios nombres de usuario a la vez.
 sherlock usuario1 usuario2 usuario3
 ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install sherlock
+# O directamente con pip:
+pip install sherlock
+```
+
 ## Consideraciones Adicionales
 
 *   **Falsos Positivos:** Aunque Sherlock es bastante preciso, es posible que encuentre "falsos positivos". Por ejemplo, puede que exista un perfil con el nombre de usuario `johndoe`, pero que no pertenezca a la persona que estás investigando. Siempre es necesaria la verificación manual.

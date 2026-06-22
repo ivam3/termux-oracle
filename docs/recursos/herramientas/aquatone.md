@@ -58,6 +58,15 @@ Dentro de la carpeta de salida, encontrarás:
 *   `headers/`: Archivos de texto con las cabeceras de cada sitio.
 *   `report.html`: El archivo más importante. Ábrelo en tu navegador para ver el informe interactivo con todas las capturas de pantalla y la información recopilada.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a gem):
+apt install aquatone
+# O directamente con gem:
+gem install aquatone
+```
+
 ## Consideraciones Adicionales
 
 *   **Dependencias:** Aquatone depende de **Google Chrome** o **Chromium** para poder tomar las capturas de pantalla. Debe estar instalado en tu sistema.

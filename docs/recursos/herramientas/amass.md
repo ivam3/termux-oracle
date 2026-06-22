@@ -80,6 +80,13 @@ amass enum -d example.com
 amass viz -d3 -o mapa_example.html
 ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab:
+apt install amass
+```
+
 ## Consideraciones Adicionales
 
 *   **Configuración de APIs:** Para obtener los mejores resultados, Amass puede integrarse con docenas de APIs de servicios externos (como VirusTotal, Shodan, etc.). Necesitarás obtener claves de API para estos servicios y configurarlas en el archivo de configuración de Amass.

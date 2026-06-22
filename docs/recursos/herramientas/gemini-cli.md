@@ -35,6 +35,15 @@ cat config.php | gemini "Busca posibles vulnerabilidades en este código"
 gemini "Crea un script de bash para respaldar la carpeta /data/db cada domingo a las 3am"
 ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install gemini-cli
+# O directamente con npm:
+npm install -g @google/gemini-cli
+```
+
 ## Consideraciones Adicionales
 
 *   **API Key:** Requiere una clave de API válida de Google AI Studio configurada en las variables de entorno.

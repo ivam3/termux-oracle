@@ -81,6 +81,15 @@ Este ejemplo redirigirá todo el tráfico de la red a través de tu máquina.
 
 Bettercap también utiliza **caplets** (`.cap`), que son archivos de script para automatizar secuencias de comandos. Esto es extremadamente útil para lanzar ataques complejos con un solo comando.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a gem):
+apt install bettercap
+# O directamente con gem:
+gem install bettercap
+```
+
 ## Consideraciones Adicionales
 
 *   **Escrito en Go:** Bettercap es un binario compilado escrito en Go, lo que lo hace muy rápido, eficiente y portátil, sin dependencias externas complicadas.

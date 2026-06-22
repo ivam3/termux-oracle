@@ -34,7 +34,13 @@ El Metasploit Framework se interactúa principalmente a través de su interfaz d
 
 ### 1. Instalación
 
-Metasploit viene preinstalado en distribuciones como Kali Linux. En otros sistemas operativos (Windows, macOS), se puede descargar e instalar desde el sitio web oficial de Rapid7.
+Metasploit viene preinstalado en distribuciones como Kali Linux. En i-HakLab se instala mediante:
+
+```bash
+apt install metasploit-framework
+```
+
+En otros sistemas operativos (Windows, macOS), se puede descargar e instalar desde el sitio web oficial de Rapid7.
 
 ```bash
 # En Kali Linux, simplemente inicia:

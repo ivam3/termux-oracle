@@ -37,6 +37,13 @@ El funcionamiento de BeEF se basa en el concepto de "hooking" (enganche).
 *   El navegador del usuario ejecuta el `hook.js` y aparece como un nuevo "zombie online" en el panel de control de BeEF del pentester.
 *   El pentester ahora puede ejecutar módulos: tomar una captura de pantalla de la página que la víctima está viendo, robar cookies, redirigir el navegador, etc.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab:
+apt install beef
+```
+
 ## Consideraciones Adicionales
 
 *   **Escrito en Ruby:** BeEF es una aplicación web escrita en Ruby.

@@ -63,6 +63,15 @@ sqlmap -u "http://testphp.vulnweb.com/listproducts.php?cat=1" --os-shell
 ```
 *   `--os-shell`: Intenta obtener una shell interactiva en el servidor.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install sqlmap
+# O directamente con pip:
+python3 -m pip install sqlmap
+```
+
 ## Consideraciones Adicionales
 
 *   **Herramienta Estándar de la Industria:** El conocimiento de sqlmap es absolutamente fundamental para cualquier persona que trabaje en seguridad de aplicaciones web.

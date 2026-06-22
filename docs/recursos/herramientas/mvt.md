@@ -33,6 +33,15 @@ mvt-android download-apks --output output/
 mvt-android check-adb --iocs iocs/
 ```
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install mvt
+# O directamente con pip:
+pip install mvt
+```
+
 ## Consideraciones importantes
 
 No funciona correctamente con USB en Termux

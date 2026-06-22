@@ -141,6 +141,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [mimikatz](./mimikatz.md)
 * [mimocode](./mimocode.md)
 * [minimax-cli](./minimax-cli.md)
+* [mistral-vibe](./mistral-vibe.md)
 * [mvt](./mvt.md)
 
 ### N

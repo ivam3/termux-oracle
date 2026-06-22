@@ -21,6 +21,15 @@ Frida es como un bisturí para un cirujano de software. Permite a los desarrolla
 
 *   **Depuración Avanzada:** Los desarrolladores pueden usar Frida para depurar problemas complejos en sus propias aplicaciones o para entender cómo interactúan las librerías de terceros.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a pip):
+apt install frida
+# O directamente con pip:
+pip install frida-tools
+```
+
 ## ¿Cómo funciona?
 
 Frida tiene una arquitectura cliente-servidor:
