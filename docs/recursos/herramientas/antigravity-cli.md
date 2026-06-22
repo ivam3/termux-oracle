@@ -13,6 +13,13 @@ Antigravity lleva la asistencia de IA a un nivel superior, permitiendo:
 *   **Investigación de Código:** Mapear arquitecturas complejas y entender dependencias sin intervención manual exhaustiva.
 *   **Automatización Avanzada:** Ejecutar flujos de trabajo multi-paso que involucran lectura, escritura y validación de código.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab:
+apt install antigravity-cli
+```
+
 ## ¿Cómo se usa? (Ejemplos básicos)
 
 Antigravity se utiliza principalmente a través de su CLI o su entorno integrado. Aquí algunos ejemplos de su potencia:

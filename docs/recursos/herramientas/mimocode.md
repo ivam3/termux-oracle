@@ -13,6 +13,15 @@ MiMo Code transforma tu entorno de desarrollo en la terminal en una experiencia 
 *   **Evolución e Innovación:** Permite extraer lecciones de sesiones anteriores y destilar flujos exitosos en habilidades reutilizables mediante comandos integrados.
 *   **Flexibilidad de Modelos:** Aunque viene preconfigurado con el modelo Xiaomi MiMo, admite la integración con Claude Code, modelos de OpenAI y otros proveedores compatibles.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install mimocode
+# O directamente con npm:
+npm install -g mimocode
+```
+
 ## ¿Cómo se usa? (Ejemplos básicos)
 
 MiMo Code se ejecuta en la terminal a través del comando `mimo`. A continuación se muestran algunos de los casos de uso más comunes:

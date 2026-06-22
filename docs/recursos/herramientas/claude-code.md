@@ -13,9 +13,18 @@ Claude Code transforma la terminal en un entorno de desarrollo asistido de alto 
 *   **Depuración de Errores:** Analiza trazas de errores de ejecución o compilación y propone soluciones inmediatas.
 *   **Investigación de Código:** Permite realizar preguntas complejas sobre cómo interactúan diferentes partes de un sistema.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install claude-code
+# O directamente con npm:
+npm install -g @anthropic-ai/claude-code
+```
+
 ## ¿Cómo se usa? (Ejemplos básicos)
 
-Una vez instalada mediante NPM (`@anthropic-ai/claude-code`), puedes iniciar la sesión interactiva:
+Una vez instalada, puedes iniciar la sesión interactiva:
 
 **Ejemplo 1: Iniciar Claude Code en el directorio actual**
 

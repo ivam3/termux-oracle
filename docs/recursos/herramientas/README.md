@@ -45,6 +45,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [cloudbunny](./cloudbunny.md)
 * [cloudflared](./cloudflared.md)
 * [code-server](./code-server.md)
+* [code-companion](./code-companion.md)
 * [codex](./codex.md)
 * [converter](./converter.md)
 * [copilot-cli](./copilot-cli.md)

@@ -13,6 +13,13 @@ OpenClaw es ideal para los entusiastas de los juegos retro que desean revivir la
 *   **Código Abierto:** Facilita la preservación del juego y permite a la comunidad aplicar correcciones y mejoras visuales.
 *   **Ligereza:** Al ser una ejecución nativa, consume muy pocos recursos, lo que lo hace perfecto para dispositivos móviles.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab:
+apt install openclaw
+```
+
 ## ¿Cómo se usa? (Ejemplos básicos)
 
 Para que OpenClaw funcione, es imprescindible contar con los archivos de datos originales del juego.

@@ -14,9 +14,18 @@ MiniMax CLI convierte tu terminal en un potente centro creativo multimodal, sien
 *   **Búsqueda en la Web:** Utilizar el motor de búsqueda integrado de MiniMax para obtener información en tiempo real directamente en la terminal.
 *   **Comprensión Visual:** Enviar imágenes para que los modelos de visión de MiniMax las analicen y describan.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install minimax-cli
+# O directamente con npm:
+npm install -g mmx-cli
+```
+
 ## ¿Cómo se usa? (Ejemplos básicos)
 
-Una vez instalada (`npm install -g mmx-cli`) y configurada con tu API Key, puedes usarla de las siguientes maneras:
+Una vez instalada y configurada con tu API Key, puedes usarla de las siguientes maneras:
 
 **Ejemplo 1: Conversar con el modelo de texto**
 

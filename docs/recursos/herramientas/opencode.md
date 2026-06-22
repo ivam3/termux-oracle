@@ -15,9 +15,18 @@ OpenCode CLI destaca por su versatilidad y seguridad en el flujo de trabajo:
 *   **Integración con LSP y Git:** Capacidad nativa para interactuar con servidores de lenguaje (LSP) para detectar errores de sintaxis y gestionar ramas o commits de Git de forma inteligente.
 *   **Seguridad y Control:** Incluye comandos como `/undo` y `/redo` para revertir o reaplicar cambios realizados por la IA de manera instantánea.
 
+## Instalación
+
+```bash
+# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+apt install opencode
+# O directamente con npm:
+npm install -g opencode-ai
+```
+
 ## ¿Cómo se usa? (Ejemplos básicos)
 
-Una vez instalado (vía NPM como `opencode-ai` o mediante su script oficial), puedes usarlo así:
+Una vez instalado, puedes usarlo así:
 
 **Ejemplo 1: Iniciar la interfaz interactiva (TUI)**
 
