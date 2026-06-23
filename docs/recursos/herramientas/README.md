@@ -9,6 +9,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 * [acccheck](./acccheck.md)
 * [adbfastboot](./adbfastboot.md)
+* [adminfiles](./adminfiles.md)
 * [adminpanel](./adminpanel.md)
 * [aircrack-ng](./aircrack-ng.md)
 * [amass](./amass.md)
@@ -27,6 +28,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### B
 
 * [bash-obfuscate](./bash-obfuscate.md)
+* [bat](./bat.md)
 * [beef](./beef.md)
 * [bettercap](./bettercap.md)
 * [binwalk](./binwalk.md)
@@ -44,6 +46,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [claude-code](./claude-code.md)
 * [cloudbunny](./cloudbunny.md)
 * [cloudflared](./cloudflared.md)
+* [cmd](./cmd.md)
 * [code-server](./code-server.md)
 * [code-companion](./code-companion.md)
 * [codex](./codex.md)
@@ -57,10 +60,12 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 * [d-tect](./d-tect.md)
 * [dex2jar](./dex2jar.md)
+* [df](./df.md)
 * [dirb](./dirb.md)
 * [dns2tcp](./dns2tcp.md)
 * [dnsenum](./dnsenum.md)
 * [dos-a-tool](./dos-a-tool.md)
+* [du](./du.md)
 
 ### E
 
@@ -80,6 +85,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [ffmpeg](./ffmpeg.md)
 * [finalrecon](./finalrecon.md)
 * [fish](./fish.md)
+* [fixer](./fixer.md)
 * [frida](./frida.md)
 * [fuzzdb](./fuzzdb.md)
 * [fzf](./fzf.md)
@@ -96,6 +102,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [ghost](./ghost.md)
 * [ghunt](./ghunt.md)
 * [git-filter-repo](./git-filter-repo.md)
+* [gitbrowsering](./gitbrowsering.md)
 * [glow](./glow.md)
 * [gobuster](./gobuster.md)
 * [gophish](./gophish.md)
@@ -131,11 +138,14 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### L
 
 * [localtunnel](./localtunnel.md)
+* [LOCALHOST](./LOCALHOST.md)
+* [lock](./lock.md)
 * [lockphish](./lockphish.md)
 
 ### M
 
 * [maltego](./maltego.md)
+* [mypip](./mypip.md)
 * [mariadb](./mariadb.md)
 * [markdown-viewer](./markdown-viewer.md)
 * [metasploit-framework](./metasploit-framework.md)
@@ -160,10 +170,12 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 * [objection](./objection.md)
 * [octosuite](./octosuite.md)
+* [omf](./omf.md)
 * [open-lovable](./open-lovable.md)
 * [openclaw](./openclaw.md)
 * [opencode](./opencode.md)
 * [openjdk-21](./openjdk-21.md)
+* [openvpn](./openvpn.md)
 * [orbitaldump](./orbitaldump.md)
 * [osintgram](./osintgram.md)
 * [osrframework](./osrframework.md)
@@ -172,13 +184,16 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### P
 
 * [penelope](./penelope.md)
+* [phantom-ps](./phantom-ps.md)
 * [phomber](./phomber.md)
 * [phoneintel](./phoneintel.md)
 * [phonesploit](./phonesploit.md)
 * [phpmyadmin](./phpmyadmin.md)
+* [pm](./pm.md)
 * [pnpm](./pnpm.md)
 * [postgresql](./postgresql.md)
 * [privoxy](./privoxy.md)
+* [proxy](./proxy.md)
 * [proxychains-ng](./proxychains-ng.md)
 * [putty](./putty.md)
 * [pybelt](./pybelt.md)
@@ -192,6 +207,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### R
 
 * [radare2](./radare2.md)
+* [rmcache](./rmcache.md)
 * [ransomux](./ransomux.md)
 * [recon-ng](./recon-ng.md)
 * [recondog](./recondog.md)
@@ -202,6 +218,8 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### S
 
 * [saycheese](./saycheese.md)
+* [serverapache](./serverapache.md)
+* [serverphp](./serverphp.md)
 * [sayhello](./sayhello.md)
 * [scrapy](./scrapy.md)
 * [scrcpy](./scrcpy.md)
@@ -218,6 +236,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [sqlite](./sqlite.md)
 * [sqlite3](./sqlite3.md)
 * [sqliv](./sqliv.md)
+* [sudo](./sudo.md)
 * [sqlmap](./sqlmap.md)
 * [steghide](./steghide.md)
 * [stegsnow](./stegsnow.md)
@@ -227,6 +246,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### T
 
 * [tangalanga](./tangalanga.md)
+* [telegram](./telegram.md)
 * [termux-desktop-xfce](./termux-desktop-xfce.md)
 * [termux-docker-qemu](./termux-docker-qemu.md)
 * [tigervnc](./tigervnc.md)
@@ -267,6 +287,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 ### Y
 
+* [yazi](./yazi.md)
 * [youtubedr](./youtubedr.md)
 * [ytfzf](./ytfzf.md)
 
