@@ -55,6 +55,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [credmap](./credmap.md)
 * [crunch](./crunch.md)
 * [cryptovenom](./cryptovenom.md)
+* [ctx7 (context7)](./ctx7.md)
 
 ### D
 
@@ -93,6 +94,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### G
 
 * [gdb](./gdb.md)
+* [gh](./gh.md)
 * [gemini-cli](./gemini-cli.md)
 * [geo-recon](./geo-recon.md)
 * [getadusers](./getadusers.md)
@@ -103,6 +105,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [ghunt](./ghunt.md)
 * [git-filter-repo](./git-filter-repo.md)
 * [gitbrowsering](./gitbrowsering.md)
+* [glab-cli](./glab-cli.md)
 * [glow](./glow.md)
 * [gobuster](./gobuster.md)
 * [gophish](./gophish.md)
@@ -189,6 +192,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [phoneintel](./phoneintel.md)
 * [phonesploit](./phonesploit.md)
 * [phpmyadmin](./phpmyadmin.md)
+* [playwright-proot](./playwright-proot.md)
 * [pm](./pm.md)
 * [pnpm](./pnpm.md)
 * [postgresql](./postgresql.md)
@@ -207,6 +211,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### R
 
 * [radare2](./radare2.md)
+* [railway-cli](./railway-cli.md)
 * [rmcache](./rmcache.md)
 * [ransomux](./ransomux.md)
 * [recon-ng](./recon-ng.md)
