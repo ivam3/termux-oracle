@@ -72,8 +72,8 @@ bettercap, aquatone
 ### Node.js / npm
 
 ```text
-bash-obfuscate, codex, copilot-cli, gemini-cli, localtunnel,
-minimax-cli, n8n, pnpm, open-lovable, qwen-code, twifo-cli
+bash-obfuscate, codebuff, codex, copilot-cli, freebuff, gemini-cli,
+localtunnel, minimax-cli, n8n, pnpm, open-lovable, qwen-code, twifo-cli
 ```
 
 También normaliza algunos alias antes de instalar:
@@ -85,6 +85,8 @@ También normaliza algunos alias antes de instalar:
 | `codex` | `@mmmbuto/codex-cli-termux@latest` |
 | `copilot-cli` / `github-copilot` | `@github/copilot` |
 | `minimax-cli` | `mmx-cli` |
+| `codebuff` | `codebuff` |
+| `freebuff` | `freebuff` |
 
 > Nota: el wrapper también contiene la normalización interna de `claude-code` a `@anthropic-ai/claude-code`, pero en este flujo debe instalarse preferentemente desde `npm` o `pnpm`.
 

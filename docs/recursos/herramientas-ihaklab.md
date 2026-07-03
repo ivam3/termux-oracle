@@ -420,6 +420,8 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 - **`claude-code`**: herramienta de programación y edición autónoma por CLI, adaptada para entornos glibc/Termux.
 - **`opencode` / `qwen-code`**: utilidades de código y modelos abiertos por CLI.
 - **`minimax-cli` / `mimocode`**: herramientas complementarias para desarrollo asistido por IA.
+- **`codebuff`**: asistente de codificación IA multigente de pago con soporte para cualquier modelo en OpenRouter y SDK para integración programática.
+- **`freebuff`**: versión gratuita y con publicidad de Codebuff, impulsada por modelos open-source (DeepSeek, MiMo, Kimi, MiniMax). Sin suscripción ni configuración.
 - **`codex`, `gemini-cli`, `github-copilot`, `mistralAI`, `ollama`**: herramientas mencionadas en el ecosistema de “vibe coding” sobre Termux.
 
 ### Análisis forense móvil e ingeniería inversa Android
@@ -555,7 +557,7 @@ Cuando detecta que el nombre solicitado no debería instalarse con APT nativo, p
 |---|---|---|
 | Módulo Python | `python3 -m pip install` | `bloodhound`, `frida`, `h8mail`, `hashid`, `holehe`, `mvt`, `objection`, `octosuite`, `orbitaldump`, `osrframework`, `phoneintel`, `scrapy`, `shodan`, `snscrape`, `speedtest-cli`, `sqlmap`, `wfuzz` |
 | Gema Ruby | `gem install` | `bettercap`, `aquatone` |
-| Módulo Node.js | `npm install -g` | `bash-obfuscate`, `codex`, `copilot-cli`, `gemini-cli`, `localtunnel`, `minimax-cli`, `n8n`, `pnpm`, `open-lovable`, `qwen-code`, `twifo-cli` |
+| Módulo Node.js | `npm install -g` | `bash-obfuscate`, `codebuff`, `codex`, `copilot-cli`, `freebuff`, `gemini-cli`, `localtunnel`, `minimax-cli`, `n8n`, `pnpm`, `open-lovable`, `qwen-code`, `twifo-cli` |
 | Paquete normal | `$PREFIX/bin/apt` | cualquier paquete no interceptado |
 
 Normalizaciones internas relevantes:
@@ -568,6 +570,8 @@ Normalizaciones internas relevantes:
 | `codex` | `@mmmbuto/codex-cli-termux@latest` |
 | `copilot-cli` / `github-copilot` | `@github/copilot` |
 | `minimax-cli` | `mmx-cli` |
+| `codebuff` | `codebuff` |
+| `freebuff` | `freebuff` |
 
 Después de una instalación/reinstalación APT normal, el wrapper llama a `pkg2conf` si la herramienta aparece en la lista de paquetes configurables.
 

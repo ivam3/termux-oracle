@@ -74,6 +74,8 @@ Cuando instalas o actualizas ciertas herramientas, el wrapper traduce nombres co
 | `codex` | `@mmmbuto/codex-cli-termux@latest` |
 | `copilot-cli` / `github-copilot` | `@github/copilot` |
 | `minimax-cli` | `mmx-cli` |
+| `codebuff` | `codebuff` |
+| `freebuff` | `freebuff` |
 
 Ejemplo:
 

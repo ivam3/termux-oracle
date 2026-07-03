@@ -95,6 +95,8 @@ Al instalar o actualizar paquetes, el wrapper traduce estos alias al paquete rea
 | `codex` | `@mmmbuto/codex-cli-termux@latest` |
 | `copilot-cli` / `github-copilot` | `@github/copilot` |
 | `minimax-cli` | `mmx-cli` |
+| `codebuff` | `codebuff` |
+| `freebuff` | `freebuff` |
 
 Ejemplo:
 
