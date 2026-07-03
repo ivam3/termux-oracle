@@ -422,6 +422,7 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 - **`minimax-cli` / `mimocode`**: herramientas complementarias para desarrollo asistido por IA.
 - **`codebuff`**: asistente de codificación IA multigente de pago con soporte para cualquier modelo en OpenRouter y SDK para integración programática.
 - **`freebuff`**: versión gratuita y con publicidad de Codebuff, impulsada por modelos open-source (DeepSeek, MiMo, Kimi, MiniMax). Sin suscripción ni configuración.
+- **`openspec`**: framework ligero spec-driven para planificación y revisión por intención compatible con múltiples agentes de codificación IA (Claude Code, Cursor, OpenCode, etc.).
 - **`codex`, `gemini-cli`, `github-copilot`, `mistralAI`, `ollama`**: herramientas mencionadas en el ecosistema de “vibe coding” sobre Termux.
 
 ### Análisis forense móvil e ingeniería inversa Android

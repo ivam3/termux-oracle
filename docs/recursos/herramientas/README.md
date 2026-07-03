@@ -179,6 +179,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [open-lovable](./open-lovable.md)
 * [openclaw](./openclaw.md)
 * [opencode](./opencode.md)
+* [openspec](./openspec.md)
 * [openjdk-21](./openjdk-21.md)
 * [openvpn](./openvpn.md)
 * [orbitaldump](./orbitaldump.md)
