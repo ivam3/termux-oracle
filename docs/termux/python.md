@@ -95,3 +95,5 @@ Instalar librerías de ciencia de datos desde el código fuente puede demorar ho
   pkg install tur-repo -y
   pkg update
   ```
+
+> Para una lista completa de paquetes Python precompilados disponibles en los distintos repositorios de Termux, consulta la sección **[📦 Paquetes Python Precompilados](paquetes.md#-6-paquetes-python-precompilados-para-android-vía-aptpkg)** en la guía de gestión de paquetes.

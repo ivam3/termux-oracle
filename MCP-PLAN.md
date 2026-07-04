@@ -228,9 +228,9 @@ El usuario registra el MCP en su `opencode.json`:
 
 | Tool | Fuente de datos |
 |------|----------------|
-| `get_wrapper_behavior()` | `docs/recursos/herramientas-ihaklab.md` (sección 13) + `docs/recursos/herramientas/apt.md` |
-| `get_default_credentials()` | `docs/recursos/herramientas-ihaklab.md` (sección 14) |
-| `get_api_keys_info()` | `docs/recursos/herramientas-ihaklab.md` (sección 13) + `docs/termux/variables-y-api-keys.md` |
+| `get_wrapper_behavior()` | `docs/recursos/herramientas-ihaklab.md` (sección 14) + `docs/recursos/herramientas/apt.md` |
+| `get_default_credentials()` | `docs/recursos/herramientas-ihaklab.md` (sección 15) |
+| `get_api_keys_info()` | `docs/recursos/herramientas-ihaklab.md` (sección 14) + `docs/termux/variables-y-api-keys.md` |
 | `get_i_haklab_command()` | `docs/recursos/herramientas-ihaklab.md` (secciones 8-10) |
 
 ### Fase 4: Testing y Validación (1 hora)
@@ -256,9 +256,9 @@ python -m pytest tests/ -v
 | `search_docs()` | Índice SQLite FTS5 construido de toda `docs/` |
 | `get_install_method()` | `docs/recursos/herramientas/apt.md` + tabla hardcodeada |
 | `list_tools_by_category()` | `docs/recursos/herramientas/herramientas.md` (sección 12) + directorios |
-| `get_wrapper_behavior()` | `docs/recursos/herramientas-ihaklab.md` §13 + `docs/recursos/herramientas/apt.md` |
-| `get_default_credentials()` | `docs/recursos/herramientas-ihaklab.md` §14 |
-| `get_api_keys_info()` | `docs/recursos/herramientas-ihaklab.md` §13 + `docs/termux/variables-y-api-keys.md` |
+| `get_wrapper_behavior()` | `docs/recursos/herramientas-ihaklab.md` §14 + `docs/recursos/herramientas/apt.md` |
+| `get_default_credentials()` | `docs/recursos/herramientas-ihaklab.md` §15 |
+| `get_api_keys_info()` | `docs/recursos/herramientas-ihaklab.md` §14 + `docs/termux/variables-y-api-keys.md` |
 | `get_i_haklab_command()` | `docs/recursos/herramientas-ihaklab.md` §§8-10 |
 | Recurso herramientas | `docs/recursos/herramientas/README.md` |
 | Recurso manual i-HakLab | `docs/recursos/herramientas-ihaklab.md` |

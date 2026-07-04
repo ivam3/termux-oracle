@@ -26,6 +26,7 @@ Este script es cargado por la shell en cada inicio de sesión y define parámetr
 * **`export CFLAGS=" -Wno-incompatible-function-pointer-types"`**: Desactiva advertencias de compilación estrictas para permitir compilar proyectos de C antiguos usando clang moderno en Android.
 * **`export CC=clang`** y **`export CXX=clang++`**: Establece a Clang/LLVM como los compiladores nativos del entorno.
 * **`export VSCODE_EXTENSIONS_DIR=$HOME/.local/share/code-server/extensions`**: Directorio donde se almacenan y aíslan las extensiones instaladas en el servidor web de desarrollo VS Code (`code-server`).
+* **`export EDITOR=nvim`** y **`export VISUAL=nvim`**: Editor de texto por defecto del sistema. Usado por herramientas como `git`, `opencode` (comando `/editor`), `crontab`, `sudoedit`, etc. No se usa una ruta absoluta porque `nvim` está en el `PATH` del sistema.
 
 ### 🔹 Aliases Útiles Configurados
 
@@ -77,3 +78,24 @@ Al ejecutar el comando, se mostrará un banner con enlaces directos para adquiri
 1. Si ya existe una API key configurada en las variables de i-HakLab (`$APIKEY_<plataforma>`), el script solicita confirmación al usuario antes de sobrescribirla para prevenir pérdidas accidentales.
 2. Solicita la clave vía prompt interactivo (`╰──➤`).
 3. Emplea un reemplazo automático de texto por flujo con `sed` para inyectar la nueva directiva de exportación persistente de la API key directamente dentro del archivo `$HOME/.local/etc/i-Haklab/variables`.
+
+---
+
+## 🛠️ 3. Variables Internas de i-HakLab: El archivo `variables`
+
+Junto a `envvariables`, existe un segundo archivo de variables de entorno en:
+
+```bash
+~/.local/etc/i-HakLab/variables
+```
+
+A diferencia de `envvariables`, que contiene variables modificables por el usuario para configurar su entorno, **`variables` almacena exclusivamente variables de uso interno de los scripts y módulos que componen la suite i-HakLab**, como por ejemplo:
+
+- `APIKEY_<plataforma>` — Claves de API de servicios externos (gestionadas por `i-HakLab setapikey`)
+- Otras variables de estado necesarias para el funcionamiento interno de los módulos de i-HakLab
+
+> [!WARNING]
+> Este archivo **no debe ser editado manualmente por el usuario**. Su contenido es gestionado exclusivamente por los comandos de i-HakLab (`setapikey`, etc.). Modificarlo directamente puede alterar el funcionamiento de la suite y provocar errores difíciles de diagnosticar. Si necesitas cambiar una API key, usa siempre:
+> ```bash
+> i-HakLab setapikey
+> ```

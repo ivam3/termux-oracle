@@ -63,9 +63,28 @@ Diccionario de conceptos técnicos y colecciones de herramientas útiles.
   * Incluye referencia de wrappers `apt`/`npm`/`pnpm`, `pkg2conf`, credenciales por defecto y automatizaciones de `4share` y `servers4test`.
 * [Ecosistema de Herramientas de i-HakLab](./docs/recursos/herramientas.md)
 * [Manuales Detallados del Arsenal (Más de 180 herramientas)](./docs/recursos/herramientas/README.md)
+* [Termux-Packages: repositorio de herramientas adaptadas para Android](./docs/recursos/termux-packages.md)
 * [Conceptos Clave del Entorno](./docs/glosario/conceptos.md)
 * [Enlaces de Interés y Herramientas recomendadas](./docs/recursos/enlaces.md)
 
+
+---
+
+## 🤖 Skill para Agentes de IA (OpenCode, Claude Code, Cline)
+
+Esta documentación también está disponible como **skill** para agentes de IA, permitiendo que OpenCode, Claude Code, Cline y otros agentes comprendan el entorno Termux/Android, sepan configurar i-HakLab y conozcan las 190+ herramientas del arsenal.
+
+### Instalación
+
+**Requisito:** tener el repositorio `ivam3/termux-packages` agregado.
+
+```bash
+apt install termux-oracle-skill
+```
+
+Esto descarga e instala la skill en `~/.agents/skills/termux-oracle/`, lista para ser usada por agentes compatibles.
+
+> La skill se encuentra publicada en [`.agents/skills/termux-oracle/`](./.agents/skills/termux-oracle/) para quien prefiera revisar su contenido o instalarla manualmente.
 
 ---
 

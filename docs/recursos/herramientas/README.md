@@ -7,6 +7,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 ### A
 
+* [termux-packages (repo)](../termux-packages.md)
 * [acccheck](./acccheck.md)
 * [adbfastboot](./adbfastboot.md)
 * [adminfiles](./adminfiles.md)

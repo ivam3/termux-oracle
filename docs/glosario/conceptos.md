@@ -64,7 +64,10 @@ Mecanismo de seguridad de control de acceso obligatorio integrado en el kernel d
 ## 🔑 Gestión del Entorno e Inteligencia Artificial
 
 ### **envvariables**
-Archivo de configuración de Bash ubicado en `~/.local/etc/i-Haklab/envvariables` que declara y exporta todas las variables de entorno fundamentales de la suite i-HakLab. Incluye rutas de compiladores, JDK, Go, NDK de Android y la inyección prioritaria de `~/.local/bin/` al `$PATH` para que los wrappers de `apt` y `npm` de la suite intercepcen los comandos del sistema.
+Archivo de configuración de Bash ubicado en `~/.local/etc/i-Haklab/envvariables` que declara y exporta todas las variables de entorno fundamentales de la suite i-HakLab. Incluye rutas de compiladores, JDK, Go, NDK de Android, `EDITOR`/`VISUAL` (nvim) y la inyección prioritaria de `~/.local/bin/` al `$PATH` para que los wrappers de `apt` y `npm` de la suite intercepcen los comandos del sistema.
+
+### **variables** (archivo interno)
+Archivo ubicado en `~/.local/etc/i-HakLab/variables`. Contiene variables de uso exclusivo de los scripts y módulos internos de i-HakLab, como las claves de API (`APIKEY_<plataforma>`) gestionadas por `i-HakLab setapikey`. **No debe editarse manualmente**, ya que su contenido es gestionado exclusivamente por los comandos de la suite.
 
 ### **setapikey** (`i-HakLab setapikey`)
 Comando interactivo de la suite i-HakLab para registrar y persistir claves de API de proveedores externos de inteligencia artificial y servicios OSINT. Soporta la configuración de llaves para: OpenAI (`chatGPT`), Anthropic (`claude`), DeepSeek, Google (`gemini`), MistralAI, Neural y Numverify (`phonescan`). Las claves se almacenan directamente en el archivo `~/.local/etc/i-Haklab/variables` mediante sustitución automática con `sed`.

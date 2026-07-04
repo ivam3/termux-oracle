@@ -96,3 +96,161 @@ A continuación se detallan algunos de los parches y configuraciones críticas q
 | **`localtunnel`** | Parchea el módulo global reemplazando el archivo `openurl.js` por una versión compatible descargada del servidor para evitar fallos de apertura de enlaces en consola. |
 | **`tor` / `privoxy` / `proxychains-ng`** | Vincula las configuraciones a través de enlaces simbólicos y enlaza Privoxy con el puerto socks5 local de Tor (`127.0.0.1:9050`) para enrutar el tráfico de forma automatizada. |
 
+---
+
+## 📦 5. Repositorios Adicionales de Paquetes
+
+Además del repositorio `stable` oficial de Termux, existen repositorios comunitarios que agregan cientos de herramientas, librerías y adaptaciones para Android:
+
+| Repositorio | Descripción | Instalación |
+|---|---|---|
+| **`termux-x11`** | Paquetes para entornos gráficos X11 en Termux (servidor X, escritorios, GUI toolkit) | `pkg install termux-x11-nightly` |
+| **`tur-repo`** (Termux User Repository) | Repositorio comunitario con paquetes científicos, juegos, y herramientas avanzadas | `pkg install tur-repo` |
+| **`glibc-repo`** | Paquetes compilados contra glibc (en lugar de bionic) para compatibilidad con Linux estándar | `pkg install glibc-repo` |
+| **`root-repo`** | Repositorio root: paquetes experimentales y que requieren permisos elevados | `pkg install root-repo` |
+| **`x11-repo`** | Repositorio de aplicaciones y librerías gráficas X11 | `pkg install x11-repo` |
+
+### Paquetes de infraestructura disponibles
+
+| Paquete | Propósito |
+|---|---|
+| `termux-am`, `termux-am-socket` | Gestión de actividades y servicios de Android |
+| `termux-api`, `termux-api-static` | API de Android desde terminal (cámara, sensores, etc.) |
+| `termux-apt-repo` | Creación de repositorios apt personales |
+| `termux-auth` | Autenticación biométrica y de contraseña |
+| `termux-core`, `termux-core-static` | Librerías base del ecosistema Termux |
+| `termux-create-package` | Empaquetado de paquetes .deb para Termux |
+| `termux-desktop-xfce` | Configura e instala el entorno gráfico XFCE4 para Termux-X11 |
+| `termux-docker-qemu` | Crea una MV con Linux ligero (Alpine) vía QEMU para obtener usuario root real sin proot |
+| `termux-elf-cleaner` | Limpieza de binarios ELF para compatibilidad Android |
+| `termux-exec`, `termux-exec-glibc`, `termux-exec-static` | Soporte de ejecución de scripts shebangs |
+| `termux-gui-bash`, `termux-gui-c`, `termux-gui-package`, `termux-gui-pm` | Bindings de GUI nativa de Termux |
+| `termux-install` | Instalador de paquetes .deb offline |
+| `termux-keyring` | Llaves GPG para verificación de paquetes |
+| `termux-licenses` | Licencias de paquetes Termux |
+| `termux-services` | Gestión de servicios (init.d style) |
+| `termux-tools` | Herramientas base de Termux (termux-info, termux-setup, etc.) |
+| `udocker` | Docker para Termux sin necesidad de root (ejecuta contenedores en espacio de usuario) |
+
+---
+
+## 🐍 6. Paquetes Python Precompilados para Android (vía `apt`/`pkg`)
+
+Muchos módulos de Python requieren compilación en C/C++ que puede fallar en Android o tardar horas. Los siguientes paquetes ya están adaptados (compilados para ARM64/aarch64) y disponibles directamente desde los repositorios de Termux. Al instalarlos con `pkg install`, evitas compilar desde código fuente:
+
+### Repositorio `stable` (oficial Termux)
+
+```
+python-apsw
+python-apt
+python-bcrypt
+python-brotli
+python-cmake
+python-contourpy
+python-cryptography
+python-ensurepip-wheels
+python-greenlet
+python-grpcio
+python-lameenc
+python-libsass
+python-llvmlite
+python-lxml
+python-msgpack
+python-numpy
+python-numpy-static
+python-onnxruntime
+python-pillow
+python-psutil
+python-pyarrow
+python-pycryptodomex
+python-pynvim
+python-pyppmd
+python-ruff
+python-sabyenc3
+python-skia-pathops
+python-static
+python-tflite-runtime
+python-tkinter
+python-tldp
+python-torch
+python-torch-static
+python-torchaudio
+python-torchcodec
+python-torchvision
+python-trash-cli
+python-xcbgen
+python-xlib
+python-yt-dlp
+python2
+python2-static
+```
+
+### Repositorio `tur-repo` / `tur-packages` (comunitario)
+
+```
+python-cairo
+python-fitsio
+python-future
+python-is-python3.7
+python-is-python3.8
+python-is-python3.9
+python-is-python3.10
+python-is-python3.11
+python-kivy
+python-mitmproxy-wireguard
+python-opengl
+python-pandas
+python-polars
+python-polars-runtime-32
+python-polars-runtime-64
+python-polars-runtime-compat
+python-pygame
+python-pywavelets
+python-scikit-image
+python-scipy
+python-scipy-2
+python-scipy-static
+python-seledroid
+python-selenium-is-seledroid
+python-tiktoken
+python-tls-client
+python-tokenizers
+python2-numpy
+python2-numpy-static
+python2-scipy
+
+# Versiones específicas de Python 3
+python3.7, python3.7-static, python3.7-tkinter, python3.7-cross
+python3.8, python3.8-static, python3.8-tkinter, python3.8-cross
+python3.9, python3.9-static, python3.9-tkinter, python3.9-cross
+python3.10, python3.10-static, python3.10-tkinter, python3.10-cross
+python3.11, python3.11-static, python3.11-tkinter, python3.11-cross
+```
+
+### Repositorio `termux-x11` (gráficos)
+
+```
+opencv-python
+python-opencv-python
+python-pyqtwebengine
+python-qscintilla
+python-xapp
+```
+
+### Repositorio `glibc-repo` (compatibilidad Linux)
+
+```
+python-glibc
+python-glibc-static
+python-pip-glibc
+python-py3c-glibc
+python-xcbgen-glibc
+```
+
+> [!TIP]
+> Antes de instalar paquetes de repositorios adicionales, habilítalos con:
+> ```bash
+> pkg install tur-repo x11-repo termux-x11-nightly glibc-repo
+> pkg update
+> ```
+

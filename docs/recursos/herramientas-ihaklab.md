@@ -119,7 +119,121 @@ i-Haklab [OPTION]... [ARG]
 
 ---
 
-## 7. Soporte, comunidad y recursos
+## 7. Estructura de archivos y directorios
+
+i-HakLab instala sus archivos en varias rutas del ecosistema Termux. A continuación se describe el árbol de directorios y la función de cada archivo.
+
+### `~/.local/bin/` — Comandos directos y wrappers
+
+Estos archivos se encuentran en `$PATH` (mediante `~/.local/bin` antepuesto en `PATH`) y se ejecutan escribiendo directamente su nombre en la terminal.
+
+| Archivo | Función |
+|---------|---------|
+| `i-Haklab` | Comando principal de la suite (punto de entrada para todas las opciones) |
+| `apt` | Wrapper que redirige paquetes Python/Node/Ruby a pip/npm/gem en lugar de apt nativo |
+| `npm` | Wrapper que normaliza alias y automatiza instalaciones complejas (n8n, pnpm, open-lovable) |
+| `pnpm` | Wrapper similar a npm pero para pnpm |
+| `adminfiles` | Copia archivos desde almacenamiento interno/externo al directorio de Termux |
+| `cmd` | Gestiona ajustes principales de Android desde Termux |
+| `gitbrowsering` | Busca repositorios en GitHub por CLI |
+| `LOCALHOST` | Muestra la IP actual en LAN |
+| `lock` | Bloquea la pantalla de Termux |
+| `ls` | Wrapper de `ls` con opciones mejoradas |
+| `mypip` | Muestra la IP pública |
+| `openvpn-app` | Abre la aplicación Android de OpenVPN |
+| `phantom-ps` | Cambia el límite de procesos fantasma a `2147483647` |
+| `pm` | Gestor de paquetes de Android |
+| `postgresql` | Inicia, detiene o reinicia PostgreSQL |
+| `proxy` | Ejecuta comandos CLI sobre Tor con proxychains |
+| `rmcache` | Elimina caché de sesión, archivos temporales y paquetes APT residuales |
+| `serverapache` | Inicializa servidor Apache |
+| `serverphp` | Inicializa servidor PHP |
+| `sudo` | Ejecuta comandos o inicia entorno como falso root |
+| `telegram` | Abre la aplicación Android de Telegram |
+| `traductor` | Inicia traductor de línea de comandos |
+
+### `~/.local/etc/i-Haklab/` — Configuración interna de la suite
+
+| Archivo/Carpeta | Función |
+|-----------------|---------|
+| `functions` | Define funciones de shell utilizadas por la suite |
+| `variables` | Variables de uso exclusivo de scripts internos. No editar manualmente. |
+| `envvariables` | Variables de entorno exportadas al inicio de sesión (`PATH`, `DISPLAY`, `EDITOR`, `JAVA_HOME`, `ANDROID_NDK_HOME`, `CC`, `CXX`, etc.) |
+| `listofbooks` | Lista de libros disponibles para descargar vía `i-HakLab show books` |
+| `listoftutorials` | Lista de tutoriales disponibles vía `i-HakLab show tutorials` |
+| `.Ivam3byCinderella` | Archivo cifrado que almacena la contraseña de login de i-HakLab |
+| `banner/` | Banners ASCII mostrados al iniciar sesión (`Ivam3`, `fixer`, `map`, `thanks`, `k-boom`, `IbyC`, `i-Haklab`) |
+| `shodan/usrpasswd.txt` | Credenciales para Shodan |
+| `shodan/query` | Consultas de Shodan |
+| `Tools/Readme/` | Documentación individual de cada herramienta en formato Markdown (190+ archivos) |
+| `Tools/listoftools` | Lista maestra de todas las herramientas disponibles en la suite |
+| `Tools/listofpkg2conf` | Lista de paquetes que activan configuración post-instalación mediante `pkg2conf` |
+
+### `~/.local/etc/fish/` y `~/.local/etc/zsh/` — Configuración de shells
+
+| Archivo | Shell | Función |
+|---------|-------|---------|
+| `fish/config.fish` | Fish | Configuración de la shell Fish (predeterminada de i-HakLab) |
+| `zsh/zshrc` | Zsh | Configuración de la shell Zsh (alternativa) |
+
+### `~/.local/etc/bash/`
+
+| Archivo | Función |
+|---------|---------|
+| `bashrc` | Configuración de la shell Bash (alternativa) |
+
+### `~/.local/libexec/` — Scripts de automatización interna
+
+| Archivo | Función |
+|---------|---------|
+| `pkg2conf` | Orquestador de post-instalación: aplica parches, enlaces simbólicos y configuraciones tras instalar un paquete |
+| `i-Haklab/setshell` | Script que gestiona el cambio entre shells (bash, zsh, fish) |
+
+### `~/` — Archivos de configuración del usuario
+
+| Archivo | Función |
+|---------|---------|
+| `.nanorc` | Configuración del editor Nano con numeración, colores e indentación |
+
+### `~/.config/fish/` — Configuración de Fish shell
+
+| Archivo | Función |
+|---------|---------|
+| `config.fish` | Archivo principal de configuración de Fish |
+| `fish_variables` | Variables persistentes de Fish (universales) |
+| `functions/codec.fish` | Función para codificar/decodificar desde Fish |
+| `functions/fish_greeting.fish` | Mensaje de bienvenida mostrado al abrir Termux |
+| `functions/github.fish` | Función para interactuar con GitHub desde Fish |
+| `functions/unset.fish` | Función para limpiar variables desde Fish |
+
+### `$PREFIX/bin/` — Archivos del sistema Termux
+
+| Archivo | Función |
+|---------|---------|
+| `termux-url-opener` | Script que intercepta URLs compartidas a Termux desde Android |
+| `fixer` | Script de diagnóstico y reparación automática de problemas de Termux |
+
+### `$PREFIX/share/man/man1/`
+
+| Archivo | Función |
+|---------|---------|
+| `i-Haklab.1` | Página de manual (`man i-Haklab`) con sintaxis completa de todos los comandos |
+
+### `~/.local/var/service/www/veno-file-manager/` — Aplicación web incluida
+
+i-HakLab incluye **Veno File Manager** como gestor de archivos web usado por `i-HakLab 4share`. Su estructura incluye:
+
+| Ruta | Función |
+|------|---------|
+| `vfm/` | Aplicación principal del gestor de archivos |
+| `vfm/index.php` | Punto de entrada del gestor |
+| `vfm/vfm-admin/` | Panel de administración (configuración, plugins, traducciones, captcha) |
+| `vfm/uploads/` | Directorio donde se almacenan los archivos subidos |
+| `documentation/` | Documentación e imágenes del gestor |
+
+---
+
+## 8. Soporte, comunidad y recursos
 
 - Chat IRC desde i-HakLab:
 
@@ -135,7 +249,7 @@ i-HakLab weechat
 
 ---
 
-## 8. Opciones de configuración (`Setting Options`)
+## 9. Opciones de configuración (`Setting Options`)
 
 | Comando | Argumentos | Función |
 |---|---:|---|
@@ -174,7 +288,7 @@ i-HakLab show tutorials
 
 ---
 
-## 9. Automatizaciones (`Automatization Options`)
+## 10. Automatizaciones (`Automatization Options`)
 
 | Comando | Argumentos | Función |
 |---|---:|---|
@@ -257,7 +371,7 @@ i-HakLab usbtest /dev/bus/usb/001
 
 ---
 
-## 10. Comandos directos
+## 11. Comandos directos
 
 Estos comandos no requieren el prefijo `i-HakLab`; se ejecutan directamente en la terminal.
 
@@ -292,7 +406,7 @@ Estos comandos no requieren el prefijo `i-HakLab`; se ejecutan directamente en l
 
 ---
 
-## 11. Funciones destacadas del ecosistema
+## 12. Funciones destacadas del ecosistema
 
 ### Información de herramientas
 
@@ -350,7 +464,7 @@ i-HakLab show books
 i-HakLab show tutorials
 ```
 
-Permite explorar libros y tutoriales incluidos para aprender herramientas, shell y uso de Termux.
+Permite explorar libros y tutoriales incluidos para aprender herramientas, shell y uso de Termux. Entre los tutoriales disponibles se encuentra **"termux tips cap 1.1"**, el cual cubre paso a paso la instalación de Termux desde GitHub Actions (rama `build`) y la configuración de los plugins necesarios.
 
 ### Herramientas disponibles e instaladas
 
@@ -409,7 +523,7 @@ El README indica que i-HakLab configura varias herramientas instaladas mediante 
 ---
 
 
-## 12. Arsenal de herramientas incluidas y clasificación técnica
+## 13. Arsenal de herramientas incluidas y clasificación técnica
 
 i-HakLab no solo expone comandos de automatización, también funciona como un **arsenal curado** con manuales y guías de más de 100 herramientas/frameworks integrados en Termux.
 
@@ -465,7 +579,7 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 
 ---
 
-## 13. Configuración del entorno, API keys y wrappers invisibles
+## 14. Configuración del entorno, API keys y wrappers invisibles
 
 La suite i-HakLab instala variables de entorno, aliases y **wrappers invisibles** que cambian el comportamiento de comandos comunes para que los paquetes queden configurados automáticamente dentro del ecosistema.
 
@@ -490,6 +604,7 @@ Define, entre otras cosas:
 - `CC=clang`, `CXX=clang++`, `ANDROID_NDK_HOME`, `ANDROID_API_LEVEL=24`.
 - `TOOLS=$HOME/.local/share`.
 - `VSCODE_EXTENSIONS_DIR=$HOME/.local/share/code-server/extensions`.
+- `EDITOR=nvim` y `VISUAL=nvim`: editor por defecto del sistema. Usado por `git`, `opencode (comando /editor)`, `crontab`, `sudoedit`, etc. Se omite ruta absoluta porque `nvim` está en el `PATH`.
 
 Aliases definidos por el entorno:
 
@@ -523,6 +638,19 @@ funciona como gestor interactivo para guardar claves de servicios externos usado
 | `phonescan` | Numverify / escaneo telefónico | `https://numverify.com/dashboard` |
 
 Este contenido complementa la guía específica de variables y API keys enlazada desde `docs/termux/variables-y-api-keys.md`.
+
+### Archivo `variables` (uso interno de i-HakLab)
+
+Además de `envvariables`, existe el archivo:
+
+```bash
+~/.local/etc/i-HakLab/variables
+```
+
+Este archivo **almacena variables de uso exclusivo de los scripts y módulos internos de i-HakLab**, como las claves de API gestionadas por `i-HakLab setapikey`.
+
+> [!WARNING]
+> **No editar manualmente.** Su contenido es gestionado exclusivamente por los comandos de la suite. Las modificaciones directas pueden romper el funcionamiento de i-HakLab.
 
 ### Inyección de wrappers en `$PATH`
 
@@ -703,7 +831,7 @@ Acciones importantes observadas en `pkg2conf`:
 
 ---
 
-## 14. Credenciales por defecto y servicios activados
+## 15. Credenciales por defecto y servicios activados
 
 ### Login de i-HakLab
 
@@ -808,7 +936,7 @@ Credenciales y datos relevantes observados en los scripts/configuración incluid
 
 ---
 
-## 15. Mapa rápido por caso de uso
+## 16. Mapa rápido por caso de uso
 
 | Necesidad | Comandos principales |
 |---|---|
@@ -829,7 +957,7 @@ Credenciales y datos relevantes observados en los scripts/configuración incluid
 
 ---
 
-## 16. Resumen ejecutivo
+## 17. Resumen ejecutivo
 
 i-HakLab convierte Termux en un laboratorio portátil de ciberseguridad, desarrollo y automatización. Sus pilares son:
 

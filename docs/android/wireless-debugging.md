@@ -8,6 +8,7 @@ La **Depuración Inalámbrica** te permite conectar Termux a dispositivos Androi
 1. Que los dispositivos estén conectados a la **misma red Wi-Fi**.
 2. Haber instalado `android-tools` en Termux (`pkg install android-tools`).
 3. Activar las **Opciones de desarrollador** en el dispositivo (ver la guía de [ADB](./adb.md)).
+4. Para una guía visual detallada de todo el proceso, ejecuta `i-haklab show tutorials` y consulta **"termux tips cap 14"** que cubre paso a paso la configuración de ADB y depuración inalámbrica.
 
 ---
 
