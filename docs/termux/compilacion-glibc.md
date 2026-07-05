@@ -69,6 +69,38 @@ El despliegue de estas herramientas se empaqueta en archivos `.deb` autogestiona
 
 ---
 
+## 📊 Comparativa: Métodos de adaptación para agentes AI
+
+| Aspecto | Nativo glibc (helper.c) ✅ | proot-distro (legacy) | npm/pnpm |
+|---------|---------------------------|----------------------|----------|
+| **Rendimiento** | Máximo (ejecución directa) | Medio (overhead proot) | Medio-alto |
+| **Arquitectura** | Solo aarch64 | Todas (arm, i686, x86_64) | Todas |
+| **Señales/procesos** | Completo | Limitado (proot no pasa todas las syscalls) | Completo |
+| **Integración FS** | Directa con Termux | Aislada en `$PREFIX/var/lib/proot-distro/installed-rootfs/` | Directa |
+| **Latencia arranque** | ~0ms | ~1-3s (inicio proot) | ~100ms |
+| **Helper C** | Sí, compila `*_helper.c` | No | No |
+| **Dependencias** | glibc, clang, python | proot-distro + Alpine/Ubuntu | nodejs |
+| **Caso de uso** | Producción, uso diario | Testing, compatibilidad cruzada | Usuarios sin ivam3 repo |
+
+### Método legacy: proot-distro
+
+Las versiones anteriores de los paquetes (`claude-code`, `opencode`) usaban proot-distro con Alpine Linux:
+
+```bash
+proot-distro install alpine
+proot-distro login alpine -- opencode "$@"
+```
+
+El script wrapper era un simple bash que hacía:
+```bash
+#!/data/data/com.termux/files/usr/bin/bash
+proot-distro login alpine -- /usr/bin/opencode "$@"
+```
+
+**Migración**: Los paquetes actuales (julio 2026+) reemplazaron proot por el helper C + loader glibc. Si actualizas desde una versión anterior, el `postinst` elimina el directorio proot antiguo automáticamente.
+
+---
+
 ## 💡 Impacto en DeepWiki / Asistentes IA
 Gracias a este patrón de documentación, el asistente (DevinAI) comprende que:
 * `claude-code` y `opencode` en i-HakLab **no corren de forma tradicional**, sino que emplean un wrapper en C para aislar `LD_PRELOAD`.

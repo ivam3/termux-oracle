@@ -55,12 +55,15 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | i-HakLab, comandos, wrappers | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md` |
 | Cómo instalar herramienta X | `references/tool-install.md` | `docs/recursos/herramientas/{tool}.md` |
 | Adaptación glibc, binarios rotos | `references/android-limitations.md` | `docs/termux/compilacion-glibc.md` |
-| proot, udocker, docker-qemu | `references/docker-alternatives.md` | `docs/android/bypass-limitaciones.md` |
+| proot, udocker, docker-qemu, proot-distro para agentes AI | `references/docker-alternatives.md` | `docs/android/bypass-limitaciones.md`, `docs/termux/compilacion-glibc.md` |
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
 | Escritorio gráfico, X11, XFCE | `references/termux-setup.md` | `docs/termux/termux-x11.md` |
 | Wrapper apt/npm/pnpm | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md#13` |
+| Ecosistema de agentes AI, config compartida | `references/agent-ecosystem.md` | `docs/recursos/herramientas/{opencode,claude-code,codex,qwen-code,...}.md` |
+| MCP servers en Termux (CodeGraph, TestSprite, Playwright) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
+| Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
 
 ## 4. Conceptos clave inline
@@ -75,14 +78,31 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 - `~/.local/bin/npm`: Normaliza alias (`gemini-cli` → `@google/gemini-cli`), automatiza n8n, pnpm, open-lovable.
 - Post-instalación: `pkg2conf` aplica configuraciones (parches, symlinks, servicios).
 
-### Adaptación glibc
-- Patrón: binario real renombrado `.va39` + loader C que apunta a `$PREFIX/glibc/lib/ld-linux-aarch64.so.1`.
-- Usado por: claude-code, opencode, codebuff, freebuff, mimocode, mistral-vibe.
+### Adaptación glibc (Virtualización Ligera de Entorno)
+Técnica para ejecutar binarios Linux glibc en Termux sin proot, usada por todos los agentes AI nativos.
+
+- **Mecanismo**: binario real renombrado `.va39` + wrapper C (`*_helper.c`) que invoca `$PREFIX/glibc/lib/ld-linux-aarch64.so.1` con `--library-path`.
+- **Por qué no patchelf**: Android/SELinux bloquea `seccomp` al parchear ELFs. La invocación directa del loader evita esto.
+- **Node.js glibc bridge**: OpenClaw usa Node.js estándar en `~/.openclaw-android/node`. Las herramientas npm heredan glibc automáticamente.
+- **Shim `glibc-compat.js`**: carga vía `NODE_OPTIONS`, redirige `process.execPath`, gestiona `LD_PRELOAD`, parchea `os.cpus`/`dns.lookup` para SELinux.
+- **Limitación TCMalloc**: binarios como `agy` (Antigravity CLI) usan `tcmalloc` que requiere 48 bits de espacio virtual. Algunos kernels Android limitan esto causando `Segmentation Fault`.
+- **Usado por**: opencode, claude-code, codebuff, freebuff, mimocode, antigravity-cli, openclaw, mistral-vibe.
 
 ### Docker alternatives
 - `udocker`: contenedores Docker en espacio de usuario (no requiere root).
 - `termux-docker-qemu`: VM Alpine vía QEMU (root real dentro de la VM).
 - `proot`: fake root (reescribe syscalls, limitado).
+
+### MCP Servers en Termux
+Servidores MCP compatibles con agentes AI en Termux:
+
+| Server | Instalación | Nota Android |
+|--------|------------|-------------|
+| **CodeGraph** | `npm install -g @codegraph/codegraph-mcp` | Usar `CODEGRAPH_NO_DAEMON=1` (SELinux bloquea hardlinks para PID) |
+| **Context7** | `npx ctx7@latest` vía opencode.json | MCP remoto, sin issues |
+| **TestSprite** | `npm install -g @testsprite/testsprite-mcp` | Plug-and-play, configurar API key |
+| **Playwright (proot)** | `apt install playwright-proot` | Chromium headless vía proot Ubuntu (aarch64) |
+| **Engram** | `apt install engram` | Memoria persistente para agentes (Go binary) |
 
 ## 5. Reglas de ejecución
 

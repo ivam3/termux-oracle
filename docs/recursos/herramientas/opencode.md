@@ -17,12 +17,49 @@ OpenCode CLI destaca por su versatilidad y seguridad en el flujo de trabajo:
 
 ## Instalación
 
+OpenCode puede instalarse en Termux mediante dos métodos. Se recomienda el método **nativo glibc** por su rendimiento y estabilidad.
+
+### Opción recomendada: Nativo glibc (vía termux-packages)
 ```bash
-# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+# Requiere tener agregado el repositorio ivam3/termux-packages
 apt install opencode
-# O directamente con npm:
-npm install -g opencode-ai
 ```
+Esto descarga el binario oficial de OpenCode (Bun-based) y lo adapta con:
+- **Loader glibc**: ejecuta el binario real mediante `$PREFIX/glibc/lib/ld-linux-aarch64.so.1`
+- **Wrapper C** (`opencode_helper.c`): limpia `LD_PRELOAD`, configura SSL y lanza el cargador
+- **Binario real renombrado**: `$PREFIX/share/opencode/opencode.real`
+
+**Ventajas**: sin Node.js, sin proot, ejecución directa con máximo rendimiento.
+**Dependencias**: `glibc`, `clang`, `python`, `jq`, `curl`, `tar`.
+**Arquitectura**: solo `aarch64`.
+
+### Opción alternativa: Node.js (vía npm/pnpm)
+```bash
+# Mediante el wrapper de i-HakLab (redirige a npm):
+apt install opencode
+# O directamente:
+npm install -g opencode-ai
+pnpm install -g opencode-ai
+```
+Instala OpenCode como paquete Node.js. Funciona sin adaptación glibc pero requiere Node.js runtime.
+
+### Opción alternativa: Bun (vía instalador oficial)
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
+Requiere configuración adicional con `glibc-runner`:
+```bash
+pkg install glibc glibc-runner glibc-repo
+grun ~/.local/share/bun/bin/bun opencode
+```
+
+### Opción legacy: proot-distro (ya no recomendada)
+Antes de la adaptación nativa, opencode se ejecutaba dentro de **Alpine Linux** via proot-distro:
+```bash
+proot-distro install alpine
+proot-distro login alpine -- opencode "$@"
+```
+Este método fue reemplazado por el nativo glibc (helper.c + loader). Los paquetes actuales de ivam3/termux-packages ya no usan proot.
 
 ## ¿Cómo se usa? (Ejemplos básicos)
 

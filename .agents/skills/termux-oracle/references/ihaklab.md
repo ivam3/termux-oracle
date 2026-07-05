@@ -37,6 +37,45 @@ i-Haklab <opción> [argumentos]
 | `4share localtunnel\|localhost.run\|cloudflared` | Servidor para compartir archivos |
 | `phonescan <number>` | Escaneo telefónico |
 
+## AI Agents & Tools
+i-Haklab integra agentes de IA y herramientas asociadas. Ver referencia completa en `references/agent-ecosystem.md`.
+
+**Agentes disponibles** (vía apt/npm):
+`opencode`, `claude-code`, `openclaw`, `qwen-code`, `mistral-vibe`, `antigravity-cli`, `copilot-cli`, `codebuff`, `freebuff`, `mimocode`, `codex-cli`, `minimax-cli`, `open-lovable`, `codecompanion`
+
+**Herramientas asociadas**:
+`engram`, `playwright-proot`, `context7`, `openspec`, `termux-oracle-skill`, `n8n`
+
+### Playwright en proot
+```bash
+apt install playwright-proot
+```
+Instala Chromium headless vía proot Ubuntu (aarch64). Usar con:
+```bash
+playwright-proot <comando>
+```
+
+### TestSprite MCP
+```bash
+npm install -g @testsprite/testsprite-mcp@latest
+```
+Configurar API key en `opencode.json`:
+```json
+{
+  "mcp": {
+    "TestSprite": {
+      "type": "local",
+      "command": ["testsprite-mcp-plugin"],
+      "environment": {
+        "API_KEY": "sk-user-..."
+      },
+      "timeout": 60000,
+      "enabled": true
+    }
+  }
+}
+```
+
 ## Direct Commands (sin prefijo i-Haklab)
 `apt`, `adminfiles`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
 
@@ -77,4 +116,6 @@ i-Haklab show tutorials
 - `apt install <herramienta>` → detecta si es Python/Node/Ruby y redirige a pip/npm/gem
 - Si es nativo, delega a `$PREFIX/bin/apt`
 - Post-instalación ejecuta `pkg2conf` si está en `listofpkg2conf`
-- `npm install <paquete>` → normaliza alias, ejecuta pkg2conf
+- `npm install <paquete>` → normaliza alias (ver tabla en `references/agent-ecosystem.md`), ejecuta pkg2conf
+- `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp` previamente
+- `pnpm` → ejecuta `corepack enable && pnpm setup`

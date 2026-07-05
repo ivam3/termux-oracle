@@ -53,3 +53,46 @@ Fallo común al levantar servidores en segundo plano dentro de Termux.
   termux-change-repo
   ```
   Selecciona la opción principal (Main Repository) y elige una fuente alternativa estable (como los mirrors de *Cloudflare* o *Grimler*).
+
+---
+
+## 6. PulseAudio: `User-configured server at unix:/.../default.pa, refusing to start/autospawn`
+* **Causa:** La variable `PULSE_SERVER` está definida estáticamente en `~/.local/etc/i-Haklab/envvariables`. Al estar definida, PulseAudio cree que ya existe un servidor externo y se niega a iniciar el suyo propio.
+* **Solución:** Eliminar la línea `export PULSE_SERVER=...` de `~/.local/etc/i-Haklab/envvariables`. PulseAudio en Termux autogestiona su socket en `$TMPDIR/`.
+
+---
+
+## 7. MariaDB: `InnoDB: Missing FILE_CHECKPOINT` / `ib_logfile0 was not found`
+* **Causa:** El archivo de log binario de InnoDB falta o está corrupto.
+* **Solución:**
+  ```bash
+  echo " " > $PREFIX/var/lib/mysql/ib_logfile0
+  ```
+
+---
+
+## 8. MariaDB: `ERROR 1396 (HY000): Operation CREATE USER failed for 'root'@'localhost'`
+* **Causa:** El usuario ya existe pero el plugin de autenticación no coincide.
+* **Solución:**
+  ```sql
+  DROP USER root@localhost;
+  FLUSH PRIVILEGES;
+  CREATE USER root@localhost IDENTIFIED BY 'root';
+  ```
+
+---
+
+## 9. MariaDB: Permiso denegado al conectar con contraseña
+* **Causa:** El plugin de autenticación usa `unix_socket` en lugar de `mysql_native_password`.
+* **Solución:**
+  1. `pkill mariadbd`
+  2. `mariadbd-safe --skip-grant-tables &`
+  3. `mariadb -u root` (entra sin contraseña)
+  4. ```sql
+     FLUSH PRIVILEGES;
+     ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+     UPDATE mysql.user SET plugin='mysql_native_password' WHERE User='root';
+     FLUSH PRIVILEGES;
+     EXIT;
+     ```
+  5. `pkill mariadbd` y reinicia normalmente

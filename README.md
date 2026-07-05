@@ -28,6 +28,7 @@ Guías de configuración avanzada, gestión de paquetes y entorno Linux en Andro
 * [Entorno Python](./docs/termux/python.md)
 * [Variables de Entorno y Configuración de API Keys](./docs/termux/variables-y-api-keys.md)
 * [🛠️ Adaptación de Binarios Glibc (`claude-code`, `opencode`)](./docs/termux/compilacion-glibc.md)
+* [🤖 Ecosistema de Agentes AI, Config Compartida y MCP](./docs/../.agents/skills/termux-oracle/references/agent-ecosystem.md)
 * [🔥 Solución de Problemas (Troubleshooting)](./docs/termux/troubleshooting.md)
 
 

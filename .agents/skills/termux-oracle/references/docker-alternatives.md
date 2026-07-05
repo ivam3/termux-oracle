@@ -23,6 +23,31 @@ En Termux no se puede ejecutar Docker directamente (requiere kernel features no 
 - **Uso:** `i-HakLab pd alpine` o `proot-distro install ubuntu`
 - **Limitaciones:** No es root real, ciertas apps no funcionan, rendimiento reducido
 
+### proot-distro para agentes AI (método legacy)
+Antes de la adaptación glibc nativa, los agentes como `opencode` y `claude-code` se ejecutaban dentro de **Alpine Linux** vía `proot-distro`. Aún útil para ciertos casos:
+
+```bash
+# Instalar Alpine en proot
+proot-distro install alpine
+
+# Ejecutar comando dentro de Alpine
+proot-distro login alpine -- <comando>
+
+# Ejecutar opencode dentro de Alpine (método legacy)
+proot-distro login alpine -- opencode
+```
+
+**Ventajas del método legacy proot:**
+- Funciona en cualquier arquitectura (no solo aarch64)
+- No requiere compilar helpers C ni tener glibc
+- Aislamiento completo del entorno Termux
+
+**Desventajas vs glibc nativo:**
+- Rendimiento reducido (overhead de proot)
+- Problemas con señales y procesos hijos
+- No hay integración directa con el sistema de archivos de Termux
+- Mayor latencia en cada invocación
+
 ## Comparativa
 | Característica | udocker | termux-docker-qemu | proot |
 |---------------|---------|-------------------|-------|
