@@ -62,7 +62,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Escritorio gráfico, X11, XFCE | `references/termux-setup.md` | `docs/termux/termux-x11.md` |
 | Wrapper apt/npm/pnpm | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md#13` |
 | Ecosistema de agentes AI, config compartida | `references/agent-ecosystem.md` | `docs/recursos/herramientas/{opencode,claude-code,codex,qwen-code,...}.md` |
-| MCP servers en Termux (CodeGraph, TestSprite, Playwright) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
+| MCP servers en Termux (CodeGraph, TestSprite, Playwright, Smithery) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
 | Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
 
@@ -103,6 +103,7 @@ Servidores MCP compatibles con agentes AI en Termux:
 | **TestSprite** | `npm install -g @testsprite/testsprite-mcp` | Plug-and-play, configurar API key |
 | **Playwright (proot)** | `apt install playwright-proot` | Chromium headless vía proot Ubuntu (aarch64) |
 | **Engram** | `apt install engram` | Memoria persistente para agentes (Go binary) |
+| **Smithery** | `npm install -g @smithery/cli` | Requiere parche `process.platform` (android→linux). Usar endpoint unificado `https://mcp.smithery.run/<namespace>` en opencode |
 
 ## 5. Reglas de ejecución
 

@@ -155,8 +155,61 @@ Este método fue reemplazado por el nativo glibc a partir de julio 2026. Los paq
 | `minimax-cli` | `mmx-cli` | npm |
 | `openspec` | `@fission-ai/openspec` | npm |
 | `context7` | `ctx7` | npx |
+| `smithery` | `@smithery/cli` | npm (pkg2conf parchea `process.platform`) |
 | `n8n` | `n8n` (con pre-requisitos pm2/gyp) | npm |
 | `open-lovable` | Clona `firecrawl/open-lovable` + npm install | git+npm |
+
+## Smithery CLI
+
+[Smithery](https://smithery.ai) es un marketplace y proxy de MCP servers. Permite descubrir, conectar y gestionar MCP servers desde un solo punto.
+
+### Instalación
+
+```bash
+npm install -g @smithery/cli
+smithery auth login     # Autenticación vía navegador
+```
+
+### Parche para Android (Termux)
+
+`process.platform` en Android devuelve `"android"`, pero el bundle ofuscado de Smithery solo contempla `win32`, `darwin` y `linux`. Sin parche, lanza:
+
+```
+TypeError: Cannot destructure property 'baseDir' of 'Ahe[Ohe]' as it is undefined.
+```
+
+**Solución en i-HakLab** (vía `pkg2conf`): el wrapper npm normaliza `@smithery/cli` y el post-instalador aplica:
+
+```bash
+sed -i 's/Ohe=process.platform,{baseDir:/Ohe=process.platform==="android"?"linux":process.platform,{baseDir:/' \
+  "$PREFIX/lib/node_modules/@smithery/cli/dist/index.js"
+termux-fix-shebang "$PREFIX/lib/node_modules/@smithery/cli/dist/index.js"
+```
+
+### Unified Endpoint (Namespace Proxy)
+
+Smithery expone un endpoint unificado por namespace que enruta a **todos los MCP servers conectados** en la cuenta:
+
+```
+https://mcp.smithery.run/<namespace>
+```
+
+Configuración en `opencode.json`:
+
+```json
+{
+  "smithery": {
+    "type": "remote",
+    "url": "https://mcp.smithery.run/ivam3-bh",
+    "enabled": true,
+    "headers": {
+      "X-API-Key": "smry_..."
+    }
+  }
+}
+```
+
+Esto reemplaza la necesidad de configurar cada MCP server individualmente con `--client <agent>`.
 
 ## MCP Servers compatibles con Termux
 
@@ -166,3 +219,4 @@ Este método fue reemplazado por el nativo glibc a partir de julio 2026. Los paq
 | **Context7** | `npx ctx7@latest` | MCP remoto: `url: "https://mcp.context7.com/mcp"` |
 | **TestSprite** | `npm install -g @testsprite/testsprite-mcp` | `command: ["testsprite-mcp-plugin"]` |
 | **Playwright (proot)** | `apt install playwright-proot` | `command: ["playwright-proot"]` |
+| **Smithery (unified)** | `npm install -g @smithery/cli` | MCP remoto: `url: "https://mcp.smithery.run/<namespace>"`, requiere `X-API-Key` header + OAuth |

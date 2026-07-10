@@ -41,10 +41,10 @@ i-Haklab <opción> [argumentos]
 i-Haklab integra agentes de IA y herramientas asociadas. Ver referencia completa en `references/agent-ecosystem.md`.
 
 **Agentes disponibles** (vía apt/npm):
-`opencode`, `claude-code`, `openclaw`, `qwen-code`, `mistral-vibe`, `antigravity-cli`, `copilot-cli`, `codebuff`, `freebuff`, `mimocode`, `codex-cli`, `minimax-cli`, `open-lovable`, `codecompanion`
+`opencode`, `claude-code`, `openclaw`, `qwen-code`, `mistral-vibe`, `antigravity-cli`, `copilot-cli`, `codebuff`, `freebuff`, `mimocode`, `codex-cli`, `minimax-cli`, `open-lovable`, `codecompanion`, `smithery`
 
 **Herramientas asociadas**:
-`engram`, `playwright-proot`, `context7`, `openspec`, `termux-oracle-skill`, `n8n`
+`engram`, `playwright-proot`, `context7`, `openspec`, `termux-oracle-skill`, `n8n`, `smithery`
 
 ### Playwright en proot
 ```bash
@@ -117,5 +117,6 @@ i-Haklab show tutorials
 - Si es nativo, delega a `$PREFIX/bin/apt`
 - Post-instalación ejecuta `pkg2conf` si está en `listofpkg2conf`
 - `npm install <paquete>` → normaliza alias (ver tabla en `references/agent-ecosystem.md`), ejecuta pkg2conf
+- `smithery` (vía `@smithery/cli`) → pkg2conf parchea `process.platform` para Android y arregla shebang
 - `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp` previamente
 - `pnpm` → ejecuta `corepack enable && pnpm setup`

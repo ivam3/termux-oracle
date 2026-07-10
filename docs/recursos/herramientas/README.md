@@ -227,6 +227,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### S
 
 * [saycheese](./saycheese.md)
+* [smithery](./smithery.md)
 * [serverapache](./serverapache.md)
 * [serverphp](./serverphp.md)
 * [sayhello](./sayhello.md)
