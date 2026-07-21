@@ -59,12 +59,18 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
+| OmnIRoute, instalar/configurar | `references/tool-install.md` | `docs/recursos/herramientas/omniroute.md`, `docs/termux/omniroute.md` |
+| Adaptar paquete npm/Node.js para Android (process.platform, addons nativos, playwright mock) | `docs/termux/omniroute.md` | `docs/recursos/herramientas/{tool}.md`, `docs/termux/compilacion-glibc.md` |
+| playwright-core "Unsupported platform", parchear platform checks | `docs/termux/omniroute.md` | `docs/termux/playwright-proot.md` |
 | Escritorio gráfico, X11, XFCE | `references/termux-setup.md` | `docs/termux/termux-x11.md` |
 | Wrapper apt/npm/pnpm | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md#13` |
 | Ecosistema de agentes AI, config compartida | `references/agent-ecosystem.md` | `docs/recursos/herramientas/{opencode,claude-code,codex,qwen-code,...}.md` |
+| Neovim, LSP, editor, vim.lsp.start, Mason, pyright, bashls, lsp-zero | `references/agent-ecosystem.md` | `docs/recursos/herramientas/neovim.md` |
 | MCP servers en Termux (CodeGraph, TestSprite, Playwright, Smithery) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
+| Hermes Agent, instalación, configuración | `references/hermes-agent.md` | `docs/recursos/herramientas/hermes-agent.md` |
 | Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
+| Crear/empaquetar .deb, termux-create-package | `references/tool-install.md` | `docs/termux/paquetes.md#termux-create-package` |
 
 ## 4. Conceptos clave inline
 
@@ -87,6 +93,13 @@ Técnica para ejecutar binarios Linux glibc en Termux sin proot, usada por todos
 - **Shim `glibc-compat.js`**: carga vía `NODE_OPTIONS`, redirige `process.execPath`, gestiona `LD_PRELOAD`, parchea `os.cpus`/`dns.lookup` para SELinux.
 - **Limitación TCMalloc**: binarios como `agy` (Antigravity CLI) usan `tcmalloc` que requiere 48 bits de espacio virtual. Algunos kernels Android limitan esto causando `Segmentation Fault`.
 - **Usado por**: opencode, claude-code, codebuff, freebuff, mimocode, antigravity-cli, openclaw, mistral-vibe.
+
+### termux-create-package
+- Herramienta oficial de Termux para construir paquetes `.deb`.
+- Entrada: manifiesto JSON/YAML + scripts de control (postinst, preinst, prerm, postrm) + archivos del paquete.
+- Salida: archivo `.deb` listo para instalar con `dpkg -i`.
+- Reemplaza `dpkg-deb --build` manejando automáticamente el prefijo `$PREFIX` y la estructura DEBIAN.
+- Docs detalladas en `docs/termux/paquetes.md#termux-create-package`.
 
 ### Docker alternatives
 - `udocker`: contenedores Docker en espacio de usuario (no requiere root).
@@ -117,7 +130,7 @@ Servidores MCP compatibles con agentes AI en Termux:
 
 ## 6. Base de conocimiento adicional
 
-Todo el conocimiento detallado está en `/data/data/com.termux/files/.repositories/termux-oracle/docs/`:
+Todo el conocimiento detallado está en `docs/`:
 - `termux/` — 13 archivos sobre instalación, paquetes, Python, glibc, troubleshooting, etc.
 - `android/` — 5 archivos sobre ADB, Fastboot, seguridad, bypass de limitaciones.
 - `recursos/` — manual i-HakLab (~970 líneas), 190+ tool docs individuales.
