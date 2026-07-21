@@ -69,34 +69,187 @@ Localizado originalmente en `@../i-Haklab/.deb/home/.local/libexec/IbyC-fixer`, 
 
 ---
 
-## 3. `PyMiR`: Solucionador de Módulos Python
+## 3. `PyMiR`: Python Modules Issue Resolver
 
-Cuando un usuario o paquete invoca `fixer PyMiR -t <tipo> -p <versión> -m <módulos>`, el script `PyMiR` toma el control para compilar e inyectar configuraciones específicas a nivel de C/C++:
+Script ubicado en `$PREFIX/libexec/PyMiR`. Se invoca desde `fixer`:
 
-* **Gestión de Compilación Compleja:**
-  * **Jupyter / PyZMQ:** Remueve flags incompatibles del compilador como `-fno-openmp-implicit-rpath` modificando directamente el archivo `_sysconfigdata` interno de Python. Además, utiliza `patchelf` para inyectar enlaces compartidos (`libpython3.11.so` / `libpython3.12.so`) en las extensiones binarias de Cython.
-  * **Pandas / Numpy:** Configura flags de optimización como `CFLAGS="-Wno-deprecated-declarations"` y define librerías matemáticas globales (`MATHLIB="m"`) para evitar fallos de enlazado dinámico.
-  * **Modos de Compilación Soportados (`-t`):**
-    * `BASIC`: Instalación directa sin caché.
-    * `BLAS`: Compilación vinculando directamente la biblioteca OpenBLAS del sistema (`libblas.so`, `liblapack.so`).
-    * `CYTHON`: Fuerza la traducción intermedia a C usando Cython.
-    * `LDFLAGS`: Limita el cargador de Android forzando `/system/lib/libcompiler_rt` para proveer funciones built-in de C.
-    * `RUST`: Habilita temporalmente el compilador de Rust configurando el target móvil de Cargo (`CARGO_BUILD_TARGET`) y remueve el compilador al finalizar para liberar almacenamiento en el dispositivo.
-    * `SOURCE-CODE`: Descarga el código fuente de PyPI, aplica `termux-fix-shebang` recursivamente sobre los instaladores y ejecuta la compilación nativa en caliente.
+```bash
+fixer PyMiR -t <TIPO> -p <2|3> -m <módulo1 módulo2 ...>
+```
+
+### Dependencias automáticas
+
+Al ejecutarse, PyMiR instala automáticamente los siguientes paquetes si no están presentes:
+`tur-repo`, `build-essential`, `python`, `python-pip`, `python2`, `curl`, `tar`, `wget`, `ruby`, `clang`, `make`, `cmake`, `nodejs`, `pkg-config`, `openblas`, `libgmp`, `libmpc`, `libmpc-static`, `libmpfr`, `libtool`, `libxml2`, `libxml2-static`, `libxml2-utils`, `libxslt`, `libxslt-static`, `libsodium`, `libsodium-static`, `libjpeg-turbo`, `libpng`, `libzmq`, `valac`
+
+### Modos de compilación (`-t`)
+
+| Modo | Descripción | Comportamiento interno |
+|------|-------------|----------------------|
+| `BASIC` | Instalación directa | Para `pandas`: exporta `CFLAGS="-Wno-deprecated-declarations -Wno-unreachable-code"` + `MATHLIB="m"`, pre-instala Cython, luego `pkg install python-numpy python-pandas`. Para `pyzmq`: `--install-option="--libzmq=$PREFIX/lib/libzmq.so"`. Auto-remueve `rust` y `~/.cargo` post-instalación |
+| `BLAS` | OpenBLAS del sistema | Exporta `BLAS=$PREFIX/lib/libblas.so`, `LAPACK=$PREFIX/lib/liblapack.so`, `CC=clang`, `CPP=clang++` |
+| `CYTHON` | Traducción intermedia a C | Instala `Cython` primero, exporta `MATHLIB="m"` |
+| `LDFLAGS` | Linker del sistema | Exporta `LDFLAGS="-L/system/lib/ -lm -lcompiler_rt"`, pasa `--global-option="build_ext" --global-option="--disable-jpeg"` |
+| `RUST` | Compilador Rust temporal | Instala `rust`, exporta `RUSTFLAGS="-C lto=no"` y `CARGO_BUILD_TARGET`, post-instalación remueve `rust` y `~/.cargo` |
+| `SC` (SOURCE-CODE) | Código fuente PyPI | Descarga `.zip` desde PyPI, extrae, ejecuta `termux-fix-shebang` recursivo en todos los archivos, `python setup.py install` |
+| `S` (SODIUM) | Sodium decryptor | Exporta `SODIUM_INSTALL=system`, instala con `--no-binary :all:` |
+
+### Módulos con instalación vía `apt` (auto-detectados)
+
+Cuando el nombre del módulo coincide con alguno de estos, PyMiR redirige a `pkg install` en lugar de `pip install`:
+
+| Módulo | Paquete apt |
+|---------|-------------|
+| `apsw` | `python-apsw` |
+| `apt` | `python-apt` |
+| `bcrypt` | `python-bcrypt` |
+| `contourpy` | `python-contourpy` |
+| `cryptography` | `python-cryptography` |
+| `numpy` | `python-numpy` |
+| `pillow` | `python-pillow` |
+| `tkinter` | `python-tkinter` |
+| `tldp` | `python-tldp` |
+| `xcbgen` | `python-xcbgen` |
+| `opencv` | `opencv-python` |
+| `scipy` | `python-scipy` o `python2-scipy` (usa repositorio its-pointless) |
+| `electrum` | `electrum` (apt directo) |
+| `asciinema` | `asciinema` (apt directo) |
+| `matplotlib` | `matplotlib` (apt directo) |
+| `pandas` | `python-pandas` (apt directo) |
+
+### Módulos especiales
+
+**`turtle`:**
+PyMiR descarga un `tar.gz` desde el repositorio i-HakLab, aplica un `sed` para corregir sintaxis Python 2→3 en `setup.py` (`except ValueError, ve:` → `except (ValueError, ve):`) y ejecuta `pip install -e`.
+
+**`jupyter`:**
+1. Localiza `_sysconfigdata_*.py` en `$LIBPY`
+2. Instala `clang`, `binutils`, `maturin`, `pyzmq`, `patchelf`
+3. Aplica `sed -i 's|-fno-openmp-implicit-rpath||g'` en `_sysconfigdata.py`
+4. Instala `jupyter` vía pip
+5. Ejecuta `patchelf --add-needed libpython3.11.so` sobre `_zmq.cpython-311.so`
+6. Instala `matplotlib` vía apt
+7. Purga `rust`
+
+### Ejemplos
+
+```bash
+# Instalar pandas en modo BASIC con Python 3
+fixer PyMiR -t BASIC -p 3 -m pandas
+
+# Compilar numpy con OpenBLAS
+fixer PyMiR -t BLAS -p 3 -m numpy
+
+# Varios módulos con Rust
+fixer PyMiR -t RUST -p 3 -m cryptography bcrypt
+
+# Instalar Jupyter completo
+fixer PyMiR -t BASIC -p 3 -m jupyter
+
+# Forzar compilación desde código fuente
+fixer PyMiR -t SC -p 3 -m mymodule
+
+# Usar sodium decryptor con Python 2
+fixer PyMiR -t S -p 2 -m colorama requests
+```
 
 ---
 
-## 4. `RuGiR`: Solucionador de Gemas Ruby
+## 4. `RuGiR`: Ruby Gems Issue Resolver
 
-El script `RuGiR` (localizado en `@../i-Haklab/.deb/home/.local/libexec/RuGiR`) corrige incompatibilidades en el ecosistema de Ruby:
+Script ubicado en `$PREFIX/libexec/RuGiR`. Se invoca desde `fixer` y presenta un menú interactivo con 7 opciones:
 
-* **Error de Enlazado de `bigdecimal.so` en Metasploit:**
-  * **Causa:** Metasploit en Termux suele crashear al no poder cargar la librería compartida de BigDecimal (`CANNOT LINK EXECUTABLE "ruby"`).
-  * **Solución `RuGiR`:** Parchea dinámicamente el wrapper de arranque `/data/data/com.termux/files/usr/bin/msfconsole` forzando la inyección de la librería BigDecimal compilada en la variable de entorno `LD_PRELOAD`:
-    ```bash
-    export LD_PRELOAD="${BIGDECIMAL_PATH}/bigdecimal.so:$LD_PRELOAD"
-    ```
-* **Compilación de Gemas Nativas (`grpc`, `xslt`, `nokogiri`):**
-  * Configura bundler para forzar el uso de librerías del sistema (`bundle config build.<gem> --using-system-libraries`) y ejecuta `gem pristine` para recompilar las cabeceras nativas contra el entorno NDK de Android.
-* **Error de Cifrado OpenSSL (`OpenSSL::Cipher::CipherError`):**
-  * Parchea en caliente los archivos internos de gemas de comunicación (como `hrr_rb_ssh`) desactivando algoritmos incompatibles con las políticas criptográficas restrictivas de Android.
+```bash
+fixer RuGiR
+```
+
+### Opciones del menú interactivo
+
+#### Opción 1 — MSFCONSOLE: BigDecimal linking para Metasploit
+**Causa:** Metasploit crashea con `CANNOT LINK EXECUTABLE "ruby"` — `bigdecimal.so` no se encuentra.
+
+**Solución:** Re-genera `$PREFIX/bin/msfconsole` con:
+- `LD_PRELOAD` apuntando a `bigdecimal.so` detectado automáticamente en `$PREFIX/lib/ruby/<version>/`
+- Auto-arranque de PostgreSQL: `initdb`, `pg_ctl start`, `createuser msf`, `createdb msf_database`
+- Enlace simbólico `msfconsole → msfvenom`
+
+```bash
+export LD_PRELOAD="${BIGDECIMAL}:\$LD_PRELOAD"
+if [ ! -d "$PREFIX/var/lib/postgresql" ]; then
+    mkdir -p "$PREFIX/var/lib/postgresql"
+    initdb "${PREFIX}/var/lib/postgresql"
+fi
+if ! pg_ctl -D "${PREFIX}/var/lib/postgresql" status > /dev/null 2>&1; then
+    pg_ctl -D "${PREFIX}/var/lib/postgresql" start --silent
+fi
+```
+
+#### Opción 2 — GRPC.GEMSPEC: Limpieza de paquetes
+**Causa:** Error al parsear Gemfile por dependencias corruptas.
+
+**Solución:** Ejecuta limpieza completa del gestor de paquetes:
+```bash
+pkg clean && pkg autoclean && pkg autoremove
+pkg update --fix-missing && pkg --configure -a
+pkg upgrade && pkg install clang
+```
+
+#### Opción 3 — GEMS: Instalación de gemas faltantes
+**Causa:** `Could not find <gem> in any of the sources`.
+
+**Solución interactiva:** Solicita nombre de la gema, versión y ruta del Gemfile, luego:
+1. `gem install bundler`
+2. `gem install <gema> -v "<version>" -- --using-system-libraries`
+3. `bundle config build.<gema> --using-system-libraries`
+4. Genera `Gemfile.local` con la ruta de extensión
+5. Elimina `rbnacl` de `Gemfile.lock`
+6. `bundle install --gemfile Gemfile.local && bundle update <gema> --full-index`
+
+#### Opción 4 — GEMS: Mismatch de versión libxslt
+**Causa:** Gema compilada contra libxslt X.X.X pero dinámicamente cargando Y.Y.Y.
+
+**Solución interactiva:** Solicita nombre de la gema y método de instalación (bundler o gem), luego ejecuta:
+- `bundle exec gem pristine <gema>` o `gem pristine <gema>`
+
+#### Opción 5 — BIGDECIMAL: Compatibilidad de arquitectura
+**Causa:** La gema bigdecimal se compiló para una arquitectura incompatible.
+
+**Solución:** Descarga y ejecuta script remoto de reparación:
+```bash
+curl -Ls https://github.com/ivam3/i-Haklab/raw/master/.set/fix-tools/fixbigdecimal | bash
+```
+
+#### Opción 6 — BUNDLER: Mismatch de versión
+**Causa:** `You have already activated bundler X.X.X, but your Gemfile requires bundler Y.Y.Y`.
+
+**Solución interactiva:** Solicita versión antigua y nueva, luego:
+1. `gem install bundler:<new_version>`
+2. Elimina `$PREFIX/lib/ruby/gems/<version>/specifications/default/bundler-<old_version>.gemspec`
+
+#### Opción 7 — MSFCONSOLE: OpenSSL::Cipher::CipherError
+**Causa:** Algoritmos de cifrado incompatibles con las políticas criptográficas de Android en la gema `hrr_rb_ssh`.
+
+**Solución:** Parchea archivos de `hrr_rb_ssh-0.4.2` comentando líneas con `sed`:
+```bash
+GEMPATH=$PREFIX/lib/ruby/gems/<version>/gems/hrr_rb_ssh-0.4.2/lib/hrr_rb_ssh/transport
+sed -i '13,15 {s/^/#/}' $GEMPATH/encryption_algorithm/functionable.rb
+for i in 256 384 521; do
+    sed -i '14 {s/^/#/}' $GEMPATH/server_host_key_algorithm/ecdsa_sha2_nistp$i.rb
+done
+```
+
+### Ejemplos
+
+```bash
+# Reparar msfconsole con bigdecimal + PostgreSQL
+fixer RuGiR → opción 1
+
+# Limpiar entorno de gemas corruptas
+fixer RuGiR → opción 2
+
+# Instalar gema faltante con soporte nativo
+fixer RuGiR → opción 3 → nokogiri
+
+# Corregir OpenSSL en hrr_rb_ssh
+fixer RuGiR → opción 7
+```

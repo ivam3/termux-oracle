@@ -6,7 +6,7 @@ Mapa de herramientas → método de instalación exacto en Termux.
 ```bash
 pkg install nmap amass metasploit-framework beef openclaw antigravity-cli
 pkg install apktool apksigner dex2jar axmlprinter2 xml2axml
-pkg install mariadb postgresql apache2 phpmyadmin
+pkg install mariadb postgresql apache2 phpmyadmin omniroute  # mariadb: ver references/mariadb.md — omniroute: ver docs/termux/omniroute.md
 pkg install tor privoxy proxychains-ng
 pkg install termux-desktop-xfce termux-docker-qemu udocker
 pkg install code-server neovim tmux yazi

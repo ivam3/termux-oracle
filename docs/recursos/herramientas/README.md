@@ -118,6 +118,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [h8mail](./h8mail.md)
 * [hakku-framework](./hakku-framework.md)
 * [hashcat](./hashcat.md)
+* [hermes-agent](./hermes-agent.md)
 * [hasher](./hasher.md)
 * [hashid](./hashid.md)
 * [hatcloud](./hatcloud.md)

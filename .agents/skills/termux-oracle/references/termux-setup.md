@@ -5,6 +5,9 @@
 - **Recomendado:** GitHub Actions → `termux/termux-app` → rama `build` → Artifacts → `app-arm64-v8a-debug.apk`
 - **Alternativa:** F-Droid
 - **CRÍTICO:** NO mezclar fuentes (todas las apps desde GitHub o todas desde F-Droid)
+  - GitHub + F-Droid = error de firma, app se cierra al abrir
+  - GitHub + Play Store = incompatibilidad de versiones
+  - F-Droid + Play Store = conflictos de permisos, crashes aleatorios
 
 ## Plugins de Termux (misma fuente que la app principal)
 | Plugin | Repositorio | Package apt |
@@ -13,6 +16,17 @@
 | Termux:X11 | termux/termux-x11 | `termux-x11-nightly` |
 | Termux:Float | termux/termux-float | — |
 | Termux:Styling | termux/termux-styling | — |
+
+## Tutorial visual
+```bash
+i-haklab show tutorials
+```
+Incluye "termux tips cap 1.1" (instalación desde GitHub) y "termux tips cap 14" (ADB).
+
+## Requerimientos mínimos
+- Android 7.0 (Nougat) o superior
+- 2 GB de espacio libre
+- Conexión a Internet estable
 
 ## Comandos iniciales
 ```bash

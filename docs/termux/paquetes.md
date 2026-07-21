@@ -134,6 +134,104 @@ Además del repositorio `stable` oficial de Termux, existen repositorios comunit
 
 ---
 
+### `termux-create-package` — Creación de paquetes .deb
+
+`termux-create-package` es la herramienta oficial de Termux para construir paquetes `.deb` compatibles con el ecosistema. Reemplaza el uso directo de `dpkg-deb --build` al manejar automáticamente el prefijo de instalación, la estructura DEBIAN y la compresión.
+
+**Instalación:**
+```bash
+pkg install termux-create-package
+```
+
+**Uso básico:**
+```bash
+termux-create-package [opciones] manifiesto.json
+```
+
+**Opciones:**
+
+| Opción | Descripción |
+|---|---|
+| `manifiesto` | Archivo YAML o JSON con la descripción del paquete (requerido) |
+| `--control-files-dir DIR` | Directorio con scripts de control (postinst, preinst, prerm, postrm). Default: directorio actual |
+| `--deb-dir DIR` | Directorio donde crear el `.deb`. Default: directorio actual |
+| `--deb-name NOMBRE` | Nombre del archivo `.deb`. Default: `{Package}_{Version}_{Architecture}.deb` |
+| `--files-dir DIR` | Directorio con los archivos del paquete. Default: relativo al directorio actual |
+| `--prefix PREFIX` | Prefijo de instalación en el sistema destino. Default: `$PREFIX` |
+| `--pkg-arch ARQ` | Arquitectura del paquete. Default: del manifiesto |
+| `--pkg-version VER` | Versión del paquete. Default: del manifiesto |
+| `--yaml` | Forzar interpretación del manifiesto como YAML |
+| `-v` | Verbosidad (`-v` = INFO, `-vv` = DEBUG) |
+
+**Estructura del manifiesto (JSON):**
+```json
+{
+  "name": "mi-paquete",
+  "version": "1.0.0-1",
+  "arch": "all",
+  "maintainer": "Nombre <email>",
+  "depends": ["python", "git"],
+  "suggests": [],
+  "description": "Descripción del paquete",
+  "files": {
+    "script.sh": "bin/script.sh"
+  }
+}
+```
+
+**Estructura de directorios esperada:**
+```
+mi-paquete/
+├── manifiesto.json         # Manifiesto del paquete
+├── postinst                # Script post-instalación (opcional)
+├── preinst                 # Script pre-instalación (opcional)
+├── prerm                   # Script pre-remoción (opcional)
+├── postrm                  # Script post-remoción (opcional)
+└── script.sh               # Archivo que se empaqueta
+```
+
+**Ejemplo completo:**
+```bash
+mkdir -p ~/proyectos/mi-paquete
+cd ~/proyectos/mi-paquete
+
+# Crear el script que queremos empaquetar
+cat > saludo.sh << 'EOF'
+#!/data/data/com.termux/files/usr/bin/bash
+echo "¡Hola desde mi paquete!"
+EOF
+chmod +x saludo.sh
+
+# Crear el manifiesto (mapea saludo.sh → bin/saludo.sh en $PREFIX)
+cat > manifiesto.json << 'EOF'
+{
+  "name": "mi-paquete",
+  "version": "1.0.0-1",
+  "arch": "all",
+  "maintainer": "Tu Nombre <email@ejemplo.com>",
+  "depends": ["bash"],
+  "description": "Paquete de ejemplo"
+}
+EOF
+
+# Construir el .deb (--files-dir . busca saludo.sh en el dir actual)
+termux-create-package --files-dir . manifiesto.json
+
+# Inspeccionar el resultado
+dpkg-deb --info mi-paquete_1.0.0-1_all.deb
+dpkg-deb --contents mi-paquete_1.0.0-1_all.deb
+```
+
+**Notas importantes:**
+- `files` en el manifiesto mapea `"ruta/en/origen"` → `"ruta/relativa/a/\$PREFIX"`. No incluyas el prefijo en la ruta destino.
+- Los scripts de control (`postinst`, `preinst`, `prerm`, `postrm`) deben tener shebang (`#!/data/data/com.termux/files/usr/bin/bash`) y permisos de ejecución.
+- Si `--control-files-dir` no se especifica, busca los scripts en el directorio actual.
+- Si `--files-dir` no se especifica, las rutas en `files` son relativas al directorio actual.
+- Usar `--deb-dir` para organizar la salida en un directorio separado.
+- Para inspeccionar un `.deb` existente: `dpkg-deb --info paquete.deb` y `dpkg-deb --contents paquete.deb`.
+
+---
+
 ## 🐍 6. Paquetes Python Precompilados para Android (vía `apt`/`pkg`)
 
 Muchos módulos de Python requieren compilación en C/C++ que puede fallar en Android o tardar horas. Los siguientes paquetes ya están adaptados (compilados para ARM64/aarch64) y disponibles directamente desde los repositorios de Termux. Al instalarlos con `pkg install`, evitas compilar desde código fuente:
