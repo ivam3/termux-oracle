@@ -44,7 +44,7 @@ i-Haklab integra agentes de IA y herramientas asociadas. Ver referencia completa
 `opencode`, `claude-code`, `openclaw`, `qwen-code`, `mistral-vibe`, `antigravity-cli`, `copilot-cli`, `codebuff`, `freebuff`, `mimocode`, `codex-cli`, `minimax-cli`, `open-lovable`, `codecompanion`, `smithery`
 
 **Herramientas asociadas**:
-`engram`, `playwright-proot`, `context7`, `openspec`, `termux-oracle-skill`, `n8n`, `smithery`
+`engram`, `omniroute`, `playwright-proot`, `context7`, `openspec`, `termux-oracle-skill`, `n8n`, `smithery`
 
 ### Playwright en proot
 ```bash

@@ -84,15 +84,47 @@ Fallo común al levantar servidores en segundo plano dentro de Termux.
 
 ## 9. MariaDB: Permiso denegado al conectar con contraseña
 * **Causa:** El plugin de autenticación usa `unix_socket` en lugar de `mysql_native_password`.
-* **Solución:**
-  1. `pkill mariadbd`
-  2. `mariadbd-safe --skip-grant-tables &`
-  3. `mariadb -u root` (entra sin contraseña)
-  4. ```sql
-     FLUSH PRIVILEGES;
-     ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
-     UPDATE mysql.user SET plugin='mysql_native_password' WHERE User='root';
-     FLUSH PRIVILEGES;
-     EXIT;
-     ```
-  5. `pkill mariadbd` y reinicia normalmente
+  MariaDB en Termux instala por defecto `unix_socket` como plugin de autenticación para `root`,
+  lo que significa que solo puedes entrar sin contraseña desde el mismo usuario del sistema.
+  Al intentar conectar con `-p` (contraseña), el servidor rechaza el acceso.
+
+* **Solución paso a paso:**
+
+  **1. Detén el proceso actual de MariaDB**
+  ```bash
+  pkill mariadbd
+  ```
+
+  **2. Inicia MariaDB en modo seguro**
+  Esto salta la verificación de tablas de privilegios y permite entrar sin autenticación:
+  ```bash
+  mariadbd-safe --skip-grant-tables &
+  ```
+  Espera unos segundos a que termine de cargar.
+
+  **3. Entra a la consola de MariaDB sin contraseña**
+  ```bash
+  mariadb -u root
+  ```
+
+  **4. Cambia el plugin y establece una contraseña**
+  Dentro de MariaDB, ejecuta estos comandos para cambiar el plugin a `mysql_native_password`
+  y asignar la contraseña deseada (ej: `root`):
+  ```sql
+  FLUSH PRIVILEGES;
+  ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';
+  UPDATE mysql.user SET plugin='mysql_native_password' WHERE User='root';
+  FLUSH PRIVILEGES;
+  EXIT;
+  ```
+
+  **5. Reinicia MariaDB normalmente**
+  ```bash
+  pkill mariadbd
+  mariadbd-safe &
+  ```
+
+  **6. Prueba final**
+  ```bash
+  mariadb -u root -proot -e "SELECT user, host FROM mysql.user;"
+  ```

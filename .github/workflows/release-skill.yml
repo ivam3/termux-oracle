@@ -1,0 +1,31 @@
+name: Package and Release Skill
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare skill package
+        run: |
+          mkdir -p package/termux-oracle
+          # Copiar el contenido de la skill (archivos, scripts, referencias)
+          cp -r .agents/skills/termux-oracle/* package/termux-oracle/
+          # Copiar la carpeta docs para que los enlaces relativos funcionen
+          cp -r docs package/termux-oracle/
+          
+          # Crear el tarball
+          cd package
+          tar -czvf ../termux-oracle-skill.tar.gz termux-oracle/
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: termux-oracle-skill.tar.gz
