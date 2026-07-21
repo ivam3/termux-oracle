@@ -1,6 +1,12 @@
 name: Package and Release Skill
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   release:
     types: [published]
 
@@ -25,7 +31,16 @@ jobs:
           cd package
           tar -czvf ../termux-oracle-skill.tar.gz termux-oracle/
 
-      - name: Upload Release Asset
+      - name: Upload Release Asset (Release Event)
+        if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
+          files: termux-oracle-skill.tar.gz
+
+      - name: Upload Release Asset (Push to main - Continuous Release)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Termux-Oracle Skill (Latest)"
           files: termux-oracle-skill.tar.gz
