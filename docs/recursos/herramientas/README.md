@@ -141,6 +141,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### K
 
 * [kerbrute](./kerbrute.md)
+* [kimi-code](./kimi-code.md)
 
 ### L
 
