@@ -16,6 +16,18 @@ En Termux no se puede ejecutar Docker directamente (requiere kernel features no 
 - **Cómo funciona:** Emula la arquitectura del procesador con QEMU, ejecuta Alpine Linux
 - **Docker dentro:** Una vez dentro de la VM Alpine, puedes instalar Docker real
 - **Uso:** `termux-docker-qemu` automatiza la creación e inicio de la VM
+- **Modo gráfico X11:**
+  - `termux-docker-qemu <os> x11 sdl` — arranca con termux-x11 + xfwm4 + VirtIO-GPU 3D (virgl), con resolución dinámica.
+  - `termux-docker-qemu <os> x11 tcp` — modo ultra ligero vía `socat` TCP:6000 -> `/tmp/.X11-unix/X0`. QEMU en `-nographic`, envía comandos X11 directo al host (ver `references/termux-x11.md`).
+
+## proroot (reemplazo directo de proot — sin ptrace)
+- **Package:** `pkg install proroot` (desde ivam3/termux-packages)
+- **Qué es:** Rootless Linux runtime. Usa LD_PRELOAD + parcheo ELF en vez de ptrace
+- **Cómo funciona:** Intercepta syscalls dentro del mismo proceso (sin cambios de contexto)
+- **Uso:** `proroot /bin/sh -c 'comando'` (auto-detecta rootfs Ubuntu 24.04)
+- **Rootfs:** Ubuntu 24.04 (glibc 2.39) en `$PREFIX/var/lib/proot-distro/containers/proroot/rootfs/`
+- **Ventaja:** Rendimiento casi nativo. Node.js, Chromium headless, Python glibc sin cuello de botella
+- **Limitaciones:** Solo arm64. glibc > 2.39 no soportado. Código cerrado.
 
 ## proot (ligero pero limitado)
 - **Qué es:** Reescribe syscalls para simular un directorio raíz falso
@@ -49,11 +61,15 @@ proot-distro login alpine -- opencode
 - Mayor latencia en cada invocación
 
 ## Comparativa
-| Característica | udocker | termux-docker-qemu | proot |
-|---------------|---------|-------------------|-------|
-| Root real | ❌ | ✅ (dentro de la VM) | ❌ |
-| Contenedores Docker | ✅ | ✅ (dentro de la VM) | ❌ |
-| Rendimiento | Alto | Bajo (emulación QEMU) | Medio |
-| Instalación | `pkg install udocker` | `pkg install termux-docker-qemu` | Nativo |
-| Complejidad | Baja | Media | Baja |
-| Uso recomendado | Contenedores ligeros | Tareas que requieren root real | Entorno Linux básico |
+| Característica | udocker | termux-docker-qemu | proot | proroot |
+|---------------|---------|-------------------|-------|---------|
+| Root real | ❌ | ✅ (dentro de la VM) | ❌ | ❌ |
+| Contenedores Docker | ✅ | ✅ (dentro de la VM) | ❌ | ❌ |
+| Rendimiento | Alto | Bajo (emulación QEMU) | Medio | Alto (casi nativo) |
+| Overhead por syscall | Variable | Alto | 2 cambios contexto | 0 (en-proceso) |
+| Arquitecturas | Todas | Todas | Todas | Solo arm64 |
+| Node.js/Chromium | Limitado | Lento | Lento | ✅ Fluido |
+| Instalación | `pkg install udocker` | `pkg install termux-docker-qemu` | Nativo | `pkg install proroot` |
+| Complejidad | Baja | Media | Baja | Baja |
+| Código fuente | Abierto | Abierto | Abierto (GPL) | Cerrado (binarios gratis) |
+| Uso recomendado | Contenedores ligeros | Tareas que requieren root real | Entorno Linux básico | Entorno Linux glibc pesado (Node, Chromium, Python) |

@@ -575,6 +575,7 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 - **`tmux` / `neovim` / `vim`**: multiplexación de terminal y edición avanzada.
 - **`cloudflared` / `ngrok` / `localtunnel`**: túneles para exponer servicios locales.
 - **`qemufy` / `termux-docker-qemu` / `udocker`**: virtualización/emulación y contenedores en espacio de usuario.
+- **`proroot`**: runtime Linux rootless sin ptrace. Reemplazo directo de proot con rendimiento casi nativo. Solo arm64. `pkg install proroot`.
 - **`engram`**: motor persistente de memoria y aprendizaje continuo usado por el proyecto.
 
 ---

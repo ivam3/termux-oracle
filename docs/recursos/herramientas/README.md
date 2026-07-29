@@ -199,6 +199,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [phpmyadmin](./phpmyadmin.md)
 * [playwright-proot](./playwright-proot.md)
 * [pm](./pm.md)
+* [proroot](./proroot.md)
 * [pnpm](./pnpm.md)
 * [postgresql](./postgresql.md)
 * [privoxy](./privoxy.md)

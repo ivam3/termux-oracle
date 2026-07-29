@@ -1,17 +1,17 @@
-# Playwright CLI en Termux via proot-distro Ubuntu
+# Playwright CLI en Termux via proroot (Ubuntu 24.04)
 
-Chromium requiere ~31 librerías glibc (GTK, X11, NSS, D-Bus) que no existen en Termux nativo. Se usa proot-distro Ubuntu como contenedor glibc completo.
+Chromium requiere ~31 librerías glibc (GTK, X11, NSS, D-Bus) que no existen en Termux nativo. Se usa **proroot** (runtime rootless sin ptrace) como contenedor glibc completo — reemplaza a proot-distro con rendimiento casi nativo.
 
 ## Instalación via .deb (recomendado)
 ```bash
 apt install playwright-proot
 ```
-El `postinst` automatiza: proot-distro Ubuntu + librerías glibc + Node.js 22 + `@playwright/cli` + Chromium.
+El `postinst` automatiza: proroot rootfs + librerías glibc + Node.js 22 + `@playwright/cli` + Chromium.
 
 ## Instalación manual
 ```bash
-proot-distro install ubuntu
-proot-distro login ubuntu --shared-tmp -- /bin/bash -c '
+pkg install proroot
+proroot /bin/bash -c '
     apt update && apt install -y libglib2.0-0t64 libnss3 libnspr4 \
         libdbus-1-3 libatk1.0-0t64 libatk-bridge2.0-0t64 libcups2t64 \
         libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 \
@@ -30,7 +30,7 @@ proot-distro login ubuntu --shared-tmp -- /bin/bash -c '
 flet run --web --port 8550 main.py
 
 # 2. Iniciar Chromium headless
-proot-distro login ubuntu --shared-tmp -- /bin/bash -c '
+proroot /bin/bash -c '
     /root/.cache/ms-playwright/chromium-*/chrome-linux/chrome \
         --headless --no-sandbox --remote-debugging-port=9222 \
         --disable-gpu --disable-dev-shm-usage \
@@ -48,7 +48,7 @@ playwright-cli eval "document.title"
 
 # 5. Cerrar
 playwright-cli close
-proot-distro login ubuntu --shared-tmp -- pkill -f chrome
+proroot /bin/bash -c 'pkill -f chrome'
 ```
 
 ## Con el wrapper `playwright-proot`
@@ -62,7 +62,8 @@ playwright-proot close
 ## Troubleshooting
 | Problema | Solución |
 |----------|----------|
-| `chrome: error while loading shared libraries` | `apt install -y $LINUX_LIBS` en Ubuntu |
+| `chrome: error while loading shared libraries` | `proroot /bin/bash -c "apt install -y \$LINUX_LIBS"` |
+| `proroot: command not found` | `pkg install proroot` |
 | Solo se ve botón "Enable accessibility" | CanvasKit (no DOM), usar `screenshot`/`snapshot`/`eval` |
 | `Target closed` | Reiniciar Chromium |
 | `ECONNREFUSED localhost:9222` | Ejecutar `playwright-proot open` primero |

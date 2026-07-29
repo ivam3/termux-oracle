@@ -56,6 +56,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Cómo instalar herramienta X | `references/tool-install.md` | `docs/recursos/herramientas/{tool}.md` |
 | Adaptación glibc, binarios rotos | `references/android-limitations.md` | `docs/termux/compilacion-glibc.md` |
 | proot, udocker, docker-qemu, proot-distro para agentes AI | `references/docker-alternatives.md` | `docs/android/bypass-limitaciones.md`, `docs/termux/compilacion-glibc.md` |
+| proroot, proroom, runtime Linux sin ptrace | `references/docker-alternatives.md` | `docs/termux/proroot.md` |
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
@@ -63,6 +64,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Adaptar paquete npm/Node.js para Android (process.platform, addons nativos, playwright mock) | `docs/termux/omniroute.md` | `docs/recursos/herramientas/{tool}.md`, `docs/termux/compilacion-glibc.md` |
 | playwright-core "Unsupported platform", parchear platform checks | `docs/termux/omniroute.md` | `docs/termux/playwright-proot.md` |
 | Escritorio gráfico, X11, XFCE | `references/termux-setup.md` | `docs/termux/termux-x11.md` |
+| QEMU + X11 + xfwm4 + resolución dinámica (virgl 3D / TCP Bridge) | `references/termux-x11.md` | `references/docker-alternatives.md` |
 | Wrapper apt/npm/pnpm | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md#13` |
 | Ecosistema de agentes AI, config compartida | `references/agent-ecosystem.md` | `docs/recursos/herramientas/{opencode,claude-code,codex,qwen-code,...}.md` |
 | Neovim, LSP, editor, vim.lsp.start, Mason, pyright, bashls, lsp-zero | `references/agent-ecosystem.md` | `docs/recursos/herramientas/neovim.md` |
@@ -105,6 +107,7 @@ Técnica para ejecutar binarios Linux glibc en Termux sin proot, usada por todos
 - `udocker`: contenedores Docker en espacio de usuario (no requiere root).
 - `termux-docker-qemu`: VM Alpine vía QEMU (root real dentro de la VM).
 - `proot`: fake root (reescribe syscalls, limitado).
+- `proroot`: reemplazo directo de proot. Sin ptrace, rendimiento casi nativo. Solo arm64. `pkg install proroot`.
 
 ### MCP Servers en Termux
 Servidores MCP compatibles con agentes AI en Termux:
@@ -114,7 +117,7 @@ Servidores MCP compatibles con agentes AI en Termux:
 | **CodeGraph** | `npm install -g @codegraph/codegraph-mcp` | Usar `CODEGRAPH_NO_DAEMON=1` (SELinux bloquea hardlinks para PID) |
 | **Context7** | `npx ctx7@latest` vía opencode.json | MCP remoto, sin issues |
 | **TestSprite** | `npm install -g @testsprite/testsprite-mcp` | Plug-and-play, configurar API key |
-| **Playwright (proot)** | `apt install playwright-proot` | Chromium headless vía proot Ubuntu (aarch64) |
+| **Playwright (proroot)** | `apt install playwright-proot` | Chromium headless vía proroot (sin ptrace, aarch64) |
 | **Engram** | `apt install engram` | Memoria persistente para agentes (Go binary) |
 | **Smithery** | `npm install -g @smithery/cli` | Requiere parche `process.platform` (android→linux). Usar endpoint unificado `https://mcp.smithery.run/<namespace>` en opencode |
 

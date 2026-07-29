@@ -22,3 +22,23 @@ pkg install termux-x11 termux-desktop-xfce
   GALLIUM_DRIVER=virpipe virgl_test_server_android &
   DISPLAY=:1 gallery_app
   ```
+
+## QEMU + termux-x11 (termux-docker-qemu)
+
+Flujo para ejecutar VMs con gráficos vía QEMU + termux-x11:
+
+**1. Display SDL + VirtIO-GPU 3D (virgl)**:
+```bash
+termux-docker-qemu alpine x11 sdl
+```
+Usa `-device virtio-vga-gl` y `-display sdl,gl=on` enviando la aceleración 3D del host a la VM.
+
+**2. Direct X11 TCP Bridge (ultra ligero)**:
+```bash
+termux-docker-qemu alpine x11 tcp
+```
+Inicia `socat` escuchando en TCP 6000 y puenteando a `${PREFIX}/tmp/.X11-unix/X0`. QEMU corre en `-nographic` eliminando el overhead de CPU de framebuffer. En Alpine se ejecuta `source /termux2alpine/x11_env.sh` (`export DISPLAY=${host_ip}:0`).
+
+**xfwm4 necesario** — En el host Termux, xfwm4 gestiona las ventanas enviadas por Alpine o la ventana SDL.
+
+**Resolución:** En modo SDL, se detecta dinámicamente con `xrandr` y se pasa a `-device virtio-vga-gl,xres=<ANCHO>,yres=<ALTO>`.
