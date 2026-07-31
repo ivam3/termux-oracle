@@ -40,3 +40,5 @@ Menú interactivo para configurar claves de servicios externos.
 Las claves se almacenan en `~/.local/etc/i-HakLab/variables` como `APIKEY_<plataforma>`.
 
 **No editar `variables` manualmente** — usar siempre `i-Haklab setapikey`.
+
+> **Nota:** el wrapper `ai` mapea `APIKEY_groq` → `GROQ_API_KEY` (consulta al endpoint de Groq). Ver `references/ihaklab.md`.

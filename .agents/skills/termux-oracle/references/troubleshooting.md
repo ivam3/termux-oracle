@@ -47,6 +47,11 @@ echo " " > $PREFIX/var/lib/mysql/ib_logfile0
 ## MariaDB: Permiso denegado al conectar con contraseña
 Ver `references/mariadb.md`.
 
+## Sin audio en entornos gráficos (Xwayland / termux-desktop-xfce / proot)
+**Causa:** Segundo daemon PulseAudio autospawnado con sink `auto_null`, o módulo TCP cargado en el daemon equivocado.
+**Solución:** Aplicar el bloque determinista (matar daemons, `export PULSE_RUNTIME_PATH=${TMPDIR}/pulse`, daemon único, guard `auto_null`, cargar TCP contra el socket unix y `export PULSE_SERVER=tcp:127.0.0.1:4713`). Ver sección "Audio: PulseAudio en entornos gráficos" en `references/termux-x11.md`.
+**Verificar:** `PULSE_SERVER=unix:${TMPDIR}/pulse/native pactl info` → `Default Sink: OpenSL_ES_sink` (nunca `auto_null`).
+
 ## MariaDB: `ERROR 1396 (HY000): Operation CREATE USER failed`
 **Solución:**
 ```sql

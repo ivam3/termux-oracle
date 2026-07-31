@@ -76,8 +76,33 @@ Configurar API key en `opencode.json`:
 }
 ```
 
+### Comando `ai` (wrapper hybrid-cli-ai)
+`ai` es un wrapper de `hybrid-cli-ai` (instalado editable en `~/.local/share/hybrid-cli-ai`) que captura por voz y decide entre ejecutar o sugerir.
+
+**Comportamiento:**
+- `ai "<consulta>"` → captura por voz (`termux-dialog speech`) y ejecuta la respuesta (default `--run`).
+- `ai --no-run "<consulta>"` o `ai -v --no-run` → voz + solo sugerir (no ejecuta).
+- `ai --model <modelo>` → cambia de modelo (default `qwen2.5-coder:1.5b` local vía Ollama).
+- `ai disable` → elimina el wrapper (`cleanup ai`).
+- Auto-inicia Ollama (`ollama serve`) con health-check sobre `http://127.0.0.1:11434/api/tags`.
+- Mapea `APIKEY_groq` → `GROQ_API_KEY` para usar el endpoint de Groq si no hay modelo local.
+
+**Adaptación a Termux** (el wrapper re-aplica un parche idempotente tras reinstalar):
+- `utils.py get_os_info()` devuelve `"termux"` si existe `$PREFIX` o `/data/data/com.termux`.
+- `ai_engine.py OS_INSTRUCTIONS["termux"]`: sin `sudo`, usar `$PREFIX`/`$HOME`, instalar con `pkg install`, e incluye la suite i-HakLab en el contexto.
+
+**Conocimiento de i-HakLab:** el wrapper antepone un cheat-sheet (`IHK_CTX`) al prompt SOLO si la consulta menciona `i-haklab|ihaklab|setapikey|helpper|alltools|wrapper|documentacion|apikey|clave de|groq`. Mantiene limpias las consultas normales y responde con i-HakLab cuando corresponde.
+
+**Gotchas:**
+- typer usa UN solo argumento: el contexto a anteponer + la consulta deben ir unidos en un solo string.
+- `--no-run` se extrae ANTES de la captura de voz y se limpia al unir (`${joined//--no-run/}`), para que `ai -v --no-run` funcione.
+- Modelos 1.5b fallan en tareas de usuarios del sistema (ej. `cat /etc/passwd`); usar un modelo mayor cuando se requiera.
+- Documentación completa en `~/.local/etc/i-Haklab/Tools/Readme/ai.md`.
+
 ## Direct Commands (sin prefijo i-Haklab)
-`apt`, `adminfiles`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
+`apt`, `adminfiles`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `nls`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
+
+- `nls` → listar archivos en cajas/grids (alternativa a `ls` para texto en recuadros). Binario Go en `~/go/bin/nls`, declarado en `functions`.
 
 ## Credenciales por defecto
 - Login i-HakLab: `Ivam3byCinderella`
@@ -99,6 +124,7 @@ i-Haklab show tutorials
 | Ruta | Contenido |
 |------|-----------|
 | `~/.local/bin/i-Haklab` | Comando principal |
+| `~/.local/bin/ai` | Wrapper de IA por voz (hybrid-cli-ai) |
 | `~/.local/bin/apt` | Wrapper de apt |
 | `~/.local/bin/npm` | Wrapper de npm |
 | `~/.local/etc/i-Haklab/functions` | Funciones de shell internas |
@@ -118,5 +144,6 @@ i-Haklab show tutorials
 - Post-instalación ejecuta `pkg2conf` si está en `listofpkg2conf`
 - `npm install <paquete>` → normaliza alias (ver tabla en `references/agent-ecosystem.md`), ejecuta pkg2conf
 - `smithery` (vía `@smithery/cli`) → pkg2conf parchea `process.platform` para Android y arregla shebang
+- `sleepwalker` → `npm install -g @sleepwalkerai/cli`; `sleepwalkerai` → `npx` (AI Visibility / Content Intelligence, ver `docs/recursos/herramientas/sleepwalker.md`)
 - `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp` previamente
 - `pnpm` → ejecuta `corepack enable && pnpm setup`

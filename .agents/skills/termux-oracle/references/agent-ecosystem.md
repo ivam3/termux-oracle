@@ -153,6 +153,8 @@ Este método fue reemplazado por el nativo glibc a partir de julio 2026. Los paq
 | `claude-code` | `@anthropic-ai/claude-code` | npm |
 | `codex` | `@mmmbuto/codex-cli-termux@latest` | npm |
 | `minimax-cli` | `mmx-cli` | npm |
+| `sleepwalker` | `@sleepwalkerai/cli` | npm |
+| `sleepwalkerai` | `@sleepwalkerai/cli` | npx |
 | `openspec` | `@fission-ai/openspec` | npm |
 | `context7` | `ctx7` | npx |
 | `smithery` | `@smithery/cli` | npm (pkg2conf parchea `process.platform`) |
