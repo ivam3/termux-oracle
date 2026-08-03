@@ -51,7 +51,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | El usuario pregunta sobre... | Archivo de referencia | Docs relacionadas |
 |---|---|---|
 | Instalar/configurar Termux | `references/termux-setup.md` | `docs/termux/instalacion.md`, `docs/termux/configuracion.md` |
-| Paquetes, repos, pkg vs apt | `references/termux-setup.md` | `docs/termux/paquetes.md` |
+| Paquetes, repos, pkg vs apt | `references/termux-setup.md` | `docs/termux/paquetes.md`, `docs/termux/wiki-oficial/package-management.md` |
 | i-HakLab, comandos, wrappers | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md` |
 | Cómo instalar herramienta X | `references/tool-install.md` | `docs/recursos/herramientas/{tool}.md` |
 | Adaptación glibc, binarios rotos | `references/android-limitations.md` | `docs/termux/compilacion-glibc.md` |
@@ -60,6 +60,10 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
+| termux-packages (oficiales Termux), build environment, `build.sh`, `build-package.sh` | `references/tool-install.md` | `docs/termux/wiki-oficial/build-environment.md`, `docs/termux/wiki-oficial/building-packages.md` |
+| Compilar/portar software para Termux (Bionic, glibc), problemas de porting | `references/android-limitations.md` | `docs/termux/wiki-oficial/common-porting-problems.md`, `docs/termux/compilacion-glibc.md` |
+| Filesystem de Termux, `$PREFIX`, rutas, límites de Android | `references/termux-setup.md` | `docs/termux/wiki-oficial/termux-file-system-layout.md`, `docs/termux/wiki-oficial/termux-execution-environment.md`, `docs/termux/wiki-oficial/termux-and-android-10.md` |
+| Mirror de repositorios oficiales de Termux | `references/termux-setup.md` | `docs/termux/wiki-oficial/how-to-mirror-repos.md` |
 | OmnIRoute, instalar/configurar | `references/tool-install.md` | `docs/recursos/herramientas/omniroute.md`, `docs/termux/omniroute.md` |
 | Adaptar paquete npm/Node.js para Android (process.platform, addons nativos, playwright mock) | `docs/termux/omniroute.md` | `docs/recursos/herramientas/{tool}.md`, `docs/termux/compilacion-glibc.md` |
 | playwright-core "Unsupported platform", parchear platform checks | `docs/termux/omniroute.md` | `docs/termux/playwright-proot.md` |
@@ -73,7 +77,8 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Hermes Agent, instalación, configuración | `references/hermes-agent.md` | `docs/recursos/herramientas/hermes-agent.md` |
 | Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
-| Crear/empaquetar .deb, termux-create-package | `references/tool-install.md` | `docs/termux/paquetes.md#termux-create-package` |
+| Crear/empaquetar .deb, termux-create-package | `references/tool-install.md` | `docs/termux/paquetes.md#termux-create-package`, `docs/termux/wiki-oficial/creating-new-package.md` |
+| Actualizar versiones de paquetes de Termux, autoupdate | `references/tool-install.md` | `docs/termux/wiki-oficial/auto-updating-packages.md` |
 
 ## 4. Conceptos clave inline
 
@@ -136,8 +141,15 @@ Servidores MCP compatibles con agentes AI en Termux:
 
 Todo el conocimiento detallado está en `docs/`:
 - `termux/` — 13 archivos sobre instalación, paquetes, Python, glibc, troubleshooting, etc.
+- `termux/wiki-oficial/` — wiki oficial del proyecto Termux (`termux/termux-packages`) sobre build environment, porting y empaquetado.
 - `android/` — 5 archivos sobre ADB, Fastboot, seguridad, bypass de limitaciones.
 - `recursos/` — manual i-HakLab (~970 líneas), 190+ tool docs individuales.
 - `scripts/`, `laboratorios/`, `ctf/`, `glosario/`, `comunidad/`.
+
+> **Desambiguación "termux-packages"**: existen DOS proyectos con el mismo nombre y NO deben confundirse:
+> - **`termux/termux-packages`** (oficial) → repositorio oficial de paquetes de Termux. Documentado en `docs/termux/wiki-oficial/`. Es la fuente que compila los binarios de los paquetes `pkg install` estándar.
+> - **`ivam3/termux-packages`** (personal) → repositorio de paquetes de i-HakLab (wrappers, herramas glibc, agentes AI). Documentado en `docs/recursos/termux-packages.md`. Es la fuente de instalación del ecosistema i-HakLab.
+>
+> Si el usuario pregunta por "termux-packages" sin aclarar, verificar el contexto: si habla de i-HakLab/glibc/agentes → `docs/recursos/termux-packages.md`; si habla de build/empaquetado oficial → `docs/termux/wiki-oficial/`.
 
 Usa `Glob` y `Grep` para buscar en estos archivos cuando necesites información específica que no esté en las referencias.

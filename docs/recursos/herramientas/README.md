@@ -301,7 +301,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### Y
 
 * [yazi](./yazi.md)
-* [youtubedr](./youtubedr.md)
+* [yt-dlp](./yt-dlp.md)
 * [ytfzf](./ytfzf.md)
 
 ### Z

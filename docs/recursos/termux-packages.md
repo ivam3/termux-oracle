@@ -1,5 +1,9 @@
 # Termux-Packages: repositorio de herramientas adaptadas para Android 📦
 
+> ⚠️ **Desambiguación**: Este documento describe el repositorio **personal** de Ivam3 (`ivam3/termux-packages`), fuente de instalación del ecosistema i-HakLab.
+>
+> **NO confundir** con el proyecto **oficial** `termux/termux-packages` (el repositorio oficial de paquetes de Termux, build environment y empaquetado), documentado en [docs/termux/wiki-oficial/](../termux/wiki-oficial/). Ambos comparten el mismo nombre pero son proyectos distintos.
+
 **Termux-Packages** es el repositorio personalizado de **Ivam3** que ofrece más de 120 herramientas y frameworks de ciberseguridad, desarrollo y automatización adaptados (compilados/configurados) para ejecutarse nativamente en **Termux/Android**. Es la fuente principal de instalación del ecosistema **i-HakLab**.
 
 ## ¿Qué resuelve?

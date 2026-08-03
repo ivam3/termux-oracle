@@ -92,7 +92,7 @@ A continuación se detallan algunos de los parches y configuraciones críticas q
 | **`gdb`** | Clona la extensión de análisis gráfico/depuración **`peda`** en las carpetas de la suite y agrega la directiva de carga automática `source` en el archivo local `~/.gdbinit`. |
 | **`tmux` / `zsh` / `bash` / `fish`** | Descarga plantillas de configuración y temas de la suite, realiza respaldos de tus archivos anteriores, crea enlaces simbólicos a las rutas activas y clona plugins de autocompletado y colores de manera automatizada. |
 | **`apache2` / `phpmyadmin`** | Descarga configuraciones HTTP seguras, borra los archivos por defecto de la ruta del sistema de Termux y los reemplaza por enlaces simbólicos a los archivos de configuración de la suite local (`~/.local/etc/`). |
-| **`youtubedr`** | Genera una configuración de credenciales en `~/.netrc` y crea un script de intercepción multimedia nativo en `/data/data/com.termux/files/usr/bin/termux-url-opener`. |
+| **`yt-dlp`** | Genera una plantilla de credenciales en `~/.netrc` y crea un script de intercepción multimedia nativo en `/data/data/com.termux/files/usr/bin/termux-url-opener` basado en `yt-dlp` (formatos de audio/360p/480p/720p/1080p con `-S res:X` y `--merge-output-format mp4`). |
 | **`localtunnel`** | Parchea el módulo global reemplazando el archivo `openurl.js` por una versión compatible descargada del servidor para evitar fallos de apertura de enlaces en consola. |
 | **`tor` / `privoxy` / `proxychains-ng`** | Vincula las configuraciones a través de enlaces simbólicos y enlaza Privoxy con el puerto socks5 local de Tor (`127.0.0.1:9050`) para enrutar el tráfico de forma automatizada. |
 

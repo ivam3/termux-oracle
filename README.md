@@ -32,6 +32,7 @@ Advanced configuration guides, package management, and Linux environment on Andr
 * [🛠️ Glibc Binaries Adaptation (`claude-code`, `opencode`)](./docs/termux/compilacion-glibc.md)
 * [🤖 AI Agent Ecosystem, Shared Config and MCP](./docs/../.agents/skills/termux-oracle/references/agent-ecosystem.md)
 * [🔥 Troubleshooting](./docs/termux/troubleshooting.md)
+* [📖 Official Termux Developer's Wiki (build environment, porting, packaging)](./docs/termux/wiki-oficial/README.md)
 
 
 ### 🤖 [3. Technical Android](./docs/android/adb.md)
@@ -66,7 +67,7 @@ Dictionary of technical concepts and useful tool collections.
   * Includes `apt`/`npm`/`pnpm` wrappers reference, `pkg2conf`, default credentials, and `4share`/`servers4test` automations.
 * [i-HakLab Tool Ecosystem](./docs/recursos/herramientas.md)
 * [Detailed Arsenal Manuals (Over 180 tools)](./docs/recursos/herramientas/README.md)
-* [Termux-Packages: repository of adapted tools for Android](./docs/recursos/termux-packages.md)
+* [Termux-Packages: repository of adapted tools for Android (i-HakLab/ivam3)](./docs/recursos/termux-packages.md)
 * [Key Environment Concepts](./docs/glosario/conceptos.md)
 * [Useful Links and Recommended Tools](./docs/recursos/enlaces.md)
 

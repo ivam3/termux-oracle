@@ -210,7 +210,7 @@ Estos archivos se encuentran en `$PATH` (mediante `~/.local/bin` antepuesto en `
 
 | Archivo | Función |
 |---------|---------|
-| `termux-url-opener` | Script que intercepta URLs compartidas a Termux desde Android |
+| `termux-url-opener` | Script que intercepta URLs compartidas a Termux desde Android y las descarga con `yt-dlp` (formatos de audio/360p/480p/720p/1080p) a `~/storage/shared/Youtube/` |
 | `fixer` | Script de diagnóstico y reparación automática de problemas de Termux |
 
 ### `$PREFIX/share/man/man1/`
@@ -803,7 +803,7 @@ Incluye:
 apache2, bash, clamav, claude-code, fish, gdb, gemini-cli, localtunnel,
 mariadb, mvt, n8n, nano, neovim, open-lovable, phpmyadmin, privoxy,
 proxychains-ng, python, qwen-code, radare2, tigervnc, tmux, tor, vim,
-youtubedr, zsh
+yt-dlp, zsh
 ```
 
 Acciones importantes observadas en `pkg2conf`:
@@ -828,7 +828,7 @@ Acciones importantes observadas en `pkg2conf`:
 | `tigervnc` | Genera `~/.vnc/xstartup` con `startxfce4`. |
 | `tmux` | Descarga configuración, enlaza `.tmux.conf` y establece fish como shell por defecto. |
 | `vim` | Instala configuración, plugins y extensiones Coc. |
-| `youtubedr` | Prepara `.netrc` y `termux-url-opener`. |
+| `yt-dlp` | Prepara `.netrc` y genera `termux-url-opener` basado en `yt-dlp`. |
 
 ---
 

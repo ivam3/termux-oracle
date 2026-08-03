@@ -35,6 +35,8 @@ Para evitar compilación lenta o fallida, existen versiones precompiladas:
 `python-torchvision`, `python-trash-cli`, `python-xcbgen`, `python-xlib`,
 `python-yt-dlp`, `python2`, `python2-static`
 
+> **`python-yt-dlp`**: paquete apt que provee el binario `yt-dlp` (descargador de video, fork de `youtube-dl`). Se instala con `pkg install python-yt-dlp`; para formatos de alta calidad requiere además `deno` (runtime JS para el *JS challenge* de YouTube) y `ffmpeg` (fusión de video+audio).
+
 ### tur-repo (comunitario)
 `python-cairo`, `python-fitsio`, `python-future`, `python-kivy`,
 `python-mitmproxy-wireguard`, `python-opengl`, `python-pandas`, `python-polars`,
