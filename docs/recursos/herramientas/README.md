@@ -283,6 +283,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 ### W
 
+* [walkie](./walkie.md)
 * [wbruter](./wbruter.md)
 * [webhackshl](./webhackshl.md)
 * [webscan](./webscan.md)

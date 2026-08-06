@@ -75,6 +75,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Neovim, LSP, editor, vim.lsp.start, Mason, pyright, bashls, lsp-zero | `references/agent-ecosystem.md` | `docs/recursos/herramientas/neovim.md` |
 | MCP servers en Termux (CodeGraph, TestSprite, Playwright, Smithery) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
 | Hermes Agent, instalación, configuración | `references/hermes-agent.md` | `docs/recursos/herramientas/hermes-agent.md` |
+| Walkie (walkie-sh), comunicación P2P entre agentes/humano, canales | `references/agent-ecosystem.md` | `docs/recursos/herramientas/walkie.md` |
 | Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
 | Crear/empaquetar .deb, termux-create-package | `references/tool-install.md` | `docs/termux/paquetes.md#termux-create-package`, `docs/termux/wiki-oficial/creating-new-package.md` |
