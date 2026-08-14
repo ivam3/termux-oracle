@@ -161,6 +161,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [mimocode](./mimocode.md)
 * [minimax-cli](./minimax-cli.md)
 * [mistral-vibe](./mistral-vibe.md)
+* [muse-code](./muse-code.md)
 * [mvt](./mvt.md)
 
 ### N
@@ -284,6 +285,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### W
 
 * [walkie](./walkie.md)
+* [walkie-tg](./walkie-tg.md)
 * [wbruter](./wbruter.md)
 * [webhackshl](./webhackshl.md)
 * [webscan](./webscan.md)

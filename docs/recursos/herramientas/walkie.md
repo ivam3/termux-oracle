@@ -68,6 +68,78 @@ Mantiene **historial rodante** en memoria (últimos 40 mensajes) para dar contex
 
 Flag nativo de `walkie agent` que solo se reenvía a `codex` (añade `--skip-git-repo-check` a `codex exec`). Agentes que no lo soportan (p. ej. `agy`) lo ignoran — walkie no se lo pasa. Sin él, codex en un directorio no-git falla con *"Not inside a trusted directory and --skip-git-repo-check was not specified"*.
 
+## Modo solo-tag estricto (parche local)
+
+El `walkie agent` stock responde igual si un humano escribe sin `@`. Para que un agente **escuchen sin intervenir** y solo actúe cuando se le taggea, se aplica un parche idempotente al bin local (`--mention-only`):
+
+- **Archivo del parche:** `$PREFIX/share/walkie/patch-mention-only.js` → target `~/.local/share/walkie/node_modules/walkie-sh/bin/walkie.js`. Backup `walkie.js.bak-mention`. Marcador idempotente `/* walkie-patch-mention */`.
+
+Lo que añade:
+
+1. **`--mention-only`** → responde solo si `@<nombre>` aparece en el mensaje.
+2. **`--respond-to <id>`** → responde solo si `msg.from === <id>` (p. ej. un ejecutor que solo obedece al brain).
+3. **Anti-replay (`START_TS`)** → descarta mensajes con `ts` anterior al arranque del agente; si el daemon se reinicia y reenvía historial, no re-procesa tareas viejas.
+
+Desde el paquete `1.5.0-2` el `postinst` lo aplica automáticamente (STEP 2.5b). A mano (instalación por otra vía):
+
+```bash
+node $PREFIX/share/walkie/patch-mention-only.js \
+  ~/.local/share/walkie/node_modules/walkie-sh/bin/walkie.js
+```
+
+## Seguimiento de miembros del canal (`--track-members`)
+
+Un agente brain no ve quién entra al canal: descarta los anuncios `"X joined"` junto con los mensajes de sistema, y con varios ejecutores no sabe a quién delegar. Un tercer parche idempotente (`$PREFIX/share/walkie/patch-members.js`, corre después de `patch-agents.js` y `patch-mention-only.js`) añade el flag opt-in:
+
+```bash
+walkie agent ops:secret --cli claude --track-members --mention-only \
+  --prompt "$(cat ~/.config/walkie/prompt-brain.txt)"
+```
+
+Lo que añade:
+
+1. Registra **miembros locales** desde los anuncios `joined`/`left` del daemon + una consulta `members` al arrancar, y **peers remotos** (otros dispositivos) desde el `from` del primer mensaje de cada uno.
+2. Inyecta el roster en el prompt del agente **solo cuando cambia la membresía** (Δ, sin ruido): `[ROSTER #channel] brain, exec1, humano, ...`
+3. Persiste en `~/.walkie/roster-<canal>.json`, así un brain reiniciado ya nace conociendo quién está presente.
+
+Desde el paquete `1.5.0-3` el `postinst` lo aplica en STEP 2.5c. A mano:
+
+```bash
+node $PREFIX/share/walkie/patch-members.js \
+  ~/.local/share/walkie/node_modules/walkie-sh/bin/walkie.js
+```
+
+## Asistencia remota 1-a-1 (brain + ejecutor)
+
+Para asistencia remota (admin + usuario dialogando, brain delegando y ejecutor aplicando en el dispositivo del usuario), lanza cada agente con su prompt y flags:
+
+**Brain (dispositivo del admin)** — orquesta y delega, **nunca ejecuta**:
+
+```bash
+walkie agent soporte-u1 --secret SEcreto \
+  --name termux-oracle-brain \
+  --cli claude \
+  --mention-only \
+  --track-members \
+  --prompt "$(cat ~/.config/walkie/prompt-brain.txt)"
+```
+
+> **Por qué `--cli claude` y no `--cli codex`:** el brain debe **orquestar y delegar**, nunca ejecutar en su propio dispositivo. `codex` es un agente tool-use con shell: aunque el prompt le prohíba ejecutar, tiene la capacidad física de hacerlo y a veces lo hace. `claude` se invoca en modo texto puro (`claude -p`, sin tools), así que al brain le es **imposible por construcción** ejecutar comandos.
+
+**Ejecutor (dispositivo del usuario)** — el único que ejecuta:
+
+```bash
+walkie agent soporte-u1 --secret SEcreto \
+  --name usuario1-executor \
+  --cli codex \
+  --mention-only \
+  --respond-to termux-oracle-brain \
+  --agent-args "--dangerously-skip-permissions" \
+  --prompt "$(cat ~/.config/walkie/prompt-executor.txt)"
+```
+
+El brain delega con el formato `TASKID|ACCION|PARAMS` y el ejecutor responde `TASKID|ESTADO|RESULTADO`. El uso de `--mention-only` en el ejecutor es redundante con `--respond-to` pero añade defensa en profundidad.
+
 ## Instalación en Termux (⚠️ requiere parche)
 
 `npm install -g walkie-sh` instala correctamente en Termux (las dependencias nativas `udx-native` y `sodium-native` traen prebuilds `android-arm64`), **pero el daemon no arranca en Android sin el parche**.

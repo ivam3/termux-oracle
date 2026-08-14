@@ -76,6 +76,8 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | MCP servers en Termux (CodeGraph, TestSprite, Playwright, Smithery) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
 | Hermes Agent, instalación, configuración | `references/hermes-agent.md` | `docs/recursos/herramientas/hermes-agent.md` |
 | Walkie (walkie-sh), comunicación P2P entre agentes/humano, canales | `references/agent-ecosystem.md` | `docs/recursos/herramientas/walkie.md` |
+| Walkie-TG, puente Walkie ↔ Telegram (marcadores `photo:`/`file:`, prompt sugerido para agentes) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/walkie-tg.md` |
+| Muse Code (Meta), agente IA de codificación, instalación `.deb`, wrapper proot, auto-actualización | `references/agent-ecosystem.md` | `docs/recursos/herramientas/muse-code.md`, `docs/termux/paquetes.md#termux-create-package` |
 | Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
 | Crear/empaquetar .deb, termux-create-package | `references/tool-install.md` | `docs/termux/paquetes.md#termux-create-package`, `docs/termux/wiki-oficial/creating-new-package.md` |

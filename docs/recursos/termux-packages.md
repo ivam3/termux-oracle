@@ -55,7 +55,7 @@ El repositorio incluye más de 120 herramientas. Entre las más destacadas:
 
 | Categoría | Herramientas |
 |-----------|-------------|
-| **IA y asistentes** | `claude-code`, `opencode`, `gemini-cli`, `qwen-code`, `codex`, `codebuff`, `freebuff`, `minimax-cli`, `mimocode`, `mistral-vibe`, `openclaw`, `antigravity-cli`, `engram`, `opencode` |
+| **IA y asistentes** | `claude-code`, `opencode`, `gemini-cli`, `qwen-code`, `codex`, `codebuff`, `freebuff`, `minimax-cli`, `mimocode`, `mistral-vibe`, `muse-code`, `openclaw`, `antigravity-cli`, `engram`, `opencode` |
 | **Pentesting** | `metasploit-framework`, `nmap`, `amass`, `beef`, `bettercap`, `aircrack-ng`, `hydra-gtk`, `hashcat`, `johntheripper` |
 | **OSINT** | `sherlock`, `holehe`, `shodan`, `ghunt`, `osintgram`, `theharvester`, `recon-ng`, `maltego` |
 | **Android** | `apktool`, `apksigner`, `dex2jar`, `axmlprinter2`, `xml2axml`, `appshark`, `androforensic`, `androbugs`, `scrcpy` |

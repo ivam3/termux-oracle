@@ -402,6 +402,7 @@ Estos comandos no requieren el prefijo `i-HakLab`; se ejecutan directamente en l
 | `sudo` | Ejecuta comandos o inicia entorno como falso root. |
 | `telegram` | Abre la aplicación Android de Telegram. |
 | `traductor` | Inicia traductor de línea de comandos. |
+| `walkie-tg` | Puente Walkie ↔ Telegram: reenvía mensajes del canal a un bot de Telegram y viceversa. Ver `herramientas/walkie-tg.md`. |
 | `yazi` | Gestor de archivos en terminal. |
 
 ---

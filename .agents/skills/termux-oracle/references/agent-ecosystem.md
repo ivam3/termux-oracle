@@ -142,6 +142,9 @@ Este método fue reemplazado por el nativo glibc a partir de julio 2026. Los paq
 | antigravity-cli | `agy_helper.c` | `agy.real` | `agy` |
 | openclaw | — (autónomo) | `~/.openclaw-android/node/bin/node` | `openclaw` |
 | mistral-vibe | — (Python/uv) | `~/.local/share/uv/tools/mistral-vibe/` | `vibe` |
+| muse-code | — (musl estático, wrapper proot) | `~/.local/share/muse-code/muse-bin-<ver>` | `muse-code` / `muse` |
+
+**Muse Code (Meta)** no usa helper glibc: es un ELF estático **musl** que corre nativo sobre el kernel Android, pero necesita `proot` para sortear el aislamiento de datos de la app (`readdir("/")` da `EACCES`). Ver `docs/recursos/herramientas/muse-code.md` para el wrapper proot, claves de bind, DNS y auto-actualización vía launcher.
 
 ## Tabla de alias npm (wrappers i-Haklab)
 
