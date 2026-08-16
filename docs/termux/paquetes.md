@@ -352,3 +352,59 @@ python-xcbgen-glibc
 > pkg update
 > ```
 
+---
+
+## 🛠️ 7. Estudio de Caso: Adaptación de `cactus` y `huggingface` a Termux
+
+Este caso documenta el proceso completo de empaquetar dos herramientas de IA (el motor **Cactus** y la librería cliente **huggingface_hub**) para el repositorio de i-Haklab, incluyendo los retos encontrados con Python 3.14, wheels de Android y el pipeline de `termux-create-package`.
+
+### Decisiones de diseño
+
+*   **Instalación GLOBAL (sin venv):** Tanto `cactus` como `huggingface` instalan sus dependencias Python con `pip install` global (sin virtualenv), usando los paquetes `python-numpy`, `python-torch`, `python-tokenizers`, etc. del repositorio de Termux vía `apt` (declarados en `depends` de `manifest.json`). Esto evita duplicar binarios pesados (~numerosos MB) dentro de cada venv.
+*   **Sin wrappers:** Se instalan los binarios directos en `$PREFIX/bin`. Como pip instala scripts en `$PREFIX/lib/bin`, el `postinst` crea enlaces `ln -sf ../lib/bin/cactus $PREFIX/bin/cactus` (y lo análogo para `huggingface-cli` / `hf`).
+*   **`huggingface` como paquete independiente:** Aunque `huggingface_hub` se necesita principalmente para `cactus`, se empaqueta como su propio `.deb` del que `cactus` declara dependencia. Así es reutilizable por otras herramientas de IA.
+
+### Retos y soluciones
+
+| Reto | Causa | Solución |
+|---|---|---|
+| `hf-xet` sin wheel en aarch64 | huggingface_hub 1.27.0 declara `hf-xet` como dependencia dura en aarch64; no hay wheel para Termux y `pip` intenta compilarlo con Rust/maturin → se cuelga | Instalar con `pip install --no-deps huggingface_hub` y agregar las deps puras (click, filelock, fsspec, packaging, pyyaml, tqdm, typing-extensions) una a una |
+| `hf_xet` roto en Python 3.14 | Error `_Py_FalseStruct` | Exportar `HF_HUB_DISABLE_XET=1` vía `${PREFIX}/etc/profile.d/huggingface.sh` (creado por `postinst`, eliminado por `postrm` con `rm -f`) para forzar descargas HTTP clásicas |
+| `transformers==5.5.4` exige `tokenizers<=0.23.0` | Chequeo en runtime de `dependency_versions_table.py`; el `python-tokenizers` de apt es 0.23.1 | Parche idempotente del archivo con heredoc Python usando `importlib.util.find_spec` (NUNCA `import transformers`, crashea en instalación limpia): relaja a `tokenizers>=0.22.0`. Se re-aplica tras cada reinstalación |
+| `requires-python = ">=3.10,<3.14"` en Cactus | El CLI bloquea Python 3.14 (el de Termux) | `sed -i` en `python/pyproject.toml` durante el `postinst` |
+| `httpcore` antiguo incompatible con Python 3.14 | Versionado estricto | Forzar `pip install "httpcore>=1.0.9"` antes de las demás deps |
+| `termux-create-package` con manifiesto JSON y `files` mixtos | `UnboundLocalError` con ciertas combinaciones de `--files-dir` / `files` | Usar el manifiesto JSON con claves `files` que mapean `README.md` → `usr/share/doc/<pkg>/README.md`, y scripts de control (postinst/postrm) en el mismo directorio. Ejecutar `termux-create-package manifest.json` desde dentro de `packages/<pkg>/` (sin flags: el `--files-dir` solo, sin el de control, dispara el bug) |
+| `executable's TLS segment is underaligned: alignment is 8, needs to be at least 64 for ARM64 Bionic` | `bin/run` y `bin/transcribe` no se descargan: el CLI los **compila localmente** (auto-build `resolve_binary` → `build_binary`) y salen con TLS `p_align` 8, que el linker Bionic ARM64 rechaza | Paso `6b` en el `postinst`: compilar ambos binarios con `build_binary(name, lib, sdl2=([],[]))` contra `libcactus_engine.a` y aplicarles `termux-elf-cleaner` (TLS → 64 + quita `DF_1_*` no soportados). Añadir `termux-elf-cleaner` a `depends` |
+| `termux-elf-cleaner` y `--api-level` | La flag asume una versión mínima de Android y el `postinst` correría distinto en dispositivos viejos | Llamarlo **SIN `--api-level`** (default = 21): el fix del TLS es incondicional en el código y para estos binarios 21/24/33 producen un ELF byte-idéntico (no traen `DT_AARCH64_PAC/BTI`) |
+
+### Pipeline de construcción
+
+```bash
+# Estructura por paquete (packages/cactus y packages/huggingface)
+packages/<pkg>/
+├── manifest.json          # name, version, arch:all, depends, files
+├── postinst                # instala deps, clona/build upstream, binarios, fixer
+├── postrm                  # limpieza (ej. profile.d/huggingface.sh)
+└── README.md               # docs instaladas en usr/share/doc/<pkg>/
+
+# Build del .deb (desde dentro de packages/<pkg>, sin flags)
+cd packages/cactus && termux-create-package manifest.json
+cd packages/huggingface && termux-create-package manifest.json
+
+# Validación end-to-end en el dispositivo
+pkg install ./cactus_2.0.1-1_all.deb ./huggingface_1.27.0-1_all.deb
+cactus convert Cactus-Compute/needle        # → "Model converted and ready"
+cactus run Cactus-Compute/needle
+huggingface-cli whoami
+```
+
+### Lecciones aprendidas
+
+*   **`pip` cuelga silenciosamente** al intentar compilar deps sin wheel (Rust, C extensions). Siempre acotar con `timeout ${PIP_TIMEOUT} pip install ...` y marcar el paso como opcional (`warn` en vez de `err`) cuando no es crítico para el flujo principal.
+*   **Un paquete de IA puede fallar parcialmente sin invalidar el resto:** en `cactus`, si el *convert stack* (sentencepiece/protobuf/transformers) falla o expira, solo `cactus convert` queda inoperante; los demás subcomandos funcionan igual. El `postinst` lo maneja con `if ...; then ok; else warn; fi`.
+*   **Los scripts pip quedan en `$PREFIX/lib/bin`** (no en `$PREFIX/bin`). Verificar con `command -v` y enlazar con `ln -sf` cuando el binario no esté ya en `$PREFIX/bin`.
+*   **Los `postinst`/`postrm` deben ser idempotentes y re-parsearse de forma segura** tras reinstalaciones (los parches con aceptan "already patched").
+*   **`termux-create-package` busca los scripts de control en el directorio actual** si no se pasa `--control-files-dir`. Mantener `manifest.json`, `postinst` y `postrm` juntos en `packages/<pkg>/`. El directorio `DEBIAN/` (layout clásico de Debian) **no lo usa** esta herramienta — genera el control.tar desde el manifiesto —, así que se elimina para evitar archivos obsoletos.
+*   **Los manifiestos se llaman `manifest.json`** (corrigiendo el typo `manifiest.json`): `updateAIpkg` y los comandos de build apuntan al nombre nuevo.
+*   **Los binarios nativos de un CLI de IA pueden compilarse en el dispositivo** con el toolchain de Termux y aun así quedar con TLS mal alineado; `termux-elf-cleaner` es la pieza oficial que normaliza esos binarios (los deps del manifiesto deben incluir el paquete `termux-elf-cleaner`).
+
