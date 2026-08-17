@@ -376,6 +376,7 @@ Este caso documenta el proceso completo de empaquetar dos herramientas de IA (el
 | `termux-create-package` con manifiesto JSON y `files` mixtos | `UnboundLocalError` con ciertas combinaciones de `--files-dir` / `files` | Usar el manifiesto JSON con claves `files` que mapean `README.md` → `usr/share/doc/<pkg>/README.md`, y scripts de control (postinst/postrm) en el mismo directorio. Ejecutar `termux-create-package manifest.json` desde dentro de `packages/<pkg>/` (sin flags: el `--files-dir` solo, sin el de control, dispara el bug) |
 | `executable's TLS segment is underaligned: alignment is 8, needs to be at least 64 for ARM64 Bionic` | `bin/run` y `bin/transcribe` no se descargan: el CLI los **compila localmente** (auto-build `resolve_binary` → `build_binary`) y salen con TLS `p_align` 8, que el linker Bionic ARM64 rechaza | Paso `6b` en el `postinst`: compilar ambos binarios con `build_binary(name, lib, sdl2=([],[]))` contra `libcactus_engine.a` y aplicarles `termux-elf-cleaner` (TLS → 64 + quita `DF_1_*` no soportados). Añadir `termux-elf-cleaner` a `depends` |
 | `termux-elf-cleaner` y `--api-level` | La flag asume una versión mínima de Android y el `postinst` correría distinto en dispositivos viejos | Llamarlo **SIN `--api-level`** (default = 21): el fix del TLS es incondicional en el código y para estos binarios 21/24/33 producen un ELF byte-idéntico (no traen `DT_AARCH64_PAC/BTI`) |
+| `cactus download Cactus-Compute/needle` rechaza el bundle prebuilt | El validador `validate_extracted_bundle` (`cactus/cli/utils.py`) exige `tokenizer.json` como sidecar **para todos** los bundles; un modelo con tokenizer SentencePiece (p. ej. `needle`) trae `tokenizer.model` + `vocab.txt`, no `tokenizer.json` → rechaza el zip, cae a build local, y ese transpile es **imposible** para arquitecturas ausentes de `transformers` (5.5.4 no contiene `needle`) | Paso `2b` en el `postinst`: parche idempotente del validador — para `tokenizer_type=sentencepiece` exige `special_tokens.json` + `tokenizer.model`; para el resto mantiene `tokenizer.json` (+`merges.txt` si `bpe`). Verificado end-to-end: `cactus download Cactus-Compute/needle` → `Ready at .../needle-cq4` y `cactus run` genera on-device (~177 tok/s) |
 
 ### Pipeline de construcción
 
@@ -392,7 +393,7 @@ cd packages/cactus && termux-create-package manifest.json
 cd packages/huggingface && termux-create-package manifest.json
 
 # Validación end-to-end en el dispositivo
-pkg install ./cactus_2.0.1-1_all.deb ./huggingface_1.27.0-1_all.deb
+pkg install ./cactus_2.0.1-3_all.deb ./huggingface_1.27.0-1_all.deb
 cactus convert Cactus-Compute/needle        # → "Model converted and ready"
 cactus run Cactus-Compute/needle
 huggingface-cli whoami
@@ -407,4 +408,5 @@ huggingface-cli whoami
 *   **`termux-create-package` busca los scripts de control en el directorio actual** si no se pasa `--control-files-dir`. Mantener `manifest.json`, `postinst` y `postrm` juntos en `packages/<pkg>/`. El directorio `DEBIAN/` (layout clásico de Debian) **no lo usa** esta herramienta — genera el control.tar desde el manifiesto —, así que se elimina para evitar archivos obsoletos.
 *   **Los manifiestos se llaman `manifest.json`** (corrigiendo el typo `manifiest.json`): `updateAIpkg` y los comandos de build apuntan al nombre nuevo.
 *   **Los binarios nativos de un CLI de IA pueden compilarse en el dispositivo** con el toolchain de Termux y aun así quedar con TLS mal alineado; `termux-elf-cleaner` es la pieza oficial que normaliza esos binarios (los deps del manifiesto deben incluir el paquete `termux-elf-cleaner`).
+*   **Los bugs de descarga/validación de bundles viven en el lado Python de cactus** (`cactus/cli/utils.py`), que se instala en `$HOME/.local/share/cactus/` — **fuera** de `packages/`. Cualquier fix de ese código no queda en el `.deb`: debe re-aplicarse como parche idempotente del `postinst` en cada instalación (paso `2b`, con veredicto `patched`/`already patched`/`PATTERN NOT FOUND` para no romper la instalación si upstream cambia el código).
 

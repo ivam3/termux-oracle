@@ -199,13 +199,13 @@ Smithery expone un endpoint unificado por namespace que enruta a **todos los MCP
 https://mcp.smithery.run/<namespace>
 ```
 
-Configuración en `opencode.json`:
+Configuración en `opencode.json` (reemplaza `<namespace>` por el namespace de **tu** cuenta de Smithery y `smry_...` por tu `X-API-Key`):
 
 ```json
 {
   "smithery": {
     "type": "remote",
-    "url": "https://mcp.smithery.run/ivam3-bh",
+    "url": "https://mcp.smithery.run/<namespace>",
     "enabled": true,
     "headers": {
       "X-API-Key": "smry_..."
