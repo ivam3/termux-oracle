@@ -1,5 +1,12 @@
 # Trape
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Trape?
 
 Trape es una herramienta de **Inteligencia de Fuentes Abiertas (OSINT)** y **ataques de ingeniería social**. Su propósito es rastrear y obtener información detallada de personas en tiempo real.

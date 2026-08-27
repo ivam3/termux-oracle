@@ -1,5 +1,12 @@
 # Xerosploit
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Xerosploit?
 
 Xerosploit es un **framework de pruebas de penetración** enfocado en la ejecución de **ataques Man-in-the-Middle (MITM)**. Su objetivo es hacer que la realización de estos ataques sea más fácil y accesible, incluso para usuarios que no son expertos en redes.

@@ -1,5 +1,12 @@
 # WBruter
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es WBruter?
 
 WBruter es una herramienta de línea de comandos diseñada para realizar **ataques de fuerza bruta** contra varios tipos de objetivos. Su función más específica es intentar descifrar el código PIN de 4 dígitos de un dispositivo Android (principalmente enfocado en Huawei y Samsung) a través de la interfaz de depuración USB (ADB).

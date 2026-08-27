@@ -1,4 +1,11 @@
 
+
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
 # Hunner-framework
 
 ## ¿Qué es Hunner-framework?

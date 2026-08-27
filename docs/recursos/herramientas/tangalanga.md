@@ -1,5 +1,12 @@
 # Tangalanga
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Tangalanga?
 
 Tangalanga es una herramienta de código abierto diseñada para **escanear y encontrar reuniones de Zoom activas y abiertas**. El nombre es una referencia humorística a "Doctor Tangalanga", un comediante argentino famoso por hacer bromas telefónicas.

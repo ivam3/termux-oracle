@@ -53,6 +53,7 @@ El paquete `.deb` de i-Haklab aplica un parche sobre `bin/walkie.js` (`~/.local/
 | `opencode` | `run` |
 | `gemini`, `qwen`, `qwen-code`, `mimo`, `mimocode`, `kilo`, `kilocode`, `minimax`, `mmx` | `-p` |
 | `copilot`, `copilot-cli`, `codebuff`, `freebuff`, `hermes`, `openclaw` | prompt posicional, subcomando vía `--agent-args` |
+| `cactus` | `run --prompt` (modelo on-device; respuesta limpia vía `--result-json`) |
 | `ollama` | REST API (sin CLI) |
 | cualquier otro | `<cli> <prompt>` (fallback genérico) |
 
@@ -63,6 +64,15 @@ Requiere un servidor Ollama en `http://127.0.0.1:11434` (configurable con `OLLAM
 Resolución de modelo: `--model` → `OLLAMA_MODEL` → primer modelo local de `/api/tags` (ignora los `:cloud`) → `qwen2.5-coder:1.5b`.
 
 Mantiene **historial rodante** en memoria (últimos 40 mensajes) para dar contexto entre mensajes; validado end-to-end (el agente recuerda datos de mensajes previos).
+
+### Cactus (IA on-device)
+
+El runner invoca `cactus run --prompt "<mensaje>"` sobre el modelo local (por defecto `google/gemma-4-E2B-it`). El modelo se pasa **posicional** (`cactus run [model]`), por lo que `--model` de walkie se reenvía como posición y no como `--model`. La respuesta se lee del `--result-json` que escribe el engine (`context_response`), así el canal solo ve la respuesta del asistente — sin el banner/`You:`/stats interactivos que cactus imprime en stdout. Primer uso puede requerir la descarga del modelo. Validado end-to-end vía P2P.
+
+```bash
+walkie agent equipo --cli cactus                          # modelo por defecto
+walkie agent equipo --cli cactus --model google/gemma-4-E2B-it
+```
 
 ### `--skip-git-repo-check`
 
@@ -187,6 +197,7 @@ o deshabilitar SELinux (`setenforce 0`), que restaura el comportamiento completo
 - ✅ Daemon arranca con el parche; comandos `status/connect/send/read` funcionan (same-machine).
 - ✅ Runner universal + Ollama validados end-to-end en i-Haklab: `walkie agent --cli ollama` responde vía P2P y mantiene contexto entre mensajes (recuerda el código secreto dado en un mensaje previo).
 - ✅ `codex exec --skip-git-repo-check` validado fuera de un repo git (sin el flag falla con "Not inside a trusted directory").
+- ✅ `walkie agent --cli cactus` validado end-to-end (v1.5.0-5): el agente responde vía P2P con la respuesta del modelo on-device leída de `--result-json` (canal limpio, sin framing del CLI).
 - ⏳ **Pendiente**: validación P2P real entre dos dispositivos en redes distintas (WAN) y en LAN.
 
 ## Consideraciones adicionales

@@ -1,5 +1,12 @@
 # SQLiv
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es SQLiv?
 
 SQLiv (Mass SQL Injection Vulnerability Scanner) es una herramienta de código abierto escrita en Python para el **descubrimiento de vulnerabilidades de inyección SQL**.

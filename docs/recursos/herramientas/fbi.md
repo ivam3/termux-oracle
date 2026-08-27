@@ -1,5 +1,12 @@
 # fbi (Framebuffer Imageviewer)
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es fbi?
 
 En el contexto de las herramientas de línea de comandos de Linux, `fbi` no tiene nada que ver con la agencia de investigación estadounidense. `fbi` es el acrónimo de **F**rame**b**uffer **I**mageviewer (Visor de Imágenes para Framebuffer).

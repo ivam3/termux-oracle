@@ -1,7 +1,7 @@
-# Quick guide for option chatGPT from command i-Haklab.
+# chatAI — Asistente de IA en terminal (i-HakLab)
 
-A simple, lightweight shell script to use OpenAI's chatGPT and DALL-E from the terminal.
-The script uses the `completions` endpoint and the `text-davinci-003` model for chatGPT and the `images/generations` endpoint for generating images.
+A simple, lightweight shell script to use OpenAI's chatAI and DALL-E from the terminal.
+The script uses the `completions` endpoint and the `text-davinci-003` model for chatAI and the `images/generations` endpoint for generating images.
 /
 ## Features
 
@@ -18,9 +18,9 @@ The script uses the `completions` endpoint and the `text-davinci-003` model for 
 
 ### Start
 
-  - Run the script by using the `chatGPT` option from the command i-Haklab anywhere
+  - Run the script by using the `chatAI` option from the command i-Haklab anywhere
   ```bash
-  i-Haklab chatGPT
+  i-Haklab chatAI
   ```
 
 ### Commands
@@ -33,11 +33,11 @@ The script uses the `completions` endpoint and the `text-davinci-003` model for 
 
 ### Chat context
 
-  - You can enable chat context mode for the model to remember your previous chat questions and answers. This way you can ask follow-up questions. To enable this mode start the script with `-c` or `--chat-context`. i.e. `i-Haklab chatGPT --chat-context` and start to chat normally.
+  - You can enable chat context mode for the model to remember your previous chat questions and answers. This way you can ask follow-up questions. To enable this mode start the script with `-c` or `--chat-context`. i.e. `i-Haklab chatAI --chat-context` and start to chat normally.
 
 ### Set request parameters
 
-  - To set request parameters you can start the script like this: `i-Haklab chatGPT --temperature 0.9 --model text-babbage:001 --max-tokens 100 --size 1024x1024`
+  - To set request parameters you can start the script like this: `i-Haklab chatAI --temperature 0.9 --model text-babbage:001 --max-tokens 100 --size 1024x1024`
   
     The available parameters are: 
       - temperature,  `-t` or `--temperature`

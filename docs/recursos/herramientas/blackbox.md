@@ -1,5 +1,12 @@
 # Blackbox (Pruebas de Caja Negra)
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es "Blackbox"?
 
 En el contexto de la ciberseguridad y las pruebas de software, el término **"Blackbox"** (Caja Negra) no se refiere a una única herramienta, sino a una **metodología de prueba**. Una prueba de caja negra es aquella en la que el analista o pentester no tiene ningún conocimiento previo sobre el funcionamiento interno del sistema que está evaluando.

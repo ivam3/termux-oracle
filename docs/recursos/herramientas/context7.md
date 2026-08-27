@@ -1,4 +1,4 @@
-# Context7 CLI (ctx7)
+# Context7 (context7 / ctx7)
 
 ## ¿Qué es Context7 CLI?
 

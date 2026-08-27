@@ -1,5 +1,12 @@
 # SQLite3
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es SQLite3?
 
 **SQLite3** es un motor de base de datos relacional, ligero, embebido y sin servidor.
@@ -306,4 +313,3 @@ Sin control de usuarios nativo
 
 https://sqlite.org/docs.html
 https://www.sqlite.org/lang.html
-

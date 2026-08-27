@@ -1,5 +1,12 @@
 # Admin Panel Finder
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es un "Admin Panel"?
 
 Un **panel de administración** (o "admin panel") es la interfaz privada de un sitio web o aplicación que los administradores utilizan para gestionar el contenido, los usuarios, la configuración y otras operaciones del sistema. Es el "detrás de cámaras" que no es accesible para los visitantes normales.

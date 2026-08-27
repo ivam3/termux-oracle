@@ -1,5 +1,12 @@
 # D-TECT
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es D-TECT?
 
 D-TECT es un framework de pruebas de penetración de código abierto, escrito en Python. Su objetivo es automatizar muchas de las tareas comunes de la fase de reconocimiento y detección de vulnerabilidades en una auditoría de seguridad web.

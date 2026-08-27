@@ -1,5 +1,12 @@
 # Fake-SMS (Suplantación de SMS)
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es una herramienta de "Fake SMS"?
 
 En el contexto de la ciberseguridad, una herramienta de "Fake SMS" no se refiere a un generador de conversaciones falsas para memes, sino a una utilidad para realizar **Suplantación de SMS (SMS Spoofing)**.

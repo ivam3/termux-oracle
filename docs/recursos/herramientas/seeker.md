@@ -1,5 +1,12 @@
 # Seeker
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Seeker?
 
 Seeker es una herramienta de prueba de penetración y hacking ético diseñada para obtener información de geolocalización de alta precisión de un objetivo. A diferencia de otras herramientas que se basan en la dirección IP (lo cual es muy impreciso), Seeker utiliza un enfoque de ingeniería social.

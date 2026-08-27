@@ -1,5 +1,12 @@
 # Storm-Breaker
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Storm-Breaker?
 
 Storm-Breaker es una herramienta de ingeniería social diseñada para obtener información sensible de un dispositivo objetivo, principalmente teléfonos móviles. Al igual que otras herramientas de phishing, funciona generando un enlace malicioso que, al ser abierto por la víctima, intenta obtener acceso a diversas funciones del dispositivo.

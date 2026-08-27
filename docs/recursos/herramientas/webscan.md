@@ -1,5 +1,12 @@
 # WebScan
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es WebScan?
 
 "WebScan" es un nombre genérico para una categoría de herramientas diseñadas para el **escaneo de vulnerabilidades en aplicaciones web**. En el contexto de esta colección de herramientas, se refiere a un script o programa de línea de comandos que automatiza la búsqueda de fallos de seguridad comunes en un sitio web.

@@ -1,5 +1,12 @@
 # EvilURL
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es EvilURL?
 
 EvilURL es una herramienta de ciberseguridad, escrita en Python, diseñada para generar y detectar **URLs maliciosas que utilizan ataques de homógrafos IDN**. Es una herramienta utilizada en pruebas de penetración y phishing para crear nombres de dominio que son visualmente idénticos o muy similares a dominios legítimos, pero que en realidad son completamente diferentes.

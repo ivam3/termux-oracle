@@ -1,5 +1,12 @@
 # Shellsploit Framework
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Shellsploit Framework?
 
 Shellsploit es un framework de código abierto utilizado para la generación de **shellcode**, **backdoors** (puertas traseras) e **inyectores**. Está diseñado para ayudar a los investigadores de seguridad y pentesters a crear payloads personalizados para una variedad de arquitecturas de CPU y sistemas operativos.

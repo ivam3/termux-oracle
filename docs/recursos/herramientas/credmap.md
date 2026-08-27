@@ -1,5 +1,12 @@
 # Credmap
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es Credmap?
 
 Credmap es una herramienta de código abierto diseñada para ilustrar el peligro de la **reutilización de credenciales**. Su función es tomar un par de credenciales (un nombre de usuario/correo y una contraseña) que han sido comprometidas en una fuga de datos (data breach) y probarlas automáticamente contra una lista de sitios web populares para ver si la víctima reutilizó la misma contraseña en otros lugares.

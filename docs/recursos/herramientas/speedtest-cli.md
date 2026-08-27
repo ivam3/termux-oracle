@@ -1,5 +1,12 @@
 # speedtest-cli (speedtest-cli de Python)
 
+> [!WARNING]
+> **⚠️ HERRAMIENTA DEPRECADA / OBSOLETA**
+> Esta herramienta ha sido eliminada de i-HakLab y del repositorio `ivam3/termux-packages`.
+> La documentación se conserva como referencia histórica.
+> **Fecha de deprecación:** 2026-08
+
+
 ## ¿Qué es speedtest-cli?
 
 `speedtest-cli` es una herramienta de línea de comandos escrita en **Python** que mide la velocidad de conexión a Internet utilizando los servidores de speedtest.net. Se instala mediante `pip` y no requiere dependencias externas más allá de Python 3.
