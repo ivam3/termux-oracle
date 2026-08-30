@@ -40,11 +40,10 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
   - `apt update && apt upgrade` solo para mantenimiento general.
   - NO mezcles fuentes de instalación de apps Termux (GitHub/F-Droid/Play Store).
 
-### i-HakLab
-- Suite que convierte Termux en un laboratorio portátil de ciberseguridad, desarrollo y automatización.
-- Instala **wrappers** en `~/.local/bin/` (apt, npm, pnpm) que redirigen paquetes Python/Node/Ruby.
-- Usa Fish shell por defecto, permite bash/zsh.
-- Incluye ~190 herramientas documentadas en `docs/recursos/herramientas/`.
+### i-HakLab (validar con `detect-env.sh` antes de asumir)
+- Suite que convierte Termux en laboratorio portátil. **No asumir instalado**: `detect-env.sh` retorna `ihaklab_installed` (`true`/`false`), `wrapper_apt` (`true` si `~/.local/bin/apt` es wrapper), `arch`.
+- Si `ihaklab_installed=true`: instala **wrappers** en `~/.local/bin/` (apt, npm, pnpm) que redirigen Python/Node/Ruby, usa Fish por defecto (permite bash/zsh), incluye ~190 herramientas en `docs/recursos/herramientas/`.
+- Si `false`: el agente debe **implementar el método subyacente** directamente (ver cada referencia `Sin i-HakLab`). Toda la info en `termux-oracle` está completa para replicar sin depender del binario `i-Haklab`.
 
 ## 3. Routing por intención
 
@@ -59,6 +58,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | proroot, proroom, runtime Linux sin ptrace | `references/docker-alternatives.md` | `docs/termux/proroot.md` |
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
+| Bypass /proc/net (Permission denied), ADB readproc, tráfico TCP/UDP sin root | `references/android-limitations.md#Bypass /proc/net via ADB shell` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` (ejemplo i-HakLab: `~/.local/bin/net-traffic-scan` si está instalado) |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
 | termux-packages (oficiales Termux), build environment, `build.sh`, `build-package.sh` | `references/tool-install.md` | `docs/termux/wiki-oficial/build-environment.md`, `docs/termux/wiki-oficial/building-packages.md` |
 | Compilar/portar software para Termux (Bionic, glibc), problemas de porting | `references/android-limitations.md` | `docs/termux/wiki-oficial/common-porting-problems.md`, `docs/termux/compilacion-glibc.md` |
@@ -90,19 +90,29 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 - `apt install` = no hace `apt update` automático. Usar solo si se acaba de hacer `apt update`.
 - En i-HakLab, `apt` es un wrapper que puede redirigir a pip/npm/gem.
 
-### Wrappers i-HakLab
-- `~/.local/bin/apt`: Si detecta módulo Python → `pip install`. Si detecta módulo Node → `npm install -g`. Si es nativo → delega a `$PREFIX/bin/apt`.
-- `~/.local/bin/npm`: Normaliza alias (`gemini-cli` → `@google/gemini-cli`), automatiza n8n, pnpm, open-lovable.
-- Post-instalación: `pkg2conf` aplica configuraciones (parches, symlinks, servicios).
+### Wrappers i-HakLab (validar antes de asumir)
+- **Validación**: Ejecuta `detect-env.sh` y verifica `ihaklab_installed` y `wrapper_apt`. Si `true`, los wrappers en `~/.local/bin/{apt,npm,pnpm}` existen y redirigen; si `false`, **no asumir**, implementar el método subyacente directamente.
+- **Con i-HakLab** (`ihaklab_installed=true`): `~/.local/bin/apt` → si detecta módulo Python → `pip install`, si Node → `npm install -g`, si nativo → delega a `$PREFIX/bin/apt`. `~/.local/bin/npm` normaliza alias (`gemini-cli` → `@google/gemini-cli`), automatiza `n8n`, `pnpm`, `open-lovable`. Post-instalación `pkg2conf` (`~/.local/libexec/pkg2conf`) aplica parches/symlinks/servicios si el paquete está en `~/.local/etc/i-Haklab/Tools/listofpkg2conf`.
+- **Sin i-HakLab** (replicable por cualquier agente): No usar `apt install <pip_pkg>` esperando redirección; usar directamente `pip install <pkg>` / `npm install -g <pkg>` / `gem install <pkg>` / `pkg install <nativo>`. Para post-configuración, replicar manualmente lo que hace `pkg2conf` (ver `references/ihaklab.md` y `references/tool-install.md`): crear symlinks, parchear configs, etc., sin depender del wrapper.
 
-### Adaptación glibc (Virtualización Ligera de Entorno)
-Técnica para ejecutar binarios Linux glibc en Termux sin proot, usada por todos los agentes AI nativos.
+### Adaptación glibc (Virtualización Ligera de Entorno) — replicable sin i-HakLab
+Técnica para ejecutar binarios Linux glibc en Termux (Bionic) sin proot, usada por agentes AI nativos. **Validar primero** `detect-env.sh` → `glibc_repo` y `arch` (`aarch64` soportado).
 
-- **Mecanismo**: binario real renombrado `.va39` + wrapper C (`*_helper.c`) que invoca `$PREFIX/glibc/lib/ld-linux-aarch64.so.1` con `--library-path`.
+- **Mecanismo (replicable)**: binario real renombrado `.va39` + wrapper C (`*_helper.c`) que invoca `$PREFIX/glibc/lib/ld-linux-aarch64.so.1` con `--library-path`. Pasos sin i-HakLab:
+  ```bash
+  pkg install glibc clang  # repo tur-repo / x11-repo
+  curl -L <url-binario-glibc> -o /tmp/agent.va39 && chmod +x /tmp/agent.va39
+  cat > /tmp/helper.c <<'C'
+  #include <unistd.h>
+  int main(int argc,char**argv){char *a[]={(char*)"/data/data/com.termux/files/usr/glibc/lib/ld-linux-aarch64.so.1","--library-path","/data/data/com.termux/files/usr/glibc/lib", "/path/to/agent.va39",0}; for(int i=1;i<argc;i++) a[3+i]=argv[i]; return execv(a[0],a);}
+  C
+  clang /tmp/helper.c -o ~/.local/bin/agent && chmod +x ~/.local/bin/agent
+  ```
 - **Por qué no patchelf**: Android/SELinux bloquea `seccomp` al parchear ELFs. La invocación directa del loader evita esto.
-- **Node.js glibc bridge**: OpenClaw usa Node.js estándar en `~/.openclaw-android/node`. Las herramientas npm heredan glibc automáticamente.
-- **Shim `glibc-compat.js`**: carga vía `NODE_OPTIONS`, redirige `process.execPath`, gestiona `LD_PRELOAD`, parchea `os.cpus`/`dns.lookup` para SELinux.
-- **Limitación TCMalloc**: binarios como `agy` (Antigravity CLI) usan `tcmalloc` que requiere 48 bits de espacio virtual. Algunos kernels Android limitan esto causando `Segmentation Fault`.
+- **Node.js glibc bridge** (si no hay helper): OpenClaw usa Node.js estándar en `~/.openclaw-android/node` (compilado para Linux glibc, no Bionic). Las herramientas npm instaladas desde ese Node heredan glibc automáticamente sin helper.
+- **Shim `glibc-compat.js`**: carga vía `NODE_OPTIONS="-r $PREFIX/share/agent/glibc-compat.js"`, redirige `process.execPath`, gestiona `LD_PRELOAD` (`libtermux-exec.so` off para glibc, on para hijos Termux), parchea `os.cpus`/`dns.lookup` para SELinux.
+- **Limitación TCMalloc**: binarios como `agy` (Antigravity CLI) usan `tcmalloc` que requiere 48 bits de espacio virtual. Algunos kernels Android limitan esto → `Segmentation Fault`/`Out of Memory` incluso con loader correcto. Workaround: usar versión `musl` o `npm`.
+- **Con i-HakLab**: `apt install <agente>` desde `ivam3/termux-packages` ya hace el renombre `.va39` + compilación helper + `pkg2conf`. **Sin i-HakLab**: replicar los 3 pasos manuales arriba (descargar binario glibc, crear helper, instalar). Ver `references/compilacion-glibc.md` y `references/agent-ecosystem.md` para tabla nativo vs proot vs npm.
 - **Usado por**: opencode, claude-code, codebuff, freebuff, mimocode, antigravity-cli, openclaw, mistral-vibe.
 
 ### termux-create-package
@@ -130,15 +140,28 @@ Servidores MCP compatibles con agentes AI en Termux:
 | **Engram** | `apt install engram` | Memoria persistente para agentes (Go binary) |
 | **Smithery** | `npm install -g @smithery/cli` | Requiere parche `process.platform` (android→linux). Usar endpoint unificado `https://mcp.smithery.run/<namespace>` en opencode |
 
-## 5. Reglas de ejecución
+### Bypass /proc/net via ADB shell (sin root)
+- **Síntoma**: `cat /proc/net/tcp: Permission denied`, `ss: Cannot open netlink socket`, `netstat: no support` en Termux (`u:r:untrusted_app:s0:c...`, sin `readproc`). Desde Android 10, SELinux bloquea `/proc/net`.
+- **Principio del bypass (replicable sin i-HakLab)**: `adb shell` corre como `uid=2000(shell)` `u:r:shell:s0` con `3009:readproc`+`3003:inet` → **sí** lee `/proc/net/{tcp,tcp6,udp,udp6,dev}`. Patrón mínimo:
+  ```bash
+  pkg install android-tools && adb devices # activar depuración inalámbrica
+  adb -s SERIAL shell cat /proc/net/tcp          # 69 líneas OK vs Permission denied en Termux
+  adb -s SERIAL shell cat /proc/net/tcp6          # IPv6
+  adb -s SERIAL shell "cat /proc/net/tcp; cat /proc/net/tcp6" | awk '...' # parsear hex2dec + rev8
+  ```
+  Para escribir en `~/.local/share` desde `shell` (sin permiso) usar `run-as com.termux mkdir -p ~/.local/share/traffic` o fallback `FALLBACK=/data/local/tmp/traffic` si `Permission denied`.
+- **Ejemplo integrado en i-HakLab (si `detect-env.sh` reporta `ihaklab_installed=true`)**: `~/.local/bin/net-traffic-scan` implementa el patrón completo: valida `adb devices` (`>1` → `select` + `adb -s`), `--dry-run` solo valida, `--once` 1 ciclo `timeout 5`, `--grid` Unicode default, cache `pm list packages --uid` en `/data/local/tmp/.net_cache`, migra `ips_24h` plain→grid, logs en `~/.local/share/traffic/` (fallback). Si **no** tienes i-HakLab, replica el `awk` de `net-traffic-scan` (hex2dec+decode_ip) sin depender del binario. Ver `references/android-limitations.md#Bypass /proc/net via ADB shell` para implementación completa.
 
-1. **Siempre preferir `pkg install` sobre `apt install`** para instalaciones individuales.
-2. Si el usuario no tiene i-HakLab, usar `pip install`/`npm install -g` directamente.
-3. Si el usuario tiene i-HakLab, `apt install <tool>` funciona (wrapper).
-4. Para herramientas Python con dependencias C, verificar primero si existe `python-<nombre>` en apt.
-5. Para herramientas glibc, instalar desde ivam3/termux-packages.
-6. No recomendar `--break-system-packages` sin antes ofrecer `venv` como alternativa.
-7. Si un comando falla, sugerir ejecutar `fixer` (diagnóstico automático).
+## 5. Reglas de ejecución (validar antes de asumir)
+
+1. **Detectar entorno primero**: `bash ~/.agents/skills/termux-oracle/scripts/detect-env.sh` → leer `ihaklab_installed`, `wrapper_apt`, `glibc_repo`, `arch`, `termux_native`.
+2. **Siempre preferir `pkg install` sobre `apt install`** para instalaciones individuales (evita 404). `apt update && apt upgrade` solo para mantenimiento.
+3. **Si `ihaklab_installed=false` o `wrapper_apt=false`**: **no asumir wrappers**; usar directamente `pip install <pkg>` / `npm install -g <pkg>` / `gem install <pkg>` / `pkg install <nativo>`, y replicar manualmente lo que haría `pkg2conf` (ver `references/ihaklab.md` y `references/tool-install.md`).
+4. **Si `ihaklab_installed=true` y `wrapper_apt=true`**: `apt install <tool>` funciona y redirige automáticamente (ver tabla en `references/tool-install.md:63`).
+5. Para herramientas Python con dependencias C, verificar primero `pkg search python-<nombre>` en apt (`pkg install python-numpy` evita compilar).
+6. Para herramientas glibc, si `glibc_repo=true` y `arch=aarch64` → `apt install <agente>` desde `ivam3/termux-packages` (helper C); si no, usar vía `npm`/`pip` (ver `references/agent-ecosystem.md` comparativa).
+7. No recomendar `--break-system-packages` sin antes ofrecer `venv` (`python -m venv ~/.venv && source ~/.venv/bin/activate`).
+8. Si un comando falla, sugerir `fixer` (`$PREFIX/bin/fixer` o `~/.local/bin/fixer`) y `termux-setup`.
 
 ## 6. Base de conocimiento adicional
 

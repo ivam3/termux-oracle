@@ -1,6 +1,8 @@
-# i-HakLab Reference
+# i-HakLab Reference — validar antes de asumir
 
-i-HakLab v3.12 es un laboratorio de hacking para Termux/Android creado por @Ivam3byCinderella.
+> **Validación**: Ejecuta `bash ~/.agents/skills/termux-oracle/scripts/detect-env.sh | jq .ihaklab_installed` . Si `false`, **no asumir** que `i-Haklab`, `~/.local/bin/apt`, `~/.local/bin/net-traffic-scan` o `~/.local/etc/i-Haklab/*` existen. Toda la info aquí es replicable sin i-Haklab (ver `Sin i-HakLab` en cada sección). Si `true`, puedes usar los wrappers y comandos tal cual.
+
+i-HakLab v3.13 es un laboratorio de hacking para Termux/Android creado por @Ivam3byCinderella. Si `detect-env.sh` reporta `ihaklab_installed=false`, replica el método subyacente descrito en cada sección sin depender del binario.
 
 ## Comando principal
 ```bash
@@ -99,10 +101,13 @@ Configurar API key en `opencode.json`:
 - Modelos 1.5b fallan en tareas de usuarios del sistema (ej. `cat /etc/passwd`); usar un modelo mayor cuando se requiera.
 - Documentación completa en `~/.local/etc/i-Haklab/Tools/Readme/ai.md`.
 
-## Direct Commands (sin prefijo i-Haklab)
-`apt`, `adminfiles`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `nls`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
+## Direct Commands (sin prefijo i-Haklab) — validar `detect-env.sh` primero
+> Si `ihaklab_installed=false`, estos comandos **no existen** como `~/.local/bin/*`. No asumir; replicar el método subyacente (ver `Sin i-HakLab` en cada caso) o instalar i-HakLab primero.
+
+`apt`, `adminfiles`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `net-traffic-scan`, `nls`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
 
 - `nls` → listar archivos en cajas/grids (alternativa a `ls` para texto en recuadros). Binario Go en `~/go/bin/nls`, declarado en `functions`.
+- `net-traffic-scan` → monitor de tráfico TCP/UDP vía ADB `readproc` bypass (ver `references/android-limitations.md#Bypass /proc/net via ADB shell`). Si no hay i-HakLab, replicar con `adb shell cat /proc/net/{tcp,udp}` + `awk hex2dec` (ver `~/.local/bin/net-traffic-scan` como referencia).
 
 ## Credenciales por defecto
 - Login i-HakLab: `Ivam3byCinderella`
@@ -138,12 +143,8 @@ i-Haklab show tutorials
 | `$PREFIX/usr/bin/fixer` | Diagnóstico y reparación |
 | `$PREFIX/share/man/man1/i-Haklab.1` | Man page |
 
-## Wrappers (comportamiento)
-- `apt install <herramienta>` → detecta si es Python/Node/Ruby y redirige a pip/npm/gem
-- Si es nativo, delega a `$PREFIX/bin/apt`
-- Post-instalación ejecuta `pkg2conf` si está en `listofpkg2conf`
-- `npm install <paquete>` → normaliza alias (ver tabla en `references/agent-ecosystem.md`), ejecuta pkg2conf
-- `smithery` (vía `@smithery/cli`) → pkg2conf parchea `process.platform` para Android y arregla shebang
-- `sleepwalker` → `npm install -g @sleepwalkerai/cli`; `sleepwalkerai` → `npx` (AI Visibility / Content Intelligence, ver `docs/recursos/herramientas/sleepwalker.md`)
-- `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp` previamente
-- `pnpm` → ejecuta `corepack enable && pnpm setup`
+## Wrappers (comportamiento) — validar `wrapper_apt` antes de asumir
+> **Validar**: `detect-env.sh | jq .wrapper_apt` . Si `false`, no hay wrappers; usar comandos subyacentes directamente.
+
+- **Con i-HakLab** (`wrapper_apt=true`): `apt install <herramienta>` → detecta si es Python/Node/Ruby y redirige a `pip`/`npm`/`gem`; si es nativo, delega a `$PREFIX/bin/apt`. Post-instalación `pkg2conf` si está en `listofpkg2conf`. `npm install <paquete>` normaliza alias (ver `references/agent-ecosystem.md`), ejecuta `pkg2conf`. `smithery` → `pkg2conf` parchea `process.platform`; `sleepwalker` → `npm install -g @sleepwalkerai/cli`; `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp`; `pnpm` → `corepack enable && pnpm setup`.
+- **Sin i-HakLab** (replicable): `pkg install <nativo>` / `pip install <pkg>` / `npm install -g <pkg>` / `gem install <pkg>` directamente, sin esperar redirección. Para post-config, replicar manualmente `pkg2conf` (symlinks, parches en `~/.config`, `~/.local/share`) ver `~/.local/libexec/pkg2conf` como referencia.

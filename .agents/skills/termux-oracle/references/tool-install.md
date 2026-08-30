@@ -59,14 +59,19 @@ gem install bettercap
 gem install aquatone
 ```
 
-## Wrapper apt (instalación unificada)
-Con i-HakLab instalado, usar `apt install <tool>` redirige automáticamente:
-| Escribes | Se instala realmente |
-|----------|---------------------|
-| `apt install sqlmap` | `python3 -m pip install sqlmap` |
-| `apt install bettercap` | `gem install bettercap` |
-| `apt install claude-code` | `npm install -g @anthropic-ai/claude-code` |
-| `apt install nmap` | `pkg install nmap` |
+## Wrapper apt (instalación unificada) — validar antes de asumir
+**Validación**: `bash ~/.agents/skills/termux-oracle/scripts/detect-env.sh | jq .wrapper_apt` y `jq .ihaklab_installed`. Si `true`, el wrapper `~/.local/bin/apt` existe y redirige; si `false`, **no asumir**, usar el comando subyacente directamente.
+
+**Con i-HakLab** (`wrapper_apt=true`): `apt install <tool>` redirige automáticamente:
+| Escribes | Se instala realmente | Subyacente sin i-HakLab |
+|----------|---------------------|-------------------------|
+| `apt install sqlmap` | `python3 -m pip install sqlmap` | `pip install sqlmap` |
+| `apt install bettercap` | `gem install bettercap` | `gem install bettercap` |
+| `apt install claude-code` | `npm install -g @anthropic-ai/claude-code` | `npm install -g @anthropic-ai/claude-code` |
+| `apt install nmap` | `pkg install nmap` | `pkg install nmap` |
+| `apt install -h` | muestra `help` de i-HakLab | `pkg install -h` o `apt --help` |
+
+**Sin i-HakLab** (replicable por cualquier agente): usar directamente `pkg install <nativo>` / `pip install <pkg>` / `npm install -g <pkg>` / `gem install <pkg>` sin esperar redirección. Para post-configuración (`pkg2conf`), replicar manualmente: ver `references/ihaklab.md#pkg2conf`.
 
 ## Adaptación glibc (Nativo vs Alternativas)
 Herramientas que requieren glibc (no Bionic nativo de Android). Tienen dos caminos de instalación:
@@ -94,10 +99,11 @@ apt update
 ```
 Más de 120 herramientas disponibles.
 
-## Regla general
-1. Si existe como `python-<nombre>` en apt → `pkg install python-<nombre>`
-2. Si es herramienta de seguridad popular → buscar en ivam3/termux-packages
-3. Si es módulo Python → `pip install` o `apt install <nombre>` (wrapper i-HakLab)
-4. Si es módulo Node.js → `npm install -g <nombre>` o `apt install <nombre>` (wrapper i-HakLab)
-5. Si es gema Ruby → `gem install <nombre>` o `apt install <nombre>` (wrapper i-HakLab)
-6. Si requiere glibc → instalar desde termux-packages
+## Regla general (validar `detect-env.sh` primero)
+1. Validar `detect-env.sh` → `arch`, `glibc_repo`, `wrapper_apt`.
+2. Si existe como `python-<nombre>` en apt (`pkg search python-<nombre>`) → `pkg install python-<nombre>` (evita compilar).
+3. Si es herramienta de seguridad popular y `glibc_repo=true` → buscar en `ivam3/termux-packages` (`apt update && apt search <tool>` tras añadir repo).
+4. Si es módulo Python y `wrapper_apt=false` → `pip install <nombre>` (o `python -m pip install`); si `wrapper_apt=true` → `apt install <nombre>` también funciona pero es wrapper.
+5. Si es módulo Node.js y `wrapper_apt=false` → `npm install -g <nombre>`; si `true` → `apt install <nombre>` redirige.
+6. Si es gema Ruby → `gem install <nombre>` (wrapper solo si `wrapper_apt=true`).
+7. Si requiere glibc y `arch=aarch64` y `glibc_repo=true` → `apt install <agente>` (nativo, ver `Adaptación glibc` abajo); si no, usar vía `npm`/`pip`.
