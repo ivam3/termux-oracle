@@ -539,6 +539,7 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 - **`freebuff`**: versión gratuita y con publicidad de Codebuff, impulsada por modelos open-source (DeepSeek, MiMo, Kimi, MiniMax). Sin suscripción ni configuración.
 - **`openspec`**: framework ligero spec-driven para planificación y revisión por intención compatible con múltiples agentes de codificación IA (Claude Code, Cursor, OpenCode, etc.).
 - **`codex`, `gemini-cli`, `github-copilot`, `mistralAI`, `ollama`**: herramientas mencionadas en el ecosistema de “vibe coding” sobre Termux.
+- **`zcode`**: harness de vibe coding con IA (GLM-5.3) como app Electron arm64; en Termux corre como binario glibc nativo sobre `termux-x11` (`zcode --help` estático sin X, GUI con `DISPLAY=:0`).
 
 ### Análisis forense móvil e ingeniería inversa Android
 
