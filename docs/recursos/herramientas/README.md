@@ -87,6 +87,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [fbi](./fbi.md)
 * [ffmpeg](./ffmpeg.md)
 * [finalrecon](./finalrecon.md)
+* [firefox-proot](./firefox-proot.md)
 * [fish](./fish.md)
 * [fixer](./fixer.md)
 * [freebuff](./freebuff.md)
@@ -261,6 +262,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 
 * [tangalanga](./tangalanga.md)
 * [telegram](./telegram.md)
+* [telegram-desktop](./telegram-desktop.md)
 * [termux-desktop-xfce](./termux-desktop-xfce.md)
 * [termux-docker-qemu](./termux-docker-qemu.md)
 * [tigervnc](./tigervnc.md)
