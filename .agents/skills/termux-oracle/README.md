@@ -25,6 +25,7 @@ cp -r .agents/skills/termux-oracle ~/.agents/skills/termux-oracle
 | `references/tool-install.md` | 190+ herramientas con su método de instalación exacto |
 | `references/android-limitations.md` | Bionic vs glibc, proot, ADB, limitaciones de Android |
 | `references/docker-alternatives.md` | udocker, termux-docker-qemu, proot |
+| `references/firefox-proot.md` | Firefox real en Ubuntu proot-distro vía repo Mozilla APT (sin snap) |
 | `references/python-ecosystem.md` | Paquetes Python precompilados, compilación, entornos virtuales |
 | `scripts/detect-env.sh` | Script de detección automática del entorno |
 

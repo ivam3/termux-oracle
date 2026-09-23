@@ -58,3 +58,25 @@
   - Wrapper colorea con `~/.local/etc/i-Haklab/{variables,functions}` (`ok`/`msg`/`info`/`warn`/`tip`/`err`, `banner`) y concatena ambos en `~/.local/share/traffic/combined_*.txt`.
   - Flags `--dry-run` (solo `adb shell id`+`cat /proc/net/tcp`), `--once` (`timeout 5`), `--grid` (default Unicode) / `--no-grid` (plain).
 - **Variantes sin ADB**: `dumpsys netstats` / `dumpsys connectivity` / `dumpsys network_management` (estadísticas por UID, no conexiones live), VPNService (requiere app). `tcpdump`/`tshark` requieren `CAP_NET_RAW` / root, no viables en `shell`.
+
+## SELinux niega hardlinks (EACCES en link) — patrón replicable sin root
+
+- **Problema**: en algunos kernels/dispositivos, SELinux niega la creación de hardlinks dentro del directorio privado de Termux aunque permisos, dueño y filesystem sean correctos. El síntoma es `EACCES: permission denied, link '<staging>' -> '<destino>'` en cualquier app que publique archivos atómicamente vía `link()` (staging + `linkSync` + `unlinkSync`). Caso real: OpenClaw no creaba `~/.openclaw/workspace/SOUL.md` y **todo** mensaje de Telegram fallaba en loop (`spooled update … failed; keeping for retry`).
+- **Entorno donde se observó** (2026-09-09): kernel `5.10.240-android12-9-00003-g1951d14a348b-ab14110529` (aarch64), Android 14 (SDK 34), Cubot KINGKONG 9, Termux, filesystem `f2fs`. No es exclusivo de ese kernel: cualquier política que niegue `{ link }` a `untrusted_app` lo reproduce.
+- **Pista clave (no es permisos)**: `ls -la` muestra dueño/escritura correctos y `copyFile`/`rename`/`symlink` funcionan; **solo** `link` falla. Repro mínima con el Node del proyecto (aquí el glibc de OpenClaw, sirve cualquier `node`):
+  ```bash
+  node -e "const fs=require('fs'),os=require('os'),d=os.tmpdir();fs.writeFileSync(d+'/link-probe-a','x');try{fs.linkSync(d+'/link-probe-a',d+'/link-probe-b');console.log('link OK')}catch(e){console.log('link FAIL '+e.code)};try{fs.unlinkSync(d+'/link-probe-a')}catch(e){};try{fs.unlinkSync(d+'/link-probe-b')}catch(e){}"
+  # → link FAIL EACCES  (si sale OK, tu kernel sí permite hardlinks: no aplica este doc)
+  ```
+- **Diagnóstico confirmatorio**: `logcat -d | grep -i "avc.*denied.*link"` → `avc: denied { link } for name="SOUL.md" … scontext=u:r:untrusted_app_27:… tcontext=u:object_r:app_data_file:… tclass=file permissive=0`. `permissive=0` = denegación real, no hay `chmod`/`chown` que lo arregle.
+- **Principio de la solución (replicable por cualquier agente, sin i-HakLab)**: no usar `link()`; publicar con `copyFileSync(origen, destino, COPYFILE_EXCL)` + `unlinkSync(origen)` (o `rename` si el flujo lo permite). `COPYFILE_EXCL` preserva la semántica no-clobber del `link` original (`EEXIST` sigue significando "ya publicado"). Patrón de parche:
+  ```js
+  try { fs.linkSync(staging, target); }
+  catch (linkError) {
+    if (!linkError || !["EACCES","EPERM","EXDEV","ENOSYS","ENOTSUP","EOPNOTSUPP"].includes(linkError.code)) throw linkError;
+    fs.copyFileSync(staging, target, fs.constants.COPYFILE_EXCL); // EEXIST → ya publicado
+  }
+  fs.unlinkSync(staging);
+  ```
+- **Ejemplo aplicado**: paquete `openclaw` de `ivam3/termux-packages`, script `platforms/openclaw/patches/openclaw-hardlink-fallback.sh` (enganchado en `openclaw-apply-patches.sh`, idempotente por marcador, localiza el `dist/workspace-*.mjs` por contenido porque el hash del nombre cambia por versión). Parchea 2 sitios con publicación atómica: `publishBootstrapFile` (`SOUL.md`) y `publishManifest` de workers. Tras parchear hay que **reiniciar el gateway/proceso** para que cargue el `dist` modificado.
+- **Playbook para el agente**: ante `EACCES` en `link`/`linkSync` en Termux → 1) correr la repro mínima, 2) confirmar con `logcat` (`avc denied { link }`), 3) aplicar fallback copy+rename/EXCL en el código (o parche post-instalación si es `node_modules`), 4) reiniciar el servicio afectado. Precedente del mismo bloqueo: CodeGraph MCP exige `CODEGRAPH_NO_DAEMON=1` por "SELinux bloquea hardlinks para PID".
