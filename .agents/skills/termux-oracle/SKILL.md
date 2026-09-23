@@ -59,6 +59,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
 | Bypass /proc/net (Permission denied), ADB readproc, tráfico TCP/UDP sin root | `references/android-limitations.md#Bypass /proc/net via ADB shell` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` (ejemplo i-HakLab: `~/.local/bin/net-traffic-scan` si está instalado) |
+| EACCES en link/hardlink, bootstrap (SOUL.md) u otro archivo no se crea, agente AI sin respuesta en bucle | `references/android-limitations.md#SELinux niega hardlinks (EACCES en link)` | Fallback a copy+rename (ejemplo aplicado: `openclaw-hardlink-fallback.sh` en `ivam3/termux-packages`) |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
 | termux-packages (oficiales Termux), build environment, `build.sh`, `build-package.sh` | `references/tool-install.md` | `docs/termux/wiki-oficial/build-environment.md`, `docs/termux/wiki-oficial/building-packages.md` |
 | Compilar/portar software para Termux (Bionic, glibc), problemas de porting | `references/android-limitations.md` | `docs/termux/wiki-oficial/common-porting-problems.md`, `docs/termux/compilacion-glibc.md` |
@@ -82,6 +83,8 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
 | Crear/empaquetar .deb, termux-create-package | `references/tool-install.md` | `docs/termux/paquetes.md#termux-create-package`, `docs/termux/wiki-oficial/creating-new-package.md` |
 | Actualizar versiones de paquetes de Termux, autoupdate | `references/tool-install.md` | `docs/termux/wiki-oficial/auto-updating-packages.md` |
+| Firefox en Ubuntu proot-distro pide snap / error conexión | `references/firefox-proot.md` | `docs/recursos/herramientas/firefox-proot.md` |
+| freebuff TUI: `!comando` → `terminal command broker protocol response was missing` | `references/freebuff-broker.md` | `docs/recursos/herramientas/freebuff.md`, `docs/termux/compilacion-glibc.md` |
 
 ## 4. Conceptos clave inline
 
@@ -112,6 +115,7 @@ Técnica para ejecutar binarios Linux glibc en Termux (Bionic) sin proot, usada 
 - **Node.js glibc bridge** (si no hay helper): OpenClaw usa Node.js estándar en `~/.openclaw-android/node` (compilado para Linux glibc, no Bionic). Las herramientas npm instaladas desde ese Node heredan glibc automáticamente sin helper.
 - **Shim `glibc-compat.js`**: carga vía `NODE_OPTIONS="-r $PREFIX/share/agent/glibc-compat.js"`, redirige `process.execPath`, gestiona `LD_PRELOAD` (`libtermux-exec.so` off para glibc, on para hijos Termux), parchea `os.cpus`/`dns.lookup` para SELinux.
 - **Limitación TCMalloc**: binarios como `agy` (Antigravity CLI) usan `tcmalloc` que requiere 48 bits de espacio virtual. Algunos kernels Android limitan esto → `Segmentation Fault`/`Out of Memory` incluso con loader correcto. Workaround: usar versión `musl` o `npm`.
+- **Trampa self-re-exec (`process.execPath` = loader)**: un binario glibc lanzado vía `ld-linux … real` ve `execPath` = loader. Si se re-lanza a sí mismo (broker de freebuff, watchdogs, updaters), el spawn falla. Fix: exponer el wrapper nativo por env + parchear el punto de invocación (caso documentado: `references/freebuff-broker.md`). `patchelf` del INTERP da segfault (seccomp) — no es vía.
 - **Con i-HakLab**: `apt install <agente>` desde `ivam3/termux-packages` ya hace el renombre `.va39` + compilación helper + `pkg2conf`. **Sin i-HakLab**: replicar los 3 pasos manuales arriba (descargar binario glibc, crear helper, instalar). Ver `references/compilacion-glibc.md` y `references/agent-ecosystem.md` para tabla nativo vs proot vs npm.
 - **Usado por**: opencode, claude-code, codebuff, freebuff, mimocode, antigravity-cli, openclaw, mistral-vibe.
 

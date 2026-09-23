@@ -17,9 +17,10 @@ Freebuff democratiza el acceso a la asistencia de codificación con IA siendo co
 ## Instalación
 
 ```bash
-# Mediante el wrapper de i-HakLab (redirige automáticamente a npm):
+# Nativo glibc (recomendado, repo ivam3/termux-packages):
+# binario real en ~/.local/share/freebuff/freebuff.real + wrapper C en $PREFIX/bin/freebuff
 apt install freebuff
-# O directamente con npm:
+# O directamente con npm (sin loader glibc, rendimiento medio):
 npm install -g freebuff
 ```
 
@@ -65,6 +66,14 @@ freebuff
 *   **Modo Limitado:** Incluye DeepSeek V4 Flash y MiMo 2.5, con 5 sesiones de 1 hora por día.
 *   **Privacidad:** No almacenan tu código base. Solo registros mínimos para depuración. No entrenan con tus datos.
 *   **Modelos:** En modo completo puedes elegir entre DeepSeek V4 Pro, MiMo 2.5 Pro, Kimi K2.6, DeepSeek V4 Flash, MiMo 2.5 y MiniMax M3.
+
+## Solución de problemas
+
+### `!comando` → `terminal command broker protocol response was missing`
+
+*   **Causa:** el TUI ejecuta cada `!cmd` en un broker aislado vía `spawn(process.execPath, ["--terminal-command-broker"])`. Bajo el wrapper glibc, `process.execPath` es el loader (`$PREFIX/glibc/lib/ld-linux-aarch64.so.1`), no el binario, así que el spawn falla y nunca se escribe el fichero de protocolo.
+*   **Solución:** incluida desde `freebuff 0.0.174-2` (helper exporta `FB=$PREFIX/bin/freebuff` + parche binario `process.execPath`→`process.env.FB` + autotest en `postinst`). Si ves el error, reinstala: `apt install --reinstall freebuff`.
+*   Detalle técnico y réplica manual: ver `references/freebuff-broker.md` en la skill `termux-oracle` y `docs/termux/compilacion-glibc.md#self-re-exec`.
 
 ---
 

@@ -99,6 +99,14 @@ proot-distro login alpine -- /usr/bin/opencode "$@"
 
 **Migración**: Los paquetes actuales (julio 2026+) reemplazaron proot por el helper C + loader glibc. Si actualizas desde una versión anterior, el `postinst` elimina el directorio proot antiguo automáticamente.
 
+### Límite: binarios con self-re-exec (caso freebuff)
+
+Un binario lanzado como `ld-linux … real` ve `process.execPath` (Bun/Node) = **el loader**, no el binario real (`freebuff --smoke-tree-sitter` lo confirma). Si el programa se re-lanza a sí mismo — freebuff lo hace por cada `!cmd` vía `spawn(process.execPath, ["--terminal-command-broker"])` — el spawn invoca al loader con un flag como programa → `unrecognized option` → el hijo nunca nace (en freebuff: `terminal command broker protocol response was missing`).
+
+* `patchelf --set-interpreter` **no** es alternativa: el ELF parcheado muere con `Segmentation fault` al ejecutarse directo (seccomp de Android/SELinux).
+* Patrón aplicado (`freebuff 0.0.174-2` en `ivam3/termux-packages`): el helper C exporta la ruta del wrapper nativo (`setenv("FB", "$PREFIX/bin/freebuff", 1)`) y el `postinst` parchea el punto de invocación en el binario con un reemplazo de **misma longitud** (`executable:process.execPath` → `executable:process.env.FB  `, ocurrencia única verificada) más un autotest del broker que aborta la instalación si falla.
+* Vale para cualquier binario Bun/glibc con self-re-exec (brokers, watchdogs, auto-updaters). Detalle completo y réplica sin i-HakLab: `references/freebuff-broker.md` en la skill `termux-oracle`.
+
 ---
 
 ## 💡 Impacto en DeepWiki / Asistentes IA
