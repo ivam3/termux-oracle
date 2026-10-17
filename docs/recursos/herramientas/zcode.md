@@ -136,5 +136,43 @@ Los debs arrastran extras que también se copian (ej. `libfreebl3`, `libnssckbi`
     termux-x11 :0 & DISPLAY=:0 zcode /tmp  # ventana oscura con texto visible
     ```
 
+## CLI + API (sin X11): `zcode-cli` y `APIKEY_zcode`
+
+Además de la app gráfica existe el **CLI npm** (`zcode-app-cli`, modelos GLM vía API Zhipu).
+No necesita X11 ni Electron: funciona en Termux puro.
+
+### Instalación y convivencia con el wrapper desktop
+
+```bash
+npm install -g zcode-app-cli   # i-Haklab lo configura vía pkg2conf (caso zcode-app-cli)
+```
+
+* Upstream trae shebang `#!/usr/bin/env node` → se repara con `termux-fix-shebang`.
+* El binario npm vive como **`zcode-cli`**; `zcode` queda reservado al wrapper desktop
+  (si `npm` crea `$PREFIX/bin/zcode` apuntando al CLI, `pkg2conf` lo renombra a `zcode-cli`).
+* Pre-configuración: Android bloquea hardlinks (`EACCES`), y el launcher crea
+  `config.json` vía `tmp+link()` — por eso `pkg2conf` pre-siembra
+  `~/.zcode/cli/config.json` (modo `600`) desde `config.example.json`.
+
+### API key (`i-Haklab setapikey` → `APIKEY_zcode`)
+
+```bash
+i-Haklab setapikey   # plataforma zcode → guarda APIKEY_zcode en ~/.local/etc/i-Haklab/variables
+```
+
+### Uso desde Neovim (CodeCompanion, adapter `zcode`)
+
+`~/.config/nvim/lua/plugins/codecompanion.lua` define el adapter `zcode`
+(`openai_compatible` contra `https://open.bigmodel.cn/api/paas/v4`, modelo `glm-4.5-air`,
+lee `APIKEY_zcode` del entorno). Para usarlo:
+
+```vim
+:CodeCompanionChat adapter=zcode
+```
+
+o edita `strategies` (`chat`/`inline`/`agent`) en ese archivo. No requiere el binario
+`zcode`/`zcode-cli`: habla directo con la API por HTTP (vía `plenary.nvim`, que en Termux
+usa `$PREFIX/tmp` gracias al workaround de `TMPDIR`/`XDG_RUNTIME_DIR` en el mismo archivo).
+
 ---
 *Nota: ZCode integra los modelos GLM en el ecosistema i-Haklab como app gráfica nativa glibc.*

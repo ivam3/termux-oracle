@@ -18,7 +18,8 @@ Esta configuración utiliza `lazy.nvim` como gestor de plugins.
 
 | Plugin | Repositorio | Descripción |
 | :--- | :--- | :--- |
-| **Code Companion** | `olimorris/codecompanion.nvim` | **Asistente de IA principal.** |
+| **Code Companion** | `olimorris/codecompanion.nvim` | **Asistente de IA principal (Gemini por defecto; 13 proveedores configurables).** |
+| **Ollama** | `nomnivore/ollama.nvim` | **IA local (deepseek-coder:1.3b). Requiere `ollama serve` activo.** |
 | **nvim-ufo** | `kevinhwang91/nvim-ufo` | **Plegado de código avanzado.** |
 | **nvim-cmp** | `hrsh7th/nvim-cmp` | **Autocompletado (LSP + snippets).** |
 | **Mason** | `williamboman/mason.nvim` | **Instalador de servidores LSP (solo referencia).** |
@@ -26,15 +27,21 @@ Esta configuración utiliza `lazy.nvim` como gestor de plugins.
 | **Telescope** | `nvim-telescope/telescope.nvim` | **Buscador interactivo universal.** |
 | **Nvim Tree** | `nvim-tree/nvim-tree.lua` | **Explorador de archivos lateral.** |
 | **zk-nvim** | `mickael-menu/zk-nvim` | Toma de notas Zettelkasten. |
-| **Conform** | `stevearc/conform.nvim` | Formateador automático al guardar. |
+| **Conform** | `stevearc/conform.nvim` | Formateador manual (`<leader>fm`). |
 | **Tokyo Night** | `folke/tokyonight.nvim` | Tema de colores principal. |
 | **Lualine** | `nvim-lualine/lualine.nvim` | Barra de estado inferior. |
 | **Bufferline** | `akinsho/bufferline.nvim` | Gestión de pestañas superior. |
 | **Toggleterm** | `akinsho/toggleterm.nvim` | Terminales integradas. |
-| **Significant** | `elpiloto/significant.nvim` | Animaciones de diagnóstico. |
 | **Auto Pairs** | `jiangmiao/auto-pairs` | Cierre automático de paréntesis. |
-| **Neural** | `dense-analysis/neural` | Cliente de IA secundario. |
 | **Treesitter** | `nvim-treesitter/nvim-treesitter` | Resaltado de sintaxis avanzado. |
+| **Vim Grammarous** | `rhysd/vim-grammarous` | Revisión gramatical y ortográfica. |
+| **GitHub Copilot** | `github/copilot.vim` | Sugerencias de código de Copilot. |
+| **Indent Blankline** | `lukas-reineke/indent-blankline.nvim` | Guías de sangría en todas las líneas. |
+| **Git.nvim** | `dinhhuy258/git.nvim` | Comandos de Git dentro del editor. |
+| **Gitsigns** | `lewis6991/gitsigns.nvim` | Indicadores de cambios Git en el margen. |
+| **Smear Cursor** | `sphamba/smear-cursor.nvim` | Efecto "smear" para el cursor. |
+| **Transparent** | `xiyaowong/transparent.nvim` | Fondo transparente del editor. |
+| **cmp-nvim-lua** | `hrsh7th/cmp-nvim-lua` | Autocompletado para la API de Neovim Lua. |
 
 ---
 
@@ -59,7 +66,8 @@ El explorador de archivos se encuentra en el lateral izquierdo.
 
 ## 5. Atajos de Teclado Personalizados
 
-La `<leader>` key está configurada como la coma (`,`).
+La `<leader>` key está configurada como la coma (`,`), igual que `<localleader>`
+(usada por mapeos locales de buffer/filetype).
 
 ### Navegación y Ventanas
 | Atajo | Descripción |
@@ -69,9 +77,7 @@ La `<leader>` key está configurada como la coma (`,`).
 | `<C-k>` | Moverse a la ventana superior. |
 | `<C-l>` | Moverse a la ventana derecha. |
 | `<leader>w` | Guardar archivo actual (`:write`). |
-| `<C-w>` | Guardar archivo actual (`:w`). |
 | `<leader>x` | Guardar y cerrar Neovim (`:x`). |
-| `<C-x>` | Guardar y cerrar Neovim. |
 | `<C-c>` | Salir de Neovim sin guardar (`:q!`). |
 | `<leader>ei` | Abrir configuración `init.lua`. |
 
@@ -104,8 +110,16 @@ La `<leader>` key está configurada como la coma (`,`).
 | `<A-,>cc` | Abrir chat de **Code Companion**. |
 | `<A-,>ci` | Code Companion Inline (Vibe coding). |
 | `<A-,>ce` | Explicar código con **Code Companion**. |
-| `<leader>n` | Activar interfaz de **Neural**. |
 | `<leader>fm` | Formatear código con **Conform**. |
+| `,lm` (visual) | Enviar selección a **Ollama local** (requiere `ollama serve`; avisa si no está disponible). |
+
+### IA local (Ollama)
+
+Modelo por defecto: `deepseek-coder:1.3b`. Neovim **no** instala ni arranca Ollama:
+instálalo con `pkg install ollama`, luego `ollama serve` y `ollama pull deepseek-coder:1.3b`.
+La tecla `,lm` se usa **en modo visual** (selecciona código primero) y avisa si falta
+el binario o el servidor. Al salir de Neovim, si `ollama serve` sigue activo, pregunta
+si mantenerlo (por defecto) o apagarlo — el servidor es compartido con el resto del sistema.
 
 ### Plegado de Código (nvim-ufo)
 
@@ -149,12 +163,11 @@ Configurado en `lua/plugins/lsp-zero.lua` con **API nativa `vim.lsp.start`**.
 - `mason.nvim` + `mason-lspconfig.nvim` — instalación de servidores (solo `lua_ls` via Mason)
 - **Configuración nativa**: `vim.lsp.start()` con autocomandos `FileType` (sin lsp-zero ni lspconfig)
 
-**Servidores pre-configurados:**
-`bashls` (Shell), `clangd` (C/C++), `lua_ls` (Lua), `pyright` (Python)
-
-**Instalación manual de servidores adicionales:**
-- Vía npm: `npm install -g <lsp-server>`
-- `:Mason` — interfaz gráfica (no recomendado en Termux: los binarios son glibc y no funcionan sin proot)
+**Servidores pre-configurados (bajo demanda, solo arrancan si el binario existe):**
+`bashls` (Shell), `clangd` (C/C++), `lua_ls` (Lua), `pyright` (Python), `jdtls` (Java),
+`smali_lsp` (Smali) y —en `lua/plugins/react.lua`— `ts_ls` (JS/TS/React), `html`, `cssls` y
+`tailwindcss`. **Nada se instala solo:** el servidor ausente se instala una vez con `:Mason`
+(o `npm install -g <lsp-server>`, Mason no recomendado en Termux).
 
 Funcionan en buffers con servidor de lenguaje activo (Python, Lua, Bash, C/C++, etc.).
 
@@ -455,6 +468,11 @@ Los objetos funcionan con cualquier operador: `y` (copiar), `c` (cambiar), `d` (
 **`lua/plugins/lsp-zero.lua`**:
 ```lua
 local lsp_servers = {
+  jdtls = {
+    cmd = { 'jdtls' }, -- :MasonInstall jdtls
+    filetypes = { 'java' },
+    root_dir = require('lspconfig.util').root_pattern('pom.xml', 'build.gradle', '.git'),
+  },
   bashls = {
     cmd = { 'bash-language-server', 'start' },
     filetypes = { 'bash', 'sh' },
@@ -477,6 +495,10 @@ local lsp_servers = {
         workspace = { library = { vim.env.VIMRUNTIME } },
       },
     },
+  },
+  smali_lsp = {
+    cmd = { 'smali-lsp', 'lsp' },
+    filetypes = { 'smali' },
   },
 }
 
@@ -503,6 +525,10 @@ end
 ```
 
 **Nota sobre Termux/Android:**
+- `nvim-lspconfig` pineado a v1.8.0 sólo como dependencia de Mason. No se usa para configurar servidores.
+- Los servidores web (`ts_ls`, `html`, `cssls`, `tailwindcss`) viven en `lua/plugins/react.lua`
+  con el mismo patrón bajo demanda (arranque por `FileType`, instalación manual vía `:Mason`,
+  sin `ensure_installed` para no pesar a todos los usuarios).
 - `nvim-lspconfig` está pineado a `v1.8.0` porque versiones ≥ v2.6 deprecan la API antigua. No se usa para configurar servidores — sólo permanece como dependencia de Mason.
 - Los servidores instalados via `npm` (`pyright-langserver`, `bash-language-server`) tienen shebangs rotos (`#!/usr/bin/env`). Reparar con: `termux-fix-shebang $(which pyright-langserver) $(which bash-language-server)`
 - `lua-language-server` se instala con `pkg install lua-language-server` (el binario de Mason es glibc y no funciona en Termux).

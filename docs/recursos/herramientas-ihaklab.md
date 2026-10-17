@@ -301,6 +301,7 @@ i-HakLab show tutorials
 | `i-HakLab ESmsg` | `encode\|decode` | Codifica o decodifica mensajes secretos en archivo ASCII. |
 | `i-HakLab fakeID` | `<opciones+args>` | Crea una identidad ficticia con email y teléfono real. |
 | `i-HakLab tunnel` | `<puerto+subdominio>` | Inicia cliente SSH para solicitar TCP port forwarding. |
+| `i-HakLab txt2media` | `-t|-f ... -o ... [-v voz] [-r vel.] | --video ... --audio ...` | Convierte texto en audio (Edge-TTS) e incrusta audio en video (ffmpeg). Ver `herramientas/txt2media.md`. |
 | `i-HakLab handler` | `<archivo.rc>` | Inicia handler en `msfconsole` con configuración previa. |
 | `i-HakLab msf` | `dirscan\|embed\|payapk\|payexe\|paypdf\|shodan` | Automatizaciones de Metasploit. |
 | `i-HakLab ngroklink` | — | Muestra el enlace actual de ngrok. |
@@ -390,6 +391,7 @@ Estos comandos no requieren el prefijo `i-HakLab`; se ejecutan directamente en l
 | `LOCALHOST` | Muestra la IP actual en LAN. |
 | `lock` | Bloquea la pantalla de Termux. |
 | `mypip` | Muestra la IP pública. |
+| `net-traffic-scan` | Monitor de tráfico TCP/UDP sin root (bypass `/proc/net` vía `adb shell`). Requiere depuración inalámbrica emparejada. Ver `herramientas/net-traffic-scan.md`. |
 | `openvpn` | Abre la aplicación Android de OpenVPN. |
 | `omf` | Cambia tema de Oh My Fish. |
 | `phantom-ps` | Cambia el límite de procesos fantasma a `2147483647`. Requiere división de pantalla/opciones de desarrollador según la ayuda. |
@@ -594,20 +596,24 @@ El archivo base está en:
 ~/.local/etc/i-Haklab/envvariables
 ```
 
+Está organizado en 8 secciones (identidad/sesión, HOME/PATH, Go, Java, compiladores C/C++,
+LLVM, Android/NDK, VS Code Server) más aliases. Es global y mínimo a propósito: lo específico
+de cada herramienta se configura bajo demanda al instalarla, no aquí.
+
 Define, entre otras cosas:
 
 - `DISPLAY=:0` para entorno gráfico/Termux Wayland.
-- `USER=i-HakLab` como usuario por defecto si no se cambia con `i-HakLab setuser`.
+- `USER=ivam3` como usuario por defecto (se cambia con `i-Haklab setuser`).
 - `GPG_TTY=$(tty)`.
 - `GYP_DEFINES="android_ndk_path=''"` para compilación de módulos Node nativos.
-- `HOME=/data/data/com.termux/files/home`.
-- `PATH="$HOME/.local/bin:/data/data/com.termux/files/usr/bin:$HOME/go/bin"`.
+- `HOME=/data/data/com.termux/files/home` si no está definido.
+- `PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.local/share/pnpm/bin:$PREFIX/lib/bin:$PREFIX/bin"`
+  (`.local/bin` primero para interceptar los wrappers `apt`/`npm`/`pnpm`).
 - `GOPATH`, `GOROOT`, `GOCACHE`, `GOMODCACHE` para Go.
 - `JAVA_HOME`, `LD_LIBRARY_PATH`, `LLVM_BUILD`, `LLVM_HOME`.
-- `CC=clang`, `CXX=clang++`, `ANDROID_NDK_HOME`, `ANDROID_API_LEVEL=24`.
+- `CC=clang`, `CXX=clang++` (+ `CFLAGS`), `ANDROID_NDK_HOME`, `ANDROID_API_LEVEL=24`.
 - `TOOLS=$HOME/.local/share`.
 - `VSCODE_EXTENSIONS_DIR=$HOME/.local/share/code-server/extensions`.
-- `EDITOR=nvim` y `VISUAL=nvim`: editor por defecto del sistema. Usado por `git`, `opencode (comando /editor)`, `crontab`, `sudoedit`, etc. Se omite ruta absoluta porque `nvim` está en el `PATH`.
 
 Aliases definidos por el entorno:
 

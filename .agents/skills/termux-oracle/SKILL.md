@@ -58,7 +58,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | proroot, proroom, runtime Linux sin ptrace | `references/docker-alternatives.md` | `docs/termux/proroot.md` |
 | Python, pip, compilación, venv | `references/python-ecosystem.md` | `docs/termux/python.md`, `docs/termux/paquetes.md#6` |
 | ADB, depuración inalámbrica | `references/android-limitations.md` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` |
-| Bypass /proc/net (Permission denied), ADB readproc, tráfico TCP/UDP sin root | `references/android-limitations.md#Bypass /proc/net via ADB shell` | `docs/android/adb.md`, `docs/android/wireless-debugging.md` (ejemplo i-HakLab: `~/.local/bin/net-traffic-scan` si está instalado) |
+| Bypass /proc/net (Permission denied), ADB readproc, tráfico TCP/UDP sin root | `references/android-limitations.md#Bypass /proc/net via ADB shell` | `docs/android/adb.md`, `docs/android/wireless-debugging.md`, `docs/recursos/herramientas/net-traffic-scan.md` (ejemplo i-HakLab: `~/.local/bin/net-traffic-scan` si está instalado) |
 | EACCES en link/hardlink, bootstrap (SOUL.md) u otro archivo no se crea, agente AI sin respuesta en bucle | `references/android-limitations.md#SELinux niega hardlinks (EACCES en link)` | Fallback a copy+rename (ejemplo aplicado: `openclaw-hardlink-fallback.sh` en `ivam3/termux-packages`) |
 | termux-packages (repo Ivam3) | `references/tool-install.md` | `docs/recursos/termux-packages.md` |
 | termux-packages (oficiales Termux), build environment, `build.sh`, `build-package.sh` | `references/tool-install.md` | `docs/termux/wiki-oficial/build-environment.md`, `docs/termux/wiki-oficial/building-packages.md` |
@@ -78,6 +78,7 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Hermes Agent, instalación, configuración | `references/hermes-agent.md` | `docs/recursos/herramientas/hermes-agent.md` |
 | Walkie (walkie-sh), comunicación P2P entre agentes/humano, canales | `references/agent-ecosystem.md` | `docs/recursos/herramientas/walkie.md` |
 | Walkie-TG, puente Walkie ↔ Telegram (marcadores `photo:`/`file:`, prompt sugerido para agentes) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/walkie-tg.md` |
+| TTS / voz sintética, texto a MP3, incrustar audio en video (Edge-TTS + ffmpeg) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/txt2media.md` |
 | Muse Code (Meta), agente IA de codificación, instalación `.deb`, wrapper proot, auto-actualización | `references/agent-ecosystem.md` | `docs/recursos/herramientas/muse-code.md`, `docs/termux/paquetes.md#termux-create-package` |
 | Adaptación glibc (deep dive), shim compat, TCMalloc | `references/agent-ecosystem.md` | `docs/termux/compilacion-glibc.md` |
 | Error de compilación/instalación | `references/python-ecosystem.md` | `docs/termux/troubleshooting.md`, `docs/termux/fixer.md` |
