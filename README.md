@@ -94,7 +94,7 @@ This downloads and installs the skill in `~/.agents/skills/termux-oracle/`, read
 
 ## 💡 How to interact with DevinAI on this Wiki?
 
-This documentation has been semantically optimized. You can ask complex questions to the assistant via the [DevinAI](https://deepwiki.com/ivam3/termux-oracle) button on the [Telegram bot](https://t.me/ivam3_bot), such as:
+This documentation has been semantically optimized. You can ask complex questions to the DevinAI assistant (not Ivam3) via the [DevinAI](https://deepwiki.com/ivam3/termux-oracle) button on the [Telegram bot](https://t.me/ivam3_bot), such as:
 * *"How do I fix the CANNOT LINK EXECUTABLE error in Termux?"*
 * *"What is the difference between pkg and apt in i-HakLab?"*
 * *"How do the apt, npm, and pnpm wrappers work in i-HakLab?"*

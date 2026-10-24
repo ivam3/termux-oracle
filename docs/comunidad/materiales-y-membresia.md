@@ -1,14 +1,14 @@
 # Material Educativo de la Comunidad y Membresía SUDOERS 📚🛡️
 
-El ecosistema **i-HakLab** e **Ivam3bycinderella** no es solo una suite de herramientas; es una plataforma de aprendizaje activa donde compartimos recursos de programación, ciberseguridad, administración de sistemas y hacking ético.
+El ecosistema **i-HakLab** e **Ivam3bycinderella** no es solo una suite de herramientas; es una plataforma de aprendizaje activa donde la comunidad comparte recursos de programación, ciberseguridad, administración de sistemas y hacking ético.
 
-Aquí se detalla todo el material gratuito disponible para la comunidad, los retos CTF locales, los beneficios de nuestra membresía VIP **SUDOERS** y cómo adquirirla.
+Aquí se detalla todo el material gratuito disponible para la comunidad, los retos CTF locales, los beneficios de la membresía VIP **SUDOERS** y cómo adquirirla.
 
 ---
 
 ## 🌐 1. Material Gratuito para la Comunidad
 
-Creemos firmemente en el libre acceso al conocimiento. Por ello, ofrecemos una gran cantidad de recursos que puedes consultar tanto desde tu terminal Termux como a través de nuestras plataformas.
+La comunidad cree firmemente en el libre acceso al conocimiento. Por ello, ofrece una gran cantidad de recursos que puedes consultar tanto desde tu terminal Termux como a través de sus plataformas.
 
 ### A. Comandos Integrados en la Terminal (`i-HakLab`)
 Si tienes instalada la suite **i-HakLab**, puedes acceder a contenido didáctico directamente desde la línea de comandos ejecutando:
@@ -20,7 +20,7 @@ Si tienes instalada la suite **i-HakLab**, puedes acceder a contenido didáctico
 > Estos comandos están integrados directamente en el entorno de la shell y descargan/muestran el contenido de forma optimizada para su consumo en terminal.
 
 ### B. El Bot de Telegram (`@Ivam3_bot`)
-Nuestro bot oficial de soporte y distribución es una herramienta automatizada muy potente. A través de él, puedes acceder a:
+El bot oficial de soporte y distribución es una herramienta automatizada muy potente. A través de él, puedes acceder a:
 * **Video Cursos de Programación**: Cursos interactivos y estructurados que van desde los fundamentos hasta el nivel avanzado.
 * **Arsenal de Libros**: Una inmensa biblioteca digital con manuales de hacking, redes, Linux, Python, bases de datos y desarrollo de software.
 * **Enlace de Acceso**: [@Ivam3_bot en Telegram](https://t.me/ivam3_bot)
@@ -46,7 +46,7 @@ Al unirte a SUDOERS, desbloqueas una serie de ventajas de formación exclusiva y
 | **Video Tutoriales de Hacking** | Explicaciones paso a paso de procesos de hacking, análisis de vulnerabilidades reales y metodologías ofensivas. |
 | **HTB desde Termux** | Resolución detallada de retos y máquinas de **Hack The Box (HTB)** realizados de forma nativa e íntegra utilizando **Termux** como plataforma de auditoría principal. |
 | **Canal Privado de Telegram** | Acceso a un canal privado de Telegram que aloja todo el material exclusivo. Aunque el contenido es el mismo que en YouTube, esta opción te permite descargar, reproducir en segundo plano y ver el material de manera más fluida y directa sin anuncios. |
-| **Asesoría Personalizada** | Contacto y comunicación directa con **Ivam3** para resolver dudas específicas, guiarte en tus proyectos o darte soporte técnico personalizado. |
+| **Asesoría Personalizada** | Beneficio de la membresía: contacto y comunicación directa con **Ivam3** para resolver dudas específicas, guiarte en tus proyectos o darte soporte técnico personalizado. No lo ofrece el agente. |
 
 ---
 

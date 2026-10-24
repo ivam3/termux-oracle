@@ -1,6 +1,6 @@
 # Preguntas Frecuentes de la Comunidad (FAQ) 👥
 
-Aquí recopilamos las dudas generales sobre la comunidad **Ivam3bycinderella**, el soporte de las herramientas y la filosofía de desarrollo. Para preguntas puramente técnicas de la terminal, consulta el [FAQ de Termux](../termux/paquetes.md).
+Aquí se recopilan las dudas generales sobre la comunidad **Ivam3bycinderella**, el soporte de las herramientas y la filosofía de desarrollo. Para preguntas puramente técnicas de la terminal, consulta el [FAQ de Termux](../termux/paquetes.md).
 
 ### ¿Quién mantiene el proyecto i-HakLab?
 El proyecto es conceptualizado, programado y mantenido por **Ivam3**, con el apoyo y retroalimentación constante de la comunidad "Ivam3bycinderella". 
@@ -24,10 +24,10 @@ La comunidad proporciona video cursos de programación, un arsenal de libros té
 Para más detalles, consulta la guía de [Material Educativo](./materiales-y-membresia.md).
 
 ### ¿Qué es la membresía SUDOERS y cuáles son sus beneficios?
-**SUDOERS** es nuestra membresía VIP de soporte y formación técnica avanzada. Ofrece acceso a:
+**SUDOERS** es la membresía VIP de soporte y formación técnica avanzada. Ofrece acceso a:
 * Video tutoriales detallados paso a paso sobre procesos de hacking y resolución de retos de Hack The Box desde Termux.
 * Un canal privado de Telegram con todo el contenido disponible para su fácil descarga y reproducción en segundo plano.
-* Contacto directo con **Ivam3** para asesorías y soporte personalizado.
+* Beneficio de la membresía: contacto directo con **Ivam3** para asesorías y soporte personalizado (no lo ofrece el agente).
 Puedes unirte a través de [YouTube](https://www.youtube.com/@ivam3bycinderella/join) o directamente en el bot [@Ivam3_bot](https://t.me/ivam3_bot). Consulta todos los detalles en la página de [Membresía SUDOERS](./materiales-y-membresia.md).
 
 ### ¿Cómo configuro las claves de API para usar los módulos de IA de i-HakLab?

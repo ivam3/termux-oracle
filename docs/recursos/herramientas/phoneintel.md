@@ -40,7 +40,7 @@ El formato general del comando es `phoneintel <opción> <número_de_teléfono>`.
     Este es el comando principal para recopilar todos los datos disponibles sobre un número de teléfono.
 
     ```bash
-    phoneintel --info +34613814500
+    phoneintel --info +34613814500  # número de ejemplo
     ```
     La salida incluirá detalles como el país, el prefijo, el tipo de línea (móvil, fijo) y el operador.
 
@@ -48,7 +48,7 @@ El formato general del comando es `phoneintel <opción> <número_de_teléfono>`.
     Crea consultas de Google especializadas para buscar el número en diferentes tipos de sitios web.
 
     ```bash
-    phoneintel +34613814500 --dorks --type social_networks
+    phoneintel +34613814500 --dorks --type social_networks  # número de ejemplo
     ```
     -   `--type`: Puedes especificar categorías como `social_networks`, `forums`, `classifieds`, `ecommerce`, `news`, `blogs`, `job_sites`, `pastes`, `reputation`, `phone_directories`, `people_search` o `all`.
 
@@ -56,7 +56,7 @@ El formato general del comando es `phoneintel <opción> <número_de_teléfono>`.
     Algunas integraciones pueden permitir la visualización de la ubicación aproximada en OpenStreetMap (requiere una API key de MapQuest, que se puede configurar).
 
     ```bash
-    phoneintel --info +34613814500 --map
+    phoneintel --info +34613814500 --map  # número de ejemplo
     ```
 
 4.  **Integración con APIs Externas (ej. Neutrino):**
@@ -67,7 +67,7 @@ El formato general del comando es `phoneintel <opción> <número_de_teléfono>`.
     phoneintel --neutrino --login --id TU_API_ID --key TU_API_KEY
 
     # Luego, usar la funcionalidad de Neutrino
-    phoneintel --neutrino +34613814500
+    phoneintel --neutrino +34613814500  # número de ejemplo
     ```
 
 5.  **Procesar Múltiples Números desde un Archivo (`--search --input`):**

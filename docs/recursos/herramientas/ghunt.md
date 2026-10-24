@@ -63,7 +63,7 @@ Una vez autenticado, puedes usar los diferentes módulos de GHunt.
 -   **Investigar por ID de Gaia:**
     El "Gaia ID" es el identificador numérico único de una cuenta de Google. Si ya lo conoces, puedes usarlo directamente.
     ```bash
-    ghunt gaia 118200258141978259231
+    ghunt gaia 118200258141978259231  # ID de ejemplo
     ```
 
 ### Información que puede revelar

@@ -15,4 +15,4 @@ Para mantener un entorno de aprendizaje óptimo, seguro y profesional dentro de 
 
 ## 3. Respeto y Comunidad
 * **Cero Tolerancia al Spam:** Queda prohibida la promoción de canales externos, venta de servicios no autorizados, o inundación de mensajes (Flood) sin relación con la temática técnica del grupo.
-* **Respeto Mutuo:** Tratarse con cordialidad. No se tolerarán insultos, actitudes elitistas hacia los principiantes ("RTFM" agresivo) ni discursos de odio. Todos empezamos desde cero.
+* **Respeto Mutuo:** Tratarse con cordialidad. No se tolerarán insultos, actitudes elitistas hacia los principiantes ("RTFM" agresivo) ni discursos de odio. Todos parten de cero.

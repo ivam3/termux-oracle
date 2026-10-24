@@ -1,6 +1,6 @@
 # Enlaces de Interés y Herramientas Recomendadas 🌐🔗
 
-Aquí recopilamos todos los enlaces oficiales de la comunidad **Ivam3bycinderella**, canales de comunicación, bots de soporte y plataformas recomendadas para la práctica técnica.
+Aquí se recopilan todos los enlaces oficiales de la comunidad **Ivam3bycinderella**, canales de comunicación, bots de soporte y plataformas recomendadas para la práctica técnica.
 
 ---
 
@@ -33,7 +33,7 @@ Apoya el desarrollo de las herramientas y accede a contenido de hacking ético a
 
 ## 🎯 Plataformas CTF y Práctica Recomendadas
 
-Para complementar el material didáctico y los retos locales (LAN), te recomendamos registrarte y practicar en las siguientes plataformas de seguridad:
+Para complementar el material didáctico y los retos locales (LAN), se recomienda registrarse y practicar en las siguientes plataformas de seguridad:
 
 * **[Hack The Box (HTB)](https://www.hackthebox.com/)**: Plataforma de referencia global para pentesting. *(Ideal para seguir los tutoriales de SUDOERS desde Termux)*.
 * **[OverTheWire](https://overthewire.org/)**: Ideal para aprender comandos de Linux ( Bandit) y seguridad a nivel de binarios ( Leviathan).

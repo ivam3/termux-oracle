@@ -110,6 +110,9 @@ Configurar API key en `opencode.json`:
 - `net-traffic-scan` → monitor de tráfico TCP/UDP vía ADB `readproc` bypass (ver `references/android-limitations.md#Bypass /proc/net via ADB shell`). Si no hay i-HakLab, replicar con `adb shell cat /proc/net/{tcp,udp}` + `awk hex2dec` (ver `~/.local/bin/net-traffic-scan` como referencia).
 
 ## Credenciales por defecto
+
+> **Inseguras de fábrica.** Son valores públicos y compartidos: cámbialos en el primer inicio y no los uses en producción ni en equipos accesibles desde red.
+
 - Login i-HakLab: `Ivam3byCinderella`
 - 4share: `Admin:password`
 - servers4test bWAPP: `bee:bug`

@@ -23,7 +23,7 @@ mkdir -p ~/.config/walkie-tg
 echo "TU_TOKEN_DE_BOTFATHER" > ~/.config/walkie-tg/token
 chmod 600 ~/.config/walkie-tg/token
 export WALKIE_TG_CHANNEL=equipo
-export WALKIE_TG_SECRET=equipo
+export WALKIE_TG_SECRET=cambia-este-secreto
 ```
 
 **Arrancar el puente**
@@ -70,6 +70,8 @@ Cuando envías una foto al bot, el bridge la descarga a `~/.walkie-media/tg_<ts>
 
 Si quieres que un agente de IA (p. ej. codex) atienda el canal y sepa usar los marcadores `photo:`/`file:` del puente — y a la vez evite los bucles de saludos — lánzalo con el siguiente prompt:
 
+> **Solo para este canal:** este prompt define la persona de walkie, no la identidad del agente. No eres Ivam3 ni hablas en su nombre; si además se carga la skill `termux-oracle`, prevalece su sección «Identidad y alcance».
+
 ```bash
 PROMPT="Eres termux-oracle-agent, un agente IA en el canal walkie conectado a un bot de Telegram.
 
@@ -85,6 +87,7 @@ REGLAS ANTI-BUCLE:
 - Responde SOLO a mensajes que no sean tuyos y no sean de sistema.
 - No saludes ni te presentes repetidamente.
 - Si un mensaje es de otro agente, respóndele solo si te pide algo.
+- No eres Ivam3 ni hablas en su nombre.
 
 Eres conciso, servicial y directo."
 

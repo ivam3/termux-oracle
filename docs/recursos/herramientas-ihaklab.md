@@ -24,6 +24,8 @@ El proyecto agrupa herramientas **open source** recomendadas por Ivam3 para:
 
 ## 2. Referencias rápidas críticas
 
+> ⚠️ **Credenciales inseguras de fábrica.** Son valores públicos y compartidos: cámbialos en el primer inicio y no los uses en producción ni en equipos accesibles desde red.
+
 | Elemento | Dato clave |
 |---|---|
 | Login por defecto | `Ivam3byCinderella` |
@@ -359,7 +361,7 @@ i-HakLab ESmsg decode
 i-HakLab tunnel -p 4444 -s my-subdomain
 i-HakLab ngrokssh -p 4546 -t http -f /ruta/id_rsa
 i-HakLab ngrokssh -p 8080 -t tcp
-i-HakLab phonescan 525584923476
+i-HakLab phonescan 525584923476  # número de ejemplo
 i-HakLab qemufy VM_image.zip
 i-HakLab qemufy rm
 i-HakLab 4share localtunnel
@@ -439,7 +441,7 @@ i-HakLab passwd set
 i-HakLab passwd new
 ```
 
-Permite configurar login de Termux por contraseña — por defecto se menciona `Ivam3byCinderella` en el README — o huella.
+Permite configurar login de Termux por contraseña — por defecto se menciona `Ivam3byCinderella` en el README, valor público que debe cambiarse tras instalar — o huella.
 
 ### Distribuciones Linux con `proot`
 

@@ -2,25 +2,25 @@
 
 Los retos **Capture The Flag (CTF)** son competiciones y ejercicios prácticos de seguridad informática en los que los participantes deben buscar vulnerabilidades, explotarlas y encontrar una pista (llamada "flag" o bandera) que demuestra que han comprometido el sistema.
 
-En el ecosistema de **Ivam3bycinderella**, promovemos activamente el desarrollo de habilidades de hacking ético mediante la resolución de estos retos en diversos entornos.
+El ecosistema de **Ivam3bycinderella** promueve activamente el desarrollo de habilidades de hacking ético mediante la resolución de estos retos en diversos entornos.
 
 ---
 
 ## 🏠 1. Retos CTF Locales (LAN) de la Comunidad
 
-Organizamos y distribuimos retos CTF para realizar de forma local.
+La comunidad organiza y distribuye retos CTF para realizar de forma local.
 * **Propósito**: Permitir que los miembros de la comunidad practiquen técnicas de red, escaneo, explotación y pivoting dentro de una Red de Área Local (LAN) sin necesidad de infraestructura en la nube o conexión activa a internet.
 * **Características**:
   * Diseñados para ser desplegados en equipos de laboratorio domésticos (computadoras, servidores locales o incluso otros dispositivos).
   * Enfocados en vulnerabilidades web clásicas, fallos de configuración de red y escalada de privilegios en Linux.
-* **Cómo participar**: Los archivos de despliegue e instrucciones de estos retos se distribuyen periódicamente mediante nuestro bot oficial [@Ivam3_bot](https://t.me/ivam3_bot) y se debaten en los grupos de la comunidad.
+* **Cómo participar**: Los archivos de despliegue e instrucciones de estos retos se distribuyen periódicamente mediante el bot oficial [@Ivam3_bot](https://t.me/ivam3_bot) y se debaten en los grupos de la comunidad.
 
 ---
 
 ## 👑 2. Resolución de Retos HTB desde Termux (Exclusivo SUDOERS)
 
 La membresía VIP **SUDOERS** incluye un enfoque práctico y avanzado en la resolución de máquinas y retos de **Hack The Box (HTB)**.
-* **El Reto de Termux**: En lugar de usar una distribución de escritorio tradicional (como Kali Linux), enseñamos a configurar y explotar las máquinas de Hack The Box utilizando **exclusivamente Termux en tu dispositivo Android**.
+* **El Reto de Termux**: En lugar de usar una distribución de escritorio tradicional (como Kali Linux), la comunidad enseña a configurar y explotar las máquinas de Hack The Box utilizando **exclusivamente Termux en tu dispositivo Android**.
 * **Contenido**:
   * Video tutoriales detallados paso a paso.
   * Explicación de las herramientas de consola adaptadas para Termux.
@@ -31,7 +31,7 @@ La membresía VIP **SUDOERS** incluye un enfoque práctico y avanzado en la reso
 
 ## 🌐 3. Plataformas CTF Externas Recomendadas
 
-Para aquellos que están comenzando o desean seguir practicando a diario, recomendamos encarecidamente explorar estas plataformas gratuitas de aprendizaje:
+Para aquellos que están comenzando o desean seguir practicando a diario, se recomienda encarecidamente explorar estas plataformas gratuitas de aprendizaje:
 
 ### A. OverTheWire (Ideal para Principiantes)
 Una suite de juegos orientados a la terminal que te enseña desde el uso básico de Linux hasta explotación binaria básica.

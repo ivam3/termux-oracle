@@ -15,8 +15,8 @@ Termux provee un entorno Linux robusto, pero configurar un arsenal de herramient
 * **Profesionales / Pentesters:** Administradores de sistemas y analistas de seguridad que requieren una suite de herramientas ligera y portable para auditorías rápidas en campo o automatización remota.
 * **Comunidad Hispana:** Apasionados de la cultura de terminal que buscan material didáctico, claro, directo y en español.
 
-## ¿Qué diferencia a nuestra comunidad de otros canales?
+## ¿Qué diferencia a la comunidad de otros canales?
 A diferencia de los grupos tradicionales que solo comparten enlaces o scripts maliciosos sin explicación ("Script Kiddies"), la comunidad **Ivam3bycinderella** y el ecosistema **i-HakLab** se fundamentan en tres pilares esenciales:
-1. **Comprensión Teórica-Práctica:** No enseñamos a copiar y pegar comandos; explicamos qué hace cada herramienta, qué dependencias requiere y cómo solucionar sus errores.
+1. **Comprensión Teórica-Práctica:** La comunidad no enseña a copiar y pegar comandos; explica qué hace cada herramienta, qué dependencias requiere y cómo solucionar sus errores.
 2. **Evolución Tecnológica Constante:** El proyecto se mantiene al día con los cambios del ecosistema Android. Un ejemplo claro es la transición en la versión 3.12 del comando `chatGPT` hacia `chatAI`, ampliando capacidades y adaptándose a múltiples proveedores de IA, así como la inclusión de suites avanzadas como `androforensic` y `qemufy`.
 3. **Optimización Móvil Extrema:** Cada script de i-HakLab está específicamente diseñado para superar las limitaciones de pantalla y entrada táctil de los teléfonos móviles mediante menús interactivos ultra-veloces.
