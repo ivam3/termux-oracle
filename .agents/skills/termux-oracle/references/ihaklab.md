@@ -104,7 +104,7 @@ Configurar API key en `opencode.json`:
 ## Direct Commands (sin prefijo i-Haklab) — validar `detect-env.sh` primero
 > Si `ihaklab_installed=false`, estos comandos **no existen** como `~/.local/bin/*`. No asumir; replicar el método subyacente (ver `Sin i-HakLab` en cada caso) o instalar i-HakLab primero.
 
-`apt`, `adminfiles`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `net-traffic-scan`, `nls`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
+`apt`, `adminfiles`, `cam-float`, `cam-usb`, `cmd`, `fixer`, `gitbrowsering`, `lock`, `mypip`, `net-traffic-scan`, `nls`, `phone-cam`, `phone-float`, `proxy`, `rmcache`, `serverapache`, `serverphp`, `sudo`, `traductor`, `postgresql`
 
 - `nls` → listar archivos en cajas/grids (alternativa a `ls` para texto en recuadros). Binario Go en `~/go/bin/nls`, declarado en `functions`.
 - `net-traffic-scan` → monitor de tráfico TCP/UDP vía ADB `readproc` bypass (ver `references/android-limitations.md#Bypass /proc/net via ADB shell`). Si no hay i-HakLab, replicar con `adb shell cat /proc/net/{tcp,udp}` + `awk hex2dec` (ver `~/.local/bin/net-traffic-scan` como referencia).
@@ -149,5 +149,5 @@ i-Haklab show tutorials
 ## Wrappers (comportamiento) — validar `wrapper_apt` antes de asumir
 > **Validar**: `detect-env.sh | jq .wrapper_apt` . Si `false`, no hay wrappers; usar comandos subyacentes directamente.
 
-- **Con i-HakLab** (`wrapper_apt=true`): `apt install <herramienta>` → detecta si es Python/Node/Ruby y redirige a `pip`/`npm`/`gem`; si es nativo, delega a `$PREFIX/bin/apt`. Post-instalación `pkg2conf` si está en `listofpkg2conf`. `npm install <paquete>` normaliza alias (ver `references/agent-ecosystem.md`), ejecuta `pkg2conf`. `smithery` → `pkg2conf` parchea `process.platform`; `sleepwalker` → `npm install -g @sleepwalkerai/cli`; `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp`; `pnpm` → `corepack enable && pnpm setup`.
+- **Con i-HakLab** (`wrapper_apt=true`): `apt install <herramienta>` → detecta si es Python/Node/Ruby y redirige a `pip`/`npm`/`gem`; si es nativo, delega a `$PREFIX/bin/apt`. Post-instalación `pkg2conf` si está en `listofpkg2conf`. `npm install <paquete>` normaliza alias (ver `references/agent-ecosystem.md`), ejecuta `pkg2conf`. Desde v3.13.32 el wrapper npm/pnpm separa opciones de paquetes (cualquier flag se pasa intacto, el orden no importa, varios paquetes en una llamada, sin `pushd $HOME`, `npm install` sin args instala el proyecto y `npm install -g` sin paquete da error de uso). `smithery` → `pkg2conf` parchea `process.platform`; `sleepwalker` → `npm install -g @sleepwalkerai/cli`; `n8n` → instala `nodejs-lts`, `libsqlite`, `sqlite`, `pm2`, `gyp`; `pnpm` → `corepack enable && pnpm setup`.
 - **Sin i-HakLab** (replicable): `pkg install <nativo>` / `pip install <pkg>` / `npm install -g <pkg>` / `gem install <pkg>` directamente, sin esperar redirección. Para post-config, replicar manualmente `pkg2conf` (symlinks, parches en `~/.config`, `~/.local/share`) ver `~/.local/libexec/pkg2conf` como referencia.

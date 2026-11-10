@@ -24,6 +24,7 @@ Advanced configuration guides, package management, and Linux environment on Andr
 * [Package Management (`pkg` vs `apt`) and `apt`/`npm`/`pnpm` wrappers](./docs/termux/paquetes.md)
 * [🛠️ 'fixer' Wrapper and Automation](./docs/termux/fixer.md)
 * [🖥️ Graphical Interface with Termux-X11](./docs/termux/termux-x11.md)
+* [🎥 OBS Studio and Phone/USB Cameras](./docs/recursos/herramientas/obs-studio.md)
 * [Storage Access](./docs/termux/almacenamiento.md)
 * [SSH Server](./docs/termux/ssh.md)
 * [Version Control with Git](./docs/termux/git.md)

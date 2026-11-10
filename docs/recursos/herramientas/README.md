@@ -179,6 +179,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### O
 
 * [objection](./objection.md)
+* [obs-studio](./obs-studio.md)
 * [octosuite](./octosuite.md)
 * [omf](./omf.md)
 * [open-lovable](./open-lovable.md)
@@ -263,6 +264,7 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 * [tangalanga](./tangalanga.md)
 * [telegram](./telegram.md)
 * [telegram-desktop](./telegram-desktop.md)
+* [terminus-game](./terminus-game.md)
 * [termux-desktop-xfce](./termux-desktop-xfce.md)
 * [termux-docker-qemu](./termux-docker-qemu.md)
 * [tigervnc](./tigervnc.md)
@@ -312,4 +314,6 @@ Aquí se encuentra la documentación detallada y manuales de uso para cada una d
 ### Z
 
 * [zaproxy](./zaproxy.md)
+* [zcode](./zcode.md)
+* [zcode-cli](./zcode-cli.md)
 * [zsh](./zsh.md)

@@ -70,3 +70,14 @@ am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity
   # Luego ejecuta tu app gráfica:
   DISPLAY=:1 gallery_app
   ```
+
+## 🎥 OBS Studio
+
+OBS puede ejecutarse dentro de Termux-X11. i-HakLab añade fuentes de cámara del teléfono y USB mediante MJPEG local:
+
+```bash
+apt install obs-studio
+DISPLAY=:1 obs
+```
+
+La guía completa, URLs de los streams, escenas y solución de problemas está en [OBS Studio y cámaras](../recursos/herramientas/obs-studio.md).

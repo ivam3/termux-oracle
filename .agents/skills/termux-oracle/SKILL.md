@@ -78,10 +78,13 @@ Esto retorna JSON con: `termux_native`, `proot_distro`, `ssh`, `ihaklab_installe
 | Adaptar paquete npm/Node.js para Android (process.platform, addons nativos, playwright mock) | `docs/termux/omniroute.md` | `docs/recursos/herramientas/{tool}.md`, `docs/termux/compilacion-glibc.md` |
 | playwright-core "Unsupported platform", parchear platform checks | `docs/termux/omniroute.md` | `docs/termux/playwright-proot.md` |
 | Escritorio gráfico, X11, XFCE | `references/termux-setup.md` | `docs/termux/termux-x11.md` |
+| OBS Studio, cámara USB/teléfono, MJPEG, escenas | `references/obs-studio.md` | `docs/recursos/herramientas/obs-studio.md` |
 | QEMU + X11 + xfwm4 + resolución dinámica (virgl 3D / TCP Bridge) | `references/termux-x11.md` | `references/docker-alternatives.md` |
 | Sin audio / sink auto_null en Xwayland, desktop-xfce, proot | `references/termux-x11.md#audio` | `references/troubleshooting.md` |
 | Wrapper apt/npm/pnpm | `references/ihaklab.md` | `docs/recursos/herramientas-ihaklab.md#13` |
 | Ecosistema de agentes AI, config compartida | `references/agent-ecosystem.md` | `docs/recursos/herramientas/{opencode,claude-code,codex,qwen-code,...}.md` |
+| ZCode gráfico (`zcode`) y CLI (`zcode-cli`, `zcode-app-cli`), API key, cuota | `references/agent-ecosystem.md` | `docs/recursos/herramientas/zcode.md`, `docs/recursos/herramientas/zcode-cli.md` |
+| Juego educativo Terminus / aprender comandos Linux | `references/tool-install.md` | `docs/recursos/herramientas/terminus-game.md` |
 | Neovim, LSP, editor, vim.lsp.start, Mason, pyright, bashls, lsp-zero | `references/agent-ecosystem.md` | `docs/recursos/herramientas/neovim.md` |
 | MCP servers en Termux (CodeGraph, TestSprite, Playwright, Smithery) | `references/agent-ecosystem.md` | `docs/recursos/herramientas/codegraph-mcp.md` |
 | Hermes Agent, instalación, configuración | `references/hermes-agent.md` | `docs/recursos/herramientas/hermes-agent.md` |

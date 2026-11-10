@@ -72,9 +72,9 @@ Lockfile estricto
 El wrapper interviene en:
 
 ```bash
-pnpm install ...
-pnpm update ...
-pnpm uninstall ...
+pnpm install ...   # también pnpm i y pnpm add
+pnpm update ...    # también pnpm up y pnpm upgrade
+pnpm uninstall ... # también pnpm remove, pnpm rm y pnpm un
 ```
 
 Para el resto de comandos delega directamente al pnpm real:
@@ -83,9 +83,32 @@ Para el resto de comandos delega directamente al pnpm real:
 $PREFIX/bin/pnpm "$@"
 ```
 
+### Cómo procesa los argumentos
+
+Desde i-HakLab v3.13.32 el wrapper separa **opciones** de **paquetes** antes
+de invocar a pnpm:
+
+* Cualquier opción (`-g`, `--global`, `--save-dev`, `--filter=...`, etc.) se
+  pasa intacta.
+* El orden ya no importa: `pnpm add paquete -g` equivale a
+  `pnpm add -g paquete`.
+* Varios paquetes se resuelven en **una sola** llamada.
+* Las opciones con valor separado (`--filter app`, `--registry URL`) se
+  conservan completas.
+* `pnpm install` sin paquetes dentro de un proyecto instala sus dependencias.
+* `pnpm install -g` sin paquete muestra un error de uso en lugar de intentar
+  instalar el directorio actual.
+* El wrapper ya **no cambia el directorio de trabajo** a `$HOME`, por lo que
+  las instalaciones locales apuntan al proyecto correcto.
+* Los alias se normalizan también al desinstalar.
+
+`open-lovable` ejecuta su flujo especial y no se incluye en la llamada
+genérica. El verbo original se conserva, por lo que `pnpm add` sigue siendo
+válido (`pnpm install <paquete>` también funciona).
+
 ## Alias normalizados
 
-Al instalar o actualizar paquetes, el wrapper traduce estos alias al paquete real:
+Al instalar, actualizar o desinstalar paquetes, el wrapper traduce estos alias al paquete real:
 
 | Alias usado | Paquete real |
 |---|---|
@@ -95,8 +118,14 @@ Al instalar o actualizar paquetes, el wrapper traduce estos alias al paquete rea
 | `codex` | `@mmmbuto/codex-cli-termux@latest` |
 | `copilot-cli` / `github-copilot` | `@github/copilot` |
 | `minimax-cli` | `mmx-cli` |
-| `codebuff` | `codebuff` |
-| `freebuff` | `freebuff` |
+| `testsprite` | `@testsprite/testsprite-mcp` |
+| `zcode-cli` | `zcode-app-cli` |
+| `openspec` | `@fission-ai/openspec` |
+| `sleepwalker` | `@sleepwalkerai/cli` |
+| `kimi-code` | `@moonshot-ai/kimi-code` |
+| `context7` | `ctx7` |
+| `comandle` | `github.com/legiosai/comandle@latest` |
+| `smithery` | `@smithery/cli` |
 
 Ejemplo:
 
@@ -170,5 +199,8 @@ bash ~/.local/libexec/pkg2conf nombre-del-paquete
 ## Notas importantes
 
 * `pnpm add -g paquete` es la forma recomendada por pnpm para añadir herramientas globales.
-* El wrapper de i-HakLab acepta flujos con `install`/`update` para mantener compatibilidad con scripts existentes.
+* El wrapper de i-HakLab acepta `install`/`i`/`add`, `update`/`up`/`upgrade` y
+  `uninstall`/`remove`/`rm`/`un` para mantener compatibilidad con scripts existentes.
+* Las opciones desconocidas se pasan a pnpm sin interpretarlas como paquetes.
 * Si un paquete global requiere scripts de compilación, revisa la salida de `pnpm approve-builds`.
+* `pnpm install -g zcode-cli` instala el CLI de ZCode como `zcode-cli` (ver `zcode-cli.md`).

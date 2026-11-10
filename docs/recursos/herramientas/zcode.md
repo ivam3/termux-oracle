@@ -138,21 +138,29 @@ Los debs arrastran extras que también se copian (ej. `libfreebl3`, `libnssckbi`
 
 ## CLI + API (sin X11): `zcode-cli` y `APIKEY_zcode`
 
-Además de la app gráfica existe el **CLI npm** (`zcode-app-cli`, modelos GLM vía API Zhipu).
-No necesita X11 ni Electron: funciona en Termux puro.
+Además de la app gráfica existe el **CLI npm** (`zcode-app-cli`, modelos GLM
+vía API Zhipu). No necesita X11 ni Electron: funciona en Termux puro.
 
-### Instalación y convivencia con el wrapper desktop
+Documentación completa: [`zcode-cli.md`](./zcode-cli.md).
 
-```bash
-npm install -g zcode-app-cli   # i-Haklab lo configura vía pkg2conf (caso zcode-app-cli)
-```
+Resumen de convivencia y automatización:
 
-* Upstream trae shebang `#!/usr/bin/env node` → se repara con `termux-fix-shebang`.
-* El binario npm vive como **`zcode-cli`**; `zcode` queda reservado al wrapper desktop
-  (si `npm` crea `$PREFIX/bin/zcode` apuntando al CLI, `pkg2conf` lo renombra a `zcode-cli`).
-* Pre-configuración: Android bloquea hardlinks (`EACCES`), y el launcher crea
-  `config.json` vía `tmp+link()` — por eso `pkg2conf` pre-siembra
-  `~/.zcode/cli/config.json` (modo `600`) desde `config.example.json`.
+* Instalación con i-HakLab: `npm install -g zcode-cli` (el wrapper normaliza
+  `zcode-cli` → `zcode-app-cli`).
+* Upstream trae shebang `#!/usr/bin/env node` → `pkg2conf` lo repara con
+  `termux-fix-shebang`.
+* El binario npm vive como **`zcode-cli`**; `zcode` queda reservado al wrapper
+  desktop. Si npm crea `$PREFIX/bin/zcode` apuntando al CLI, `pkg2conf` lo
+  renombra a `zcode-cli`.
+* Android bloquea hardlinks (`EACCES`) y algunas versiones crean
+  `config.json` con `tmp + link()`: `pkg2conf` parchea esa llamada a
+  `rename()` y pre-siembra `~/.zcode/cli/config.json` (modo `600`).
+* `pkg2conf` mueve `options.apiKey` al nivel superior del proveedor (el
+  runtime solo lee esa posición) e inyecta `APIKEY_zcode` desde
+  `i-Haklab setapikey` sin sobrescribir una clave existente.
+* Tras instalar, lanza un micro-prompt headless para clasificar saldo/key y
+  avisar de `[1113] Insufficient balance`, 401 o configuración pendiente.
+* Requiere Node.js 22 o superior; `preconf` instala `nodejs-lts` si hace falta.
 
 ### API key (`i-Haklab setapikey` → `APIKEY_zcode`)
 
@@ -175,4 +183,4 @@ o edita `strategies` (`chat`/`inline`/`agent`) en ese archivo. No requiere el bi
 usa `$PREFIX/tmp` gracias al workaround de `TMPDIR`/`XDG_RUNTIME_DIR` en el mismo archivo).
 
 ---
-*Nota: ZCode integra los modelos GLM en el ecosistema i-Haklab como app gráfica nativa glibc.*
+*Nota: ZCode integra los modelos GLM en el ecosistema i-Haklab como app gráfica nativa glibc y CLI npm.*

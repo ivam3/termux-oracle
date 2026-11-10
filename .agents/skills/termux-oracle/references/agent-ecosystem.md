@@ -147,6 +147,11 @@ Este método fue reemplazado por el nativo glibc a partir de julio 2026. Los paq
 
 **Muse Code (Meta)** no usa helper glibc: es un ELF estático **musl** que corre nativo sobre el kernel Android, pero necesita `proot` para sortear el aislamiento de datos de la app (`readdir("/")` da `EACCES`). Ver `docs/recursos/herramientas/muse-code.md` para el wrapper proot, claves de bind, DNS y auto-actualización vía launcher.
 
+**ZCode CLI (`zcode-cli`)** es el complemento de terminal de ZCode y no usa
+helper glibc: es un paquete npm (`zcode-app-cli`) que corre sobre Node.js 22+.
+Se instala con `npm install -g zcode-cli` y convive con la app gráfica `zcode`
+(wrapper glibc + `termux-x11`). Ver `docs/recursos/herramientas/zcode-cli.md`.
+
 ## Tabla de alias npm (wrappers i-Haklab)
 
 | Comando | Se traduce a | Tipo |
@@ -157,6 +162,9 @@ Este método fue reemplazado por el nativo glibc a partir de julio 2026. Los paq
 | `claude-code` | `@anthropic-ai/claude-code` | npm |
 | `codex` | `@mmmbuto/codex-cli-termux@latest` | npm |
 | `minimax-cli` | `mmx-cli` | npm |
+| `testsprite` | `@testsprite/testsprite-mcp` | npm |
+| `zcode-cli` | `zcode-app-cli` | npm (CLI de ZCode, sin X11) |
+| `kimi-code` | `@moonshot-ai/kimi-code` | npm |
 | `sleepwalker` | `@sleepwalkerai/cli` | npm |
 | `sleepwalkerai` | `@sleepwalkerai/cli` | npx |
 | `openspec` | `@fission-ai/openspec` | npm |

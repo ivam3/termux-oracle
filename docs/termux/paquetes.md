@@ -71,9 +71,18 @@ Cuando ejecutas `apt install <herramienta>`, este wrapper intercepta el nombre d
 
 ### B. El Wrapper de NPM (`~/.local/bin/npm`)
 Muchos módulos globales de Node.js fallan al compilarse en Android por diferencias en la ubicación de librerías del sistema o falta del NDK. El wrapper `npm` corrige esto de antemano:
-* **Resolución de pre-requisitos de `n8n`**: Si instalas `n8n`, el wrapper instala previamente los paquetes nativos `nodejs-lts`, `libsqlite`, `sqlite`, y los módulos globales de compilación `pm2` y `node-gyp`. Además, genera automáticamente archivos temporales `.gyp/include.py` con variables NDK vacías para anular fallos del compilador.
-* **Soporte de `pnpm`**: Configura corepack y escribe las rutas binarias necesarias en los archivos de perfil de la shell (`.bashrc`, `.zshrc`, `config.fish`).
+* **Parseo de argumentos (v3.13.32+)**: separa opciones de paquetes. Cualquier flag (`-g`, `--global`, `--save-dev`, `--omit=dev`, `--registry=...`) se pasa intacto y el orden ya no importa (`npm install pkg -g` == `npm install -g pkg`). Varios paquetes se instalan en una sola llamada y ya no se ejecuta npm una vez por cada argumento.
+* **Sin `pushd $HOME`**: las instalaciones locales usan el directorio del proyecto; `npm install` sin paquetes instala sus dependencias (antes no hacía nada) y `npm install -g` sin paquete muestra un error de uso.
+* **Resolución de pre-requisitos de `n8n`**: Si instalas `n8n`, el wrapper instala previamente los paquetes nativos `nodejs-lts`, `libsqlite`, `sqlite`, y los módulos globales de compilación `pm2`, `gyp` y `node-gyp`. Además, genera automáticamente `~/.gyp/include.gypi` con variables NDK vacías para anular fallos del compilador.
+* **Soporte de `pnpm`**: ejecuta `corepack enable`, `pnpm setup --force --no-modify-path` y configura `package-import-method=copy` (SELinux rechaza hardlinks). No sobrescribe el shim de Corepack en `$PREFIX/bin/pnpm`.
 * **Parcheo de código**: Lanza `pkg2conf` al finalizar la instalación.
+
+### C. El Wrapper de PNPM (`~/.local/bin/pnpm`)
+Réplica del wrapper de npm para pnpm:
+* Mismo parseo de argumentos (opciones vs paquetes, varios paquetes por llamada) y sin `pushd $HOME`.
+* Conserva el verbo original (`add`, `remove`, etc.) y normaliza los mismos alias.
+* Exporta `PNPM_CONFIG_PACKAGE_IMPORT_METHOD=copy` por defecto.
+* Automatiza `n8n` y `open-lovable` y ejecuta `pkg2conf` cuando corresponde.
 
 ---
 

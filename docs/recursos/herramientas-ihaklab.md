@@ -136,6 +136,8 @@ Estos archivos se encuentran en `$PATH` (mediante `~/.local/bin` antepuesto en `
 | `npm` | Wrapper que normaliza alias y automatiza instalaciones complejas (n8n, pnpm, open-lovable) |
 | `pnpm` | Wrapper similar a npm pero para pnpm |
 | `adminfiles` | Copia archivos desde almacenamiento interno/externo al directorio de Termux |
+| `cam-float` / `phone-float` | Ventanas flotantes `mpv` para las cámaras USB/teléfono |
+| `cam-usb` / `phone-cam` | Publican cámaras UVC/teléfono como MJPEG para OBS |
 | `cmd` | Gestiona ajustes principales de Android desde Termux |
 | `gitbrowsering` | Busca repositorios en GitHub por CLI |
 | `LOCALHOST` | Muestra la IP actual en LAN |
@@ -189,6 +191,9 @@ Estos archivos se encuentran en `$PATH` (mediante `~/.local/bin` antepuesto en `
 | Archivo | Función |
 |---------|---------|
 | `pkg2conf` | Orquestador de post-instalación: aplica parches, enlaces simbólicos y configuraciones tras instalar un paquete |
+| `preconf` | Acciones previas a la instalación; para `obs-studio` instala dependencias y compila helpers de cámara |
+| `cleanup` | Limpieza posterior a la desinstalación; para `obs-studio` retira escenas/fuentes de i-HakLab y helpers |
+| `i-Haklab/build-uvc-cam` | Compila `libuvc`, `uvc-stream`, `usbdesc` y `mjpeg-pipe-server` |
 | `i-Haklab/setshell` | Script que gestiona el cambio entre shells (bash, zsh, fish) |
 
 ### `~/` — Archivos de configuración del usuario
@@ -383,6 +388,8 @@ Estos comandos no requieren el prefijo `i-HakLab`; se ejecutan directamente en l
 | `apt` | Instala, elimina y configura paquetes/herramientas/frameworks. |
 | `adminfiles` | Copia archivos desde almacenamiento interno/externo al directorio de Termux. |
 | `bat` | Alternativa a `cat` con resaltado de texto. |
+| `cam-float` | Ventana flotante `mpv` para la cámara USB. Ver `herramientas/obs-studio.md`. |
+| `cam-usb` | Publica una cámara UVC por USB como MJPEG en `127.0.0.1:9000`. |
 | `cmd` | Gestiona ajustes principales de Android desde Termux. |
 | `df` | Muestra información de memoria/montajes. |
 | `du` | Muestra peso de directorios y archivos recursivamente. |
@@ -397,6 +404,8 @@ Estos comandos no requieren el prefijo `i-HakLab`; se ejecutan directamente en l
 | `openvpn` | Abre la aplicación Android de OpenVPN. |
 | `omf` | Cambia tema de Oh My Fish. |
 | `phantom-ps` | Cambia el límite de procesos fantasma a `2147483647`. Requiere división de pantalla/opciones de desarrollador según la ayuda. |
+| `phone-cam` | Publica la cámara frontal/trasera del teléfono como MJPEG en `127.0.0.1:9001` vía ADB + scrcpy. |
+| `phone-float` | Ventana flotante `mpv` para la cámara del teléfono. |
 | `pm` | Gestor de paquetes Android. |
 | `postgresql` | Inicia, detiene o reinicia PostgreSQL. |
 | `proxy` | Ejecuta comandos CLI sobre Tor/proxychains. |
@@ -461,6 +470,25 @@ i-HakLab Xwayland
 ```
 
 Levanta XFCE4 como window manager sobre Termux Wayland.
+
+### Cámaras para OBS Studio
+
+i-HakLab integra la cámara del teléfono y, opcionalmente, una cámara UVC por USB como fuentes MJPEG locales para OBS Studio. La vía recomendada es `phone-cam`; no requiere la app *USB Camera*.
+
+```bash
+apt install obs-studio          # preconf + pkg2conf automáticos
+phone-cam --list
+phone-cam back                  # cámara trasera -> http://127.0.0.1:9001/video
+phone-cam front                 # cámara frontal -> http://127.0.0.1:9001/video
+phone-cam --stop
+
+cam-usb --list                  # cámara USB opcional
+cam-usb --probe
+cam-usb                         # -> http://127.0.0.1:9000/video
+cam-usb --stop
+```
+
+Escenas creadas por `pkg2conf`: **Cámara USB**, **Cámara Trasera**, **Cámara Frontal** y **USB + Teléfono** (USB principal con el teléfono en PiP). Además detecta el perfil y la colección activos, crea dos fuentes `ffmpeg_source` MJPEG (`9000` y `9001`), ajusta la resolución al lienzo (`BaseCX`/`BaseCY`), respeta escenas/fuentes existentes del usuario, guarda un backup `Untitled.json.bak.ih-<fecha>` y escribe de forma atómica. En OBS también se puede añadir una **Fuente multimedia** con la URL MJPEG. Guía completa: [`herramientas/obs-studio.md`](./herramientas/obs-studio.md).
 
 ### Material educativo
 
@@ -544,6 +572,7 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 - **`openspec`**: framework ligero spec-driven para planificación y revisión por intención compatible con múltiples agentes de codificación IA (Claude Code, Cursor, OpenCode, etc.).
 - **`codex`, `gemini-cli`, `github-copilot`, `mistralAI`, `ollama`**: herramientas mencionadas en el ecosistema de “vibe coding” sobre Termux.
 - **`zcode`**: harness de vibe coding con IA (GLM-5.3) como app Electron arm64; en Termux corre como binario glibc nativo sobre `termux-x11` (`zcode --help` estático sin X, GUI con `DISPLAY=:0`).
+- **`zcode-cli`**: cliente de terminal del agente ZCode (`zcode-app-cli`), sin X11 ni Electron. i-HakLab lo instala como `zcode-cli` para no chocar con la app gráfica, repara el shebang, parchea la creación de configuración (`link` → `rename`), inyecta `APIKEY_zcode` y verifica la cuota. Ver `herramientas/zcode-cli.md`.
 
 ### Análisis forense móvil e ingeniería inversa Android
 
@@ -580,9 +609,11 @@ i-HakLab no solo expone comandos de automatización, también funciona como un *
 - **`traductor` / `translate-shell`**: traducción de documentación técnica desde CLI.
 - **`tmux` / `neovim` / `vim`**: multiplexación de terminal y edición avanzada.
 - **`cloudflared` / `ngrok` / `localtunnel`**: túneles para exponer servicios locales.
+- **`obs-studio` + `phone-cam` / `cam-usb`**: fuentes MJPEG locales para OBS con cámara del teléfono (recomendado) o UVC por USB. Ver `herramientas/obs-studio.md`.
 - **`qemufy` / `termux-docker-qemu` / `udocker`**: virtualización/emulación y contenedores en espacio de usuario.
 - **`proroot`**: runtime Linux rootless sin ptrace. Reemplazo directo de proot con rendimiento casi nativo. Solo arm64. `pkg install proroot`.
 - **`engram`**: motor persistente de memoria y aprendizaje continuo usado por el proyecto.
+- **`terminus-game`**: juego de aventura de texto para aprender comandos de Linux (`ls`, `cd`, `less`, `grep`, etc.), port nativo Node.js del Terminus original. Ver `herramientas/terminus-game.md`.
 
 ---
 
@@ -710,8 +741,14 @@ Normalizaciones internas relevantes:
 | `codex` | `@mmmbuto/codex-cli-termux@latest` |
 | `copilot-cli` / `github-copilot` | `@github/copilot` |
 | `minimax-cli` | `mmx-cli` |
-| `codebuff` | `codebuff` |
-| `freebuff` | `freebuff` |
+| `testsprite` | `@testsprite/testsprite-mcp` |
+| `zcode-cli` | `zcode-app-cli` |
+| `openspec` | `@fission-ai/openspec` |
+| `sleepwalker` | `@sleepwalkerai/cli` |
+| `kimi-code` | `@moonshot-ai/kimi-code` |
+| `context7` | `ctx7` |
+| `comandle` | `github.com/legiosai/comandle@latest` |
+| `smithery` | `@smithery/cli` |
 
 Después de una instalación/reinstalación APT normal, el wrapper llama a `pkg2conf` si la herramienta aparece en la lista de paquetes configurables.
 
@@ -720,15 +757,27 @@ Después de una instalación/reinstalación APT normal, el wrapper llama a `pkg2
 El wrapper `npm` interviene en:
 
 ```bash
-npm install ...
-npm update ...
-npm uninstall ...
+npm install ...   # también npm i y npm add
+npm update ...    # también npm up y npm upgrade
+npm uninstall ... # también npm remove, npm rm y npm un
 ```
 
 Funciones principales:
 
-- Normaliza alias como `gemini-cli`, `qwen-code`, `claude-code`, `codex`, `copilot-cli`, `github-copilot` y `minimax-cli`.
-- Prepara instalaciones especiales de `n8n`, `pnpm` y `open-lovable`.
+- **Separación de opciones y paquetes:** cualquier flag (`-g`, `--global`,
+  `--save-dev`, `--omit=dev`, `--registry=...`) se pasa intacto; el orden ya no
+  importa (`npm install pkg -g` == `npm install -g pkg`).
+- **Una sola invocación:** varios paquetes se instalan en la misma llamada.
+- **Sin cambio de directorio:** ya no hace `pushd $HOME`, por lo que las
+  instalaciones locales usan el proyecto actual.
+- **Sin paquetes:** `npm install` / `npm update` se delegan al npm nativo;
+  `npm install -g` sin paquete muestra un error de uso.
+- Normaliza alias como `gemini-cli`, `qwen-code`, `claude-code`, `codex`,
+  `copilot-cli`, `github-copilot`, `minimax-cli`, `testsprite`, `zcode-cli`,
+  `openspec`, `sleepwalker`, `kimi-code`, `context7`, `comandle` y `smithery`
+  (también al desinstalar).
+- Prepara instalaciones especiales de `n8n`, `pnpm` y `open-lovable`; esos dos
+  últimos quedan fuera de la llamada genérica.
 - Ejecuta `pkg2conf` después de instalar paquetes integrables.
 - Para otros comandos, delega a `$PREFIX/bin/npm`.
 
@@ -761,14 +810,21 @@ Automatización especial de `open-lovable`:
 El wrapper `pnpm` interviene en:
 
 ```bash
-pnpm install ...
-pnpm update ...
-pnpm uninstall ...
+pnpm install ...   # también pnpm i y pnpm add
+pnpm update ...    # también pnpm up y pnpm upgrade
+pnpm uninstall ... # también pnpm remove, pnpm rm y pnpm un
 ```
 
 Funciones principales:
 
-- Normaliza los mismos alias Node.js que el wrapper `npm`.
+- **Separación de opciones y paquetes:** cualquier flag (`-g`, `--global`,
+  `--save-dev`, `--filter=...`) se pasa intacto; el orden ya no importa.
+- **Una sola invocación:** varios paquetes se resuelven en la misma llamada,
+  conservando el verbo original (`add`, `remove`, etc.).
+- **Sin cambio de directorio:** ya no hace `pushd $HOME`.
+- **Sin paquetes:** `pnpm install` / `pnpm update` se delegan al pnpm nativo;
+  `pnpm install -g` sin paquete muestra un error de uso.
+- Normaliza los mismos alias Node.js que el wrapper `npm`, también al desinstalar.
 - Automatiza `n8n` y `open-lovable`.
 - Ejecuta `pkg2conf` si el paquete aparece en `listofpkg2conf`.
 - Para otros comandos, delega a `$PREFIX/bin/pnpm`.
@@ -811,7 +867,7 @@ Incluye:
 
 ```text
 apache2, bash, clamav, claude-code, fish, gdb, gemini-cli, localtunnel,
-mariadb, mvt, n8n, nano, neovim, open-lovable, phpmyadmin, privoxy,
+mariadb, mvt, n8n, nano, neovim, obs-studio, open-lovable, phpmyadmin, privoxy,
 proxychains-ng, python, qwen-code, radare2, tigervnc, tmux, tor, vim,
 yt-dlp, zsh
 ```
@@ -831,6 +887,7 @@ Acciones importantes observadas en `pkg2conf`:
 | `mvt` | Instala dependencias criptográficas y parchea archivos Python/ADB. |
 | `n8n` | Crea función fish `n8n` con variables SQLite y tips de `pm2`. |
 | `nano` | Genera `.nanorc` con numeración, mouse, colores e indentación. |
+| `obs-studio` | Detecta perfil/colección activos y lienzo (`BaseCX`/`BaseCY`); crea 2 fuentes MJPEG (`ffmpeg_source`: USB `:9000`, teléfono `:9001`) y 4 escenas (USB, Trasera, Frontal, USB+Teléfono en PiP). No borra escenas/fuentes del usuario, hace backup `Untitled.json.bak.ih-<fecha>` y escribe de forma atómica. |
 | `neovim` | Descarga configuración, instala paquetes npm/pip auxiliares y language servers. |
 | `open-lovable` | Ajusta `package.json` para usar `NEXT_DISABLE_TURBOPACK=1 next dev`. |
 | `privoxy`, `proxychains-ng`, `tor` | Instala/enlaza configuraciones de proxy/Tor. |
@@ -963,6 +1020,7 @@ Credenciales y datos relevantes observados en los scripts/configuración incluid
 | Laboratorio vulnerable | `i-HakLab servers4test` |
 | VM sin root | `i-HakLab qemufy ...` |
 | Escritorio gráfico | `i-HakLab Xwayland` |
+| Cámaras para OBS | `apt install obs-studio`, `phone-cam back`, `cam-usb` |
 | Backup | `i-HakLab backup create`, `i-HakLab backup restore` |
 | Limpieza/fixes | `fixer`, `rmcache`, `phantom-ps` |
 

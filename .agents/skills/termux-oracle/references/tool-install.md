@@ -13,6 +13,8 @@ pkg install code-server neovim tmux yazi
 pkg install android-tools  # ADB + Fastboot
 ```
 
+Para **OBS Studio + cámaras** con i-HakLab, usar `apt install obs-studio`: el wrapper ejecuta `preconf` (dependencias y helpers) y `pkg2conf` (escenas). Sin i-HakLab: `pkg install x11-repo`, luego `pkg install obs-studio ffmpeg scrcpy android-tools termux-api mpv`, y configurar la fuente MJPEG manualmente. Ver `references/obs-studio.md`.
+
 ## Pip (Python)
 ```bash
 python3 -m pip install sqlmap shodan bloodhound wfuzz mvt holehe sherlock
@@ -49,9 +51,13 @@ npm install -g @qwen-code/qwen-code
 npm install -g mmx-cli  # minimax-cli
 npm install -g @github/copilot
 npm install -g @mmmbuto/codex-cli-termux@latest
+npm install -g zcode-cli   # alias i-HakLab -> zcode-app-cli (CLI, sin X11)
 npm install -g n8n localtunnel
 npm install -g open-lovable
 ```
+
+`zcode-cli` es el CLI de ZCode (`zcode-app-cli`), distinto de la app
+gráfica Electron `zcode`. Ver `docs/recursos/herramientas/zcode-cli.md`.
 
 ## Gem (Ruby)
 ```bash
@@ -98,6 +104,11 @@ curl -fsSL "https://raw.githubusercontent.com/ivam3/termux-packages/gh-pages/dis
 apt update
 ```
 Más de 120 herramientas disponibles.
+
+**Juego educativo incluido:** `pkg install terminus-game` (port de *Terminus*
+para aprender comandos Linux; requiere `nodejs-lts`). Guarda la partida en
+`~/.local/share/terminus-game/save.json`. Ver
+`docs/recursos/herramientas/terminus-game.md`.
 
 ## Regla general (validar `detect-env.sh` primero)
 1. Validar `detect-env.sh` → `arch`, `glibc_repo`, `wrapper_apt`.
